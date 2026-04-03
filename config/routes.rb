@@ -1,0 +1,17 @@
+OnboardOnRails::Engine.routes.draw do
+  namespace :admin do
+    resources :tours do
+      resources :steps, except: [:index]
+      resource :stats, only: [:show]
+    end
+    root to: "tours#index"
+  end
+
+  namespace :api do
+    resources :tours, only: [:index]
+    resources :completions, only: [:create]
+    resources :events, only: [:create]
+  end
+
+  get "selector_picker", to: "selector_picker#show"
+end

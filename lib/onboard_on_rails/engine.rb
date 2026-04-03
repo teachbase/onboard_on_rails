@@ -2,6 +2,12 @@ module OnboardOnRails
   class Engine < ::Rails::Engine
     isolate_namespace OnboardOnRails
 
+    initializer "onboard_on_rails.helpers" do
+      ActiveSupport.on_load(:action_view) do
+        include OnboardOnRails::MetaTagsHelper
+      end
+    end
+
     initializer "onboard_on_rails.assets.precompile" do |app|
       if app.config.respond_to?(:assets) && app.config.assets.respond_to?(:precompile)
         app.config.assets.precompile += %w[
