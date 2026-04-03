@@ -11,6 +11,7 @@
   <td><%= tour.priority %></td>
   <td>
     <div class="oor-table__actions">
+      <%= link_to t("onboard_on_rails.admin.tours.table.stats"), admin_tour_stats_path(tour), class: "oor-btn oor-btn--sm oor-btn--secondary" %>
       <%= link_to t("onboard_on_rails.admin.tours.table.edit"), edit_admin_tour_path(tour), class: "oor-btn oor-btn--sm oor-btn--secondary" %>
       <%= button_to t("onboard_on_rails.admin.tours.table.delete"), admin_tour_path(tour), method: :delete, class: "oor-btn oor-btn--sm oor-btn--danger", form: { style: "display:inline", data: { turbo_confirm: t("onboard_on_rails.admin.tours.table.delete_confirm") } }, onclick: "return confirm('#{j t("onboard_on_rails.admin.tours.table.delete_confirm")}')" %>
     </div>
