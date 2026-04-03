@@ -122,7 +122,7 @@ OnboardOnRails.PositioningEngine = {
     const x = rect.left - pad, y = rect.top - pad;
     const w = rect.width + pad * 2, h = rect.height + pad * 2;
     const r = 4;
-    return `polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, ${x}px ${y+r}px, ${x+r}px ${y}px, ${x+w-r}px ${y}px, ${x+w}px ${y+r}px, ${x+w}px ${y+h-r}px, ${x+w-r}px ${y+h}px, ${x+r}px ${y+h}px, ${x}px ${y+h-r}px, ${x}px ${y+r}px)`;
+    return `polygon(evenodd, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, ${x}px ${y+r}px, ${x+r}px ${y}px, ${x+w-r}px ${y}px, ${x+w}px ${y+r}px, ${x+w}px ${y+h-r}px, ${x+w-r}px ${y+h}px, ${x+r}px ${y+h}px, ${x}px ${y+h-r}px, ${x}px ${y+r}px)`;
   },
   scrollIntoView(targetEl) {
     const rect = targetEl.getBoundingClientRect();
