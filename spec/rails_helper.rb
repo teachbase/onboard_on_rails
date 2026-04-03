@@ -13,6 +13,8 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
+ENGINE_ROOT = File.expand_path("..", __dir__)
+
 RSpec.configure do |config|
   config.fixture_paths = [Rails.root.join("spec/fixtures")]
   config.use_transactional_fixtures = true
@@ -20,3 +22,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods
 end
+
+FactoryBot.definition_file_paths = [File.join(ENGINE_ROOT, "spec", "factories")]
+FactoryBot.find_definitions

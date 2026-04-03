@@ -6,6 +6,7 @@ require "onboard_on_rails"
 
 module Dummy
   class Application < Rails::Application
+    config.root = File.expand_path("../..", __FILE__)
     config.load_defaults Rails::VERSION::STRING.to_f
     config.eager_load = false
   end
