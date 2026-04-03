@@ -23,4 +23,6 @@ Rails.application.configure do
   config.active_record.migration_error = :page_load
 
   config.active_storage.service = :test
+
+  config.i18n.default_locale = :en
 end
