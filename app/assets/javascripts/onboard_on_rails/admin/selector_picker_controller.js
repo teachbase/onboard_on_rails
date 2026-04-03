@@ -1,15 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
-  var wrapper = document.querySelector("[data-controller='selector-picker']");
-  if (!wrapper) return;
-
-  var input = wrapper.querySelector("[data-selector-picker-target='input']");
-
-  function handleMessage(event) {
-    if (event.data && event.data.type === "oor-selector-picked" && input) {
-      input.value = event.data.selector;
-      input.dispatchEvent(new Event("input"));
+  // Listen for selector picked messages from the picker popup
+  window.addEventListener("message", function(event) {
+    if (event.data && event.data.type === "oor-selector-picked") {
+      var input = document.querySelector("input[name='step[selector]']")
+                || document.getElementById("step_selector");
+      if (input) {
+        input.value = event.data.selector;
+        input.dispatchEvent(new Event("input"));
+        input.dispatchEvent(new Event("change"));
+      }
     }
-  }
-
-  window.addEventListener("message", handleMessage);
+  });
 });
