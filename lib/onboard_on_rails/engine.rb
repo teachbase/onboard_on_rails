@@ -15,9 +15,9 @@ module OnboardOnRails
       end
     end
 
-    initializer "onboard_on_rails.assets", after: :append_assets_path do |app|
-      js_path = root.join("app", "assets", "javascripts").to_s
-      app.config.assets.paths << js_path unless app.config.assets.paths.map(&:to_s).include?(js_path)
+    initializer "onboard_on_rails.assets" do |app|
+      app.config.assets.paths << OnboardOnRails::Engine.root.join("app", "assets", "javascripts").to_s
+      app.config.assets.paths << OnboardOnRails::Engine.root.join("app", "assets", "stylesheets").to_s
 
       if app.config.assets.respond_to?(:precompile)
         app.config.assets.precompile += %w[
