@@ -1,0 +1,199 @@
+/* OnboardOnRails Client CSS — Tour Themes */
+
+/* Overlay */
+.oor-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+}
+
+/* Fade-in animation */
+@keyframes oor-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Base tour step */
+.oor-tour-step {
+  --oor-step-bg: #ffffff;
+  --oor-step-text: #1a1a2e;
+  --oor-step-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --oor-step-font-size: 14px;
+  --oor-step-radius: 12px;
+  --oor-step-btn-bg: #4361ee;
+  --oor-step-max-width: 320px;
+
+  position: absolute;
+  z-index: 10001;
+  background: var(--oor-step-bg);
+  color: var(--oor-step-text);
+  font-family: var(--oor-step-font);
+  font-size: var(--oor-step-font-size);
+  border-radius: var(--oor-step-radius);
+  max-width: var(--oor-step-max-width);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
+  animation: oor-fade-in 0.25s ease-out;
+  overflow: hidden;
+}
+
+/* Step content */
+.oor-step-content {
+  padding: 20px 20px 12px;
+}
+
+.oor-step-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.oor-step-body {
+  font-size: var(--oor-step-font-size);
+  line-height: 1.5;
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* Step footer */
+.oor-step-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px 16px;
+  gap: 12px;
+}
+
+/* Dots */
+.oor-step-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.oor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d1d5db;
+  display: inline-block;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.oor-dot--active {
+  background: var(--oor-step-btn-bg);
+  transform: scale(1.3);
+}
+
+/* Actions */
+.oor-step-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.oor-btn-skip {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.oor-btn-skip:hover {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.oor-btn-prev {
+  background: none;
+  border: 1px solid #d1d5db;
+  color: var(--oor-step-text);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.oor-btn-prev:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.oor-btn-next {
+  background: var(--oor-step-btn-bg);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 6px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.oor-btn-next:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Theme: Tooltip (default) */
+.oor-theme-tooltip {
+  max-width: var(--oor-step-max-width);
+}
+
+/* Theme: Modal */
+.oor-theme-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 480px;
+  width: 90vw;
+}
+
+/* Theme: Banner */
+.oor-theme-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  width: 100%;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.oor-theme-banner .oor-step-content {
+  text-align: center;
+}
+
+.oor-theme-banner .oor-step-footer {
+  justify-content: center;
+}
+
+/* Theme: Slideout */
+.oor-theme-slideout {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 360px;
+  width: 90vw;
+  border-radius: 12px 0 0 12px;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: oor-slide-in-right 0.3s ease-out;
+}
+
+@keyframes oor-slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
