@@ -56,6 +56,19 @@
   opacity: 0.85;
 }
 
+.oor-step-body code {
+  background: rgba(0,0,0,0.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.oor-step-body img {
+  max-width: 100%;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
 /* Step footer */
 .oor-step-footer {
   display: flex;
@@ -84,6 +97,15 @@
 .oor-dot--active {
   background: var(--oor-step-btn-bg);
   transform: scale(1.3);
+}
+
+/* Step counter (for tours with >5 steps) */
+.oor-step-counter {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--oor-step-text);
+  opacity: 0.5;
+  white-space: nowrap;
 }
 
 /* Actions */

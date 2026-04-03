@@ -84,28 +84,51 @@ module OnboardOnRails
 
       create_step(tour, 4,
         title: "Тема: Тултип",
-        body: "Компактная всплывающая подсказка рядом с целевым элементом. Идеально для пошаговых инструкций, привязанных к конкретным кнопкам и полям.",
+        body: "Компактная всплывающая подсказка рядом с целевым элементом. Идеально для пошаговых инструкций." \
+             '<div style="margin-top:12px;background:#f8f9fa;border-radius:6px;padding:12px;position:relative;min-height:80px;">' \
+             '<div style="background:#e2e8f0;border-radius:4px;height:20px;width:60%;margin-bottom:8px;"></div>' \
+             '<div style="background:#e2e8f0;border-radius:4px;height:12px;width:40%;"></div>' \
+             '<div style="position:absolute;bottom:8px;right:8px;background:#fff;border-radius:6px;padding:6px 10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);font-size:10px;">' \
+             '<b>Подсказка</b><br><span style="opacity:0.6">Текст тултипа</span></div>' \
+             '</div>',
         selector: "select[name='tour[theme]']",
         placement: "bottom"
       )
 
       create_step(tour, 5,
         title: "Тема: Модальное окно",
-        body: "Появляется по центру экрана поверх контента. Подходит для важных объявлений, приветственных сообщений и шагов, не привязанных к элементам.",
+        body: "Появляется по центру экрана. Подходит для приветствий и важных объявлений." \
+             '<div style="margin-top:12px;background:#f8f9fa;border-radius:6px;padding:12px;position:relative;min-height:80px;">' \
+             '<div style="position:absolute;inset:0;background:rgba(0,0,0,0.3);border-radius:6px;"></div>' \
+             '<div style="position:relative;z-index:1;margin:16px auto;max-width:70%;background:#fff;border-radius:8px;padding:10px;box-shadow:0 4px 16px rgba(0,0,0,0.2);text-align:center;font-size:10px;">' \
+             '<b>Модальное окно</b><br><span style="opacity:0.6">Контент по центру</span></div>' \
+             '</div>',
         selector: "select[name='tour[theme]']",
         placement: "bottom"
       )
 
       create_step(tour, 6,
         title: "Тема: Баннер",
-        body: "Полоса внизу экрана на всю ширину. Хорош для ненавязчивых уведомлений и анонсов новых функций.",
+        body: "Полоса внизу экрана на всю ширину. Для ненавязчивых уведомлений." \
+             '<div style="margin-top:12px;background:#f8f9fa;border-radius:6px;padding:12px;position:relative;min-height:80px;">' \
+             '<div style="background:#e2e8f0;border-radius:4px;height:14px;width:50%;margin-bottom:6px;"></div>' \
+             '<div style="background:#e2e8f0;border-radius:4px;height:10px;width:70%;"></div>' \
+             '<div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:0 0 6px 6px;padding:6px 10px;box-shadow:0 -2px 8px rgba(0,0,0,0.1);font-size:10px;text-align:center;">' \
+             '<b>Баннер</b> — <span style="opacity:0.6">Сообщение во всю ширину</span></div>' \
+             '</div>',
         selector: "select[name='tour[theme]']",
         placement: "top"
       )
 
       create_step(tour, 7,
         title: "Тема: Выдвижная панель",
-        body: "Панель справа на всю высоту экрана. Подходит для подробных инструкций с большим количеством текста.",
+        body: "Панель справа на всю высоту. Для подробных инструкций." \
+             '<div style="margin-top:12px;background:#f8f9fa;border-radius:6px;padding:12px;position:relative;min-height:80px;overflow:hidden;">' \
+             '<div style="background:#e2e8f0;border-radius:4px;height:14px;width:50%;margin-bottom:6px;"></div>' \
+             '<div style="background:#e2e8f0;border-radius:4px;height:10px;width:70%;"></div>' \
+             '<div style="position:absolute;top:0;right:0;bottom:0;width:35%;background:#fff;box-shadow:-2px 0 8px rgba(0,0,0,0.1);padding:8px;font-size:10px;">' \
+             '<b>Панель</b><br><span style="opacity:0.6">Подробный контент справа</span></div>' \
+             '</div>',
         selector: "select[name='tour[theme]']",
         placement: "left"
       )
