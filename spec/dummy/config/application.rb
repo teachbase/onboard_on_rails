@@ -9,5 +9,7 @@ module Dummy
     config.root = File.expand_path("../..", __FILE__)
     config.load_defaults Rails::VERSION::STRING.to_f
     config.eager_load = false
+    config.i18n.default_locale = :ru
+    config.i18n.available_locales = [:ru, :en]
   end
 end
