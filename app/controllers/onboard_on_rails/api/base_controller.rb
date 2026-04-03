@@ -4,8 +4,6 @@ module OnboardOnRails
       skip_forgery_protection
       before_action :authenticate_user!
 
-      private
-
       def current_user
         @current_user ||= begin
           method_name = OnboardOnRails.configuration.current_user_method
@@ -17,6 +15,8 @@ module OnboardOnRails
           nil
         end
       end
+
+      private
 
       def authenticate_user!
         head :unauthorized unless current_user
