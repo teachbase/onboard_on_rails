@@ -10,6 +10,7 @@ module OnboardOnRails
 
     initializer "onboard_on_rails.helpers" do
       ActiveSupport.on_load(:action_view) do
+        require OnboardOnRails::Engine.root.join("app", "helpers", "onboard_on_rails", "meta_tags_helper").to_s
         include OnboardOnRails::MetaTagsHelper
       end
     end
