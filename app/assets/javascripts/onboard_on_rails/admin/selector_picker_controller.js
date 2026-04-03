@@ -1,18 +1,15 @@
-(() => {
-  if (typeof Stimulus === "undefined") return;
-  const application = Stimulus.Application.start();
+document.addEventListener("DOMContentLoaded", function() {
+  var wrapper = document.querySelector("[data-controller='selector-picker']");
+  if (!wrapper) return;
 
-  application.register("selector-picker", class extends Stimulus.Controller {
-    static targets = ["input"];
+  var input = wrapper.querySelector("[data-selector-picker-target='input']");
 
-    connect() { window.addEventListener("message", this.handleMessage.bind(this)); }
-    disconnect() { window.removeEventListener("message", this.handleMessage.bind(this)); }
-
-    handleMessage(event) {
-      if (event.data && event.data.type === "oor-selector-picked" && this.hasInputTarget) {
-        this.inputTarget.value = event.data.selector;
-        this.inputTarget.dispatchEvent(new Event("input"));
-      }
+  function handleMessage(event) {
+    if (event.data && event.data.type === "oor-selector-picked" && input) {
+      input.value = event.data.selector;
+      input.dispatchEvent(new Event("input"));
     }
-  });
-})();
+  }
+
+  window.addEventListener("message", handleMessage);
+});

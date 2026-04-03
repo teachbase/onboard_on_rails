@@ -29,7 +29,7 @@
             </div>
             <div class="oor-step-item__actions">
               <%= link_to t("onboard_on_rails.admin.tours.edit.edit"), edit_admin_tour_step_path(@tour, step), class: "oor-btn oor-btn--sm oor-btn--secondary" %>
-              <%= link_to t("onboard_on_rails.admin.tours.edit.delete"), admin_tour_step_path(@tour, step), method: :delete, data: { confirm: t("onboard_on_rails.admin.tours.edit.delete_step_confirm") }, class: "oor-btn oor-btn--sm oor-btn--danger" %>
+              <%= button_to t("onboard_on_rails.admin.tours.edit.delete"), admin_tour_step_path(@tour, step), method: :delete, class: "oor-btn oor-btn--sm oor-btn--danger", form: { style: "display:inline", data: { turbo_confirm: t("onboard_on_rails.admin.tours.edit.delete_step_confirm") } }, onclick: "return confirm('#{j t("onboard_on_rails.admin.tours.edit.delete_step_confirm")}')" %>
             </div>
           </li>
         <% end %>

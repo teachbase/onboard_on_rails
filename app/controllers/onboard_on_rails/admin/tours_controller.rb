@@ -48,12 +48,22 @@ module OnboardOnRails
       end
 
       def tour_params
-        params.require(:tour).permit(
+        permitted = params.require(:tour).permit(
           :name, :description, :status, :trigger_type, :trigger_event,
           :frequency, :theme, :priority, :schedule_start, :schedule_end,
           :ab_test_id, :ab_test_group,
-          url_pattern: [], style_overrides: {}, segment_rules: {}
+          style_overrides: {}, segment_rules: {}
         )
+
+        if params[:tour].key?(:url_pattern)
+          if params[:tour][:url_pattern].is_a?(String)
+            permitted[:url_pattern] = params[:tour][:url_pattern].split(",").map(&:strip).reject(&:blank?)
+          else
+            permitted[:url_pattern] = params[:tour].permit(url_pattern: [])[:url_pattern] || []
+          end
+        end
+
+        permitted
       end
     end
   end
