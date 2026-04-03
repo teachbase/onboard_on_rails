@@ -3,23 +3,51 @@ window.OnboardOnRails = window.OnboardOnRails || {};
 OnboardOnRails.TourRenderer = {
   overlay: null, tooltip: null, resizeHandler: null,
 
+  targetEl: null,
+  originalStyles: null,
+
   show(tour, stepIndex, callbacks) {
     this.cleanup();
     const step = tour.steps[stepIndex];
     if (!step) return;
-    const targetEl = step.placement === "center" ? null : document.querySelector(step.selector);
-    if (!targetEl && step.placement !== "center") return;
-    this.createOverlay(targetEl);
-    this.createTooltip(tour, step, stepIndex, tour.steps.length, targetEl, callbacks);
-    if (targetEl) OnboardOnRails.PositioningEngine.scrollIntoView(targetEl);
+    this.targetEl = step.placement === "center" ? null : document.querySelector(step.selector);
+    if (!this.targetEl && step.placement !== "center") return;
+    this.createOverlay(this.targetEl);
+    this.highlightTarget(this.targetEl);
+    this.createTooltip(tour, step, stepIndex, tour.steps.length, this.targetEl, callbacks);
+    if (this.targetEl) OnboardOnRails.PositioningEngine.scrollIntoView(this.targetEl);
     this.resizeHandler = () => {
-      if (targetEl) {
-        this.overlay.style.clipPath = OnboardOnRails.PositioningEngine.getClipPath(targetEl);
-        OnboardOnRails.PositioningEngine.position(this.tooltip, targetEl, step.placement);
+      if (this.targetEl) {
+        this.overlay.style.clipPath = OnboardOnRails.PositioningEngine.getClipPath(this.targetEl);
+        OnboardOnRails.PositioningEngine.position(this.tooltip, this.targetEl, step.placement);
       }
     };
     window.addEventListener("resize", this.resizeHandler);
     window.addEventListener("scroll", this.resizeHandler);
+  },
+
+  highlightTarget(el) {
+    if (!el) return;
+    this.originalStyles = {
+      position: el.style.position,
+      zIndex: el.style.zIndex,
+      position_computed: window.getComputedStyle(el).position
+    };
+    if (this.originalStyles.position_computed === "static") {
+      el.style.position = "relative";
+    }
+    el.style.zIndex = "10001";
+  },
+
+  restoreTarget() {
+    if (this.targetEl && this.originalStyles) {
+      if (this.originalStyles.position_computed === "static") {
+        this.targetEl.style.position = this.originalStyles.position;
+      }
+      this.targetEl.style.zIndex = this.originalStyles.zIndex;
+    }
+    this.targetEl = null;
+    this.originalStyles = null;
   },
 
   createOverlay(targetEl) {
@@ -66,6 +94,7 @@ OnboardOnRails.TourRenderer = {
   },
 
   cleanup() {
+    this.restoreTarget();
     if (this.overlay) { this.overlay.remove(); this.overlay = null; }
     if (this.tooltip) { this.tooltip.remove(); this.tooltip = null; }
     if (this.resizeHandler) {
