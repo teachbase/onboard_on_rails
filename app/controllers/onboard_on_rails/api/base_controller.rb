@@ -7,12 +7,14 @@ module OnboardOnRails
       private
 
       def current_user
-        method_name = OnboardOnRails.configuration.current_user_method
-        main_app_controller = request.env["action_controller.instance"]
-        if main_app_controller&.respond_to?(method_name, true)
-          main_app_controller.send(method_name)
-        else
-          send(method_name) if respond_to?(method_name, true)
+        @current_user ||= begin
+          method_name = OnboardOnRails.configuration.current_user_method
+          host_controller = ::ApplicationController.new
+          host_controller.request = request if host_controller.respond_to?(:request=)
+          host_controller.send(method_name) if host_controller.respond_to?(method_name, true)
+        rescue => e
+          Rails.logger.error "[OnboardOnRails] Failed to get current_user: #{e.message}"
+          nil
         end
       end
 

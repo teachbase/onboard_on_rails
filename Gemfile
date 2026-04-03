@@ -2,6 +2,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "pg"
+gem "puma"
 gem "sprockets-rails"
 
 group :development, :test do

@@ -1,3 +1,8 @@
+development:
+  adapter: postgresql
+  database: onboard_on_rails_development
+  host: localhost
+
 test:
   adapter: postgresql
   database: onboard_on_rails_test
