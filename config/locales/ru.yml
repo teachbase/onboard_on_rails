@@ -1,4 +1,65 @@
 ru:
+  activerecord:
+    errors:
+      messages:
+        blank: "не может быть пустым"
+        taken: "уже занято"
+        invalid: "имеет неверное значение"
+        too_short: "слишком короткое (минимум %{count} символов)"
+        too_long: "слишком длинное (максимум %{count} символов)"
+        inclusion: "имеет недопустимое значение"
+        not_a_number: "не является числом"
+      models:
+        onboard_on_rails/tour:
+          attributes:
+            name:
+              blank: "не может быть пустым"
+            trigger_event:
+              blank: "обязательно для типа триггера «по событию»"
+        onboard_on_rails/step:
+          attributes:
+            title:
+              blank: "не может быть пустым"
+            selector:
+              blank: "не может быть пустым"
+        onboard_on_rails/completion:
+          attributes:
+            user_id:
+              blank: "не может быть пустым"
+        onboard_on_rails/event:
+          attributes:
+            user_id:
+              blank: "не может быть пустым"
+            name:
+              blank: "не может быть пустым"
+    attributes:
+      onboard_on_rails/tour:
+        name: "Название"
+        description: "Описание"
+        status: "Статус"
+        trigger_type: "Тип триггера"
+        trigger_event: "Событие триггера"
+        url_pattern: "URL паттерн"
+        frequency: "Частота показа"
+        theme: "Тема"
+        priority: "Приоритет"
+      onboard_on_rails/step:
+        title: "Заголовок"
+        body: "Текст"
+        selector: "CSS селектор"
+        placement: "Расположение"
+        position: "Позиция"
+      onboard_on_rails/completion:
+        status: "Статус"
+        user_id: "Пользователь"
+      onboard_on_rails/event:
+        name: "Название"
+        user_id: "Пользователь"
+  errors:
+    messages:
+      blank: "не может быть пустым"
+      inclusion: "имеет недопустимое значение"
+      invalid: "имеет неверное значение"
   onboard_on_rails:
     admin:
       nav:
