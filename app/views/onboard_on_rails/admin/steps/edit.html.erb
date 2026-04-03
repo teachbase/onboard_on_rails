@@ -1,18 +1,18 @@
 <div class="oor-page-header">
-  <h1>Edit Step: <%= @step.title %></h1>
+  <h1><%= t("onboard_on_rails.admin.steps.edit.title", name: @step.title) %></h1>
   <div class="oor-page-header__actions">
-    <%= link_to "Back to Tour", edit_admin_tour_path(@tour), class: "oor-btn oor-btn--secondary" %>
+    <%= link_to t("onboard_on_rails.admin.steps.edit.back"), edit_admin_tour_path(@tour), class: "oor-btn oor-btn--secondary" %>
   </div>
 </div>
 
 <div class="oor-panel-layout">
   <div class="oor-panel">
-    <h3 class="oor-panel__title">Step Settings</h3>
+    <h3 class="oor-panel__title"><%= t("onboard_on_rails.admin.steps.edit.step_settings") %></h3>
     <%= render "form", tour: @tour, step: @step %>
   </div>
 
   <div class="oor-panel">
-    <h3 class="oor-panel__title">Live Preview</h3>
+    <h3 class="oor-panel__title"><%= t("onboard_on_rails.admin.steps.edit.live_preview") %></h3>
     <%= render "preview", step: @step %>
   </div>
 </div>

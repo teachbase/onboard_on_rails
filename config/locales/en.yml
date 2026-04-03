@@ -1,0 +1,172 @@
+en:
+  onboard_on_rails:
+    admin:
+      nav:
+        brand: "OnboardOnRails"
+        tours: "Tours"
+      tours:
+        index:
+          title: "Tours"
+          new_tour: "New Tour"
+          all: "All"
+          no_tours_title: "No tours found"
+          no_tours_description: "Create your first tour to get started with onboarding."
+          create_tour: "Create Tour"
+        table:
+          name: "Name"
+          status: "Status"
+          steps: "Steps"
+          url_pattern: "URL Pattern"
+          trigger: "Trigger"
+          priority: "Priority"
+          actions: "Actions"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure you want to delete this tour?"
+        new:
+          title: "New Tour"
+          back: "Back to Tours"
+        edit:
+          title: "Edit Tour: %{name}"
+          back: "Back to Tours"
+          tour_settings: "Tour Settings"
+          steps_title: "Steps (%{count})"
+          no_steps: "No steps yet. Add your first step to this tour."
+          add_step: "Add Step"
+          delete_step_confirm: "Delete this step?"
+          edit: "Edit"
+          delete: "Delete"
+        form:
+          errors:
+            one: "%{count} error prevented this tour from being saved:"
+            other: "%{count} errors prevented this tour from being saved:"
+          labels:
+            name: "Name"
+            description: "Description"
+            status: "Status"
+            trigger_type: "Trigger Type"
+            trigger_event: "Trigger Event"
+            url_pattern: "URL Pattern"
+            frequency: "Frequency"
+            theme: "Theme"
+            priority: "Priority"
+            schedule_start: "Schedule Start"
+            schedule_end: "Schedule End"
+            ab_test_id: "A/B Test ID"
+            ab_test_group: "A/B Test Group"
+          hints:
+            trigger_event: "Required when trigger type is \"event\". The custom event name to listen for."
+            url_pattern: "Comma-separated URL patterns. Use * as wildcard (e.g., /dashboard/*, /settings)"
+            priority: "Higher priority tours are shown first. Default: 0"
+            ab_test_id: "Optional experiment identifier for A/B testing."
+            ab_test_group: "Optional group assignment (e.g., A, B, control)."
+          submit:
+            create: "Create Tour"
+            update: "Update Tour"
+          cancel: "Cancel"
+      steps:
+        new:
+          title: "New Step for \"%{tour_name}\""
+          back: "Back to Tour"
+        edit:
+          title: "Edit Step: %{name}"
+          back: "Back to Tour"
+          step_settings: "Step Settings"
+          live_preview: "Live Preview"
+        form:
+          errors:
+            one: "%{count} error prevented this step from being saved:"
+            other: "%{count} errors prevented this step from being saved:"
+          labels:
+            title: "Title"
+            body: "Body (HTML supported)"
+            selector: "CSS Selector"
+            pick: "Pick"
+            placement: "Placement"
+            position: "Position"
+            action_type: "Action Type"
+            action_value: "Action Value"
+            wait_for_selector: "Wait for Selector"
+            url_pattern: "URL Pattern"
+          hints:
+            selector: "CSS selector for the target element (e.g., #main-header, .btn-primary)"
+            action_value: "For \"redirect\": the URL. For \"custom_event\": the event name."
+            wait_for_selector: "Optional. Wait for this selector to appear before showing the step."
+            url_pattern: "Optional. Only show this step on matching URLs."
+          style_overrides: "Style Overrides"
+          styles:
+            background_color: "Background Color"
+            text_color: "Text Color"
+            font_family: "Font Family"
+            font_size: "Font Size"
+            border_radius: "Border Radius"
+            button_color: "Button Color"
+            default_system: "Default (System)"
+            default: "Default"
+            default_radius: "Default (6px)"
+          submit:
+            create: "Create Step"
+            update: "Update Step"
+          cancel: "Cancel"
+        preview:
+          page_header: "Simulated Page Header"
+          navigation: "Navigation bar placeholder"
+          target_element: "Target Element:"
+          content_area: "Content area placeholder"
+          sidebar: "Sidebar placeholder"
+          step_title: "Step Title"
+          step_body: "Step body text goes here..."
+          skip: "Skip"
+          next: "Next"
+      stats:
+        title: "Stats: %{name}"
+        back: "Back to Tour"
+        started: "Started"
+        completed: "Completed"
+        dismissed: "Dismissed"
+        completion_rate: "Completion Rate"
+        drop_off_title: "Drop-off per Step"
+        drop_off:
+          position: "Position"
+          step: "Step"
+          dropped: "Dropped"
+        ab_test_title: "A/B Test Breakdown"
+        ab_test:
+          group: "Group"
+          total: "Total"
+          completed: "Completed"
+          rate: "Rate"
+    flash:
+      tour_created: "Tour created."
+      tour_updated: "Tour updated."
+      tour_deleted: "Tour deleted."
+      step_created: "Step created."
+      step_updated: "Step updated."
+      step_deleted: "Step deleted."
+    statuses:
+      draft: "Draft"
+      active: "Active"
+      archived: "Archived"
+    trigger_types:
+      auto: "Auto"
+      event: "Event"
+      manual: "Manual"
+    frequencies:
+      once: "Once"
+      every_session: "Every Session"
+      always: "Always"
+    themes:
+      tooltip: "Tooltip"
+      modal: "Modal"
+      banner: "Banner"
+      slideout: "Slideout"
+    placements:
+      top: "Top"
+      bottom: "Bottom"
+      left: "Left"
+      right: "Right"
+      center: "Center"
+    action_types:
+      next: "Next"
+      redirect: "Redirect"
+      custom_event: "Custom Event"

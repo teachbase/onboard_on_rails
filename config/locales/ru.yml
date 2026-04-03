@@ -1,0 +1,176 @@
+ru:
+  onboard_on_rails:
+    admin:
+      nav:
+        brand: "OnboardOnRails"
+        tours: "Туры"
+      tours:
+        index:
+          title: "Туры"
+          new_tour: "Новый тур"
+          all: "Все"
+          no_tours_title: "Туры не найдены"
+          no_tours_description: "Создайте первый тур для онбординга пользователей."
+          create_tour: "Создать тур"
+        table:
+          name: "Название"
+          status: "Статус"
+          steps: "Шаги"
+          url_pattern: "URL паттерн"
+          trigger: "Триггер"
+          priority: "Приоритет"
+          actions: "Действия"
+          edit: "Изменить"
+          delete: "Удалить"
+          delete_confirm: "Вы уверены, что хотите удалить этот тур?"
+        new:
+          title: "Новый тур"
+          back: "Назад к турам"
+        edit:
+          title: "Редактирование: %{name}"
+          back: "Назад к турам"
+          tour_settings: "Настройки тура"
+          steps_title: "Шаги (%{count})"
+          no_steps: "Шагов пока нет. Добавьте первый шаг к туру."
+          add_step: "Добавить шаг"
+          delete_step_confirm: "Удалить этот шаг?"
+          edit: "Изменить"
+          delete: "Удалить"
+        form:
+          errors:
+            one: "%{count} ошибка не позволяет сохранить тур:"
+            few: "%{count} ошибки не позволяют сохранить тур:"
+            many: "%{count} ошибок не позволяют сохранить тур:"
+            other: "%{count} ошибок не позволяют сохранить тур:"
+          labels:
+            name: "Название"
+            description: "Описание"
+            status: "Статус"
+            trigger_type: "Тип триггера"
+            trigger_event: "Событие триггера"
+            url_pattern: "URL паттерн"
+            frequency: "Частота показа"
+            theme: "Тема"
+            priority: "Приоритет"
+            schedule_start: "Начало расписания"
+            schedule_end: "Конец расписания"
+            ab_test_id: "ID A/B теста"
+            ab_test_group: "Группа A/B теста"
+          hints:
+            trigger_event: "Обязательно для типа триггера \"event\". Название пользовательского события."
+            url_pattern: "URL паттерны через запятую. Используйте * как подстановку (например, /dashboard/*, /settings)"
+            priority: "Туры с более высоким приоритетом показываются первыми. По умолчанию: 0"
+            ab_test_id: "Необязательный идентификатор эксперимента для A/B тестирования."
+            ab_test_group: "Необязательная группа (например, A, B, control)."
+          submit:
+            create: "Создать тур"
+            update: "Обновить тур"
+          cancel: "Отмена"
+      steps:
+        new:
+          title: "Новый шаг для \"%{tour_name}\""
+          back: "Назад к туру"
+        edit:
+          title: "Редактирование шага: %{name}"
+          back: "Назад к туру"
+          step_settings: "Настройки шага"
+          live_preview: "Предпросмотр"
+        form:
+          errors:
+            one: "%{count} ошибка не позволяет сохранить шаг:"
+            few: "%{count} ошибки не позволяют сохранить шаг:"
+            many: "%{count} ошибок не позволяют сохранить шаг:"
+            other: "%{count} ошибок не позволяют сохранить шаг:"
+          labels:
+            title: "Заголовок"
+            body: "Текст (поддерживается HTML)"
+            selector: "CSS селектор"
+            pick: "Выбрать"
+            placement: "Расположение"
+            position: "Позиция"
+            action_type: "Тип действия"
+            action_value: "Значение действия"
+            wait_for_selector: "Ждать селектор"
+            url_pattern: "URL паттерн"
+          hints:
+            selector: "CSS селектор целевого элемента (например, #main-header, .btn-primary)"
+            action_value: "Для \"redirect\": URL. Для \"custom_event\": название события."
+            wait_for_selector: "Необязательно. Ждать появления элемента перед показом шага."
+            url_pattern: "Необязательно. Показывать шаг только на совпадающих URL."
+          style_overrides: "Переопределение стилей"
+          styles:
+            background_color: "Цвет фона"
+            text_color: "Цвет текста"
+            font_family: "Шрифт"
+            font_size: "Размер шрифта"
+            border_radius: "Скругление углов"
+            button_color: "Цвет кнопки"
+            default_system: "По умолчанию (системный)"
+            default: "По умолчанию"
+            default_radius: "По умолчанию (6px)"
+          submit:
+            create: "Создать шаг"
+            update: "Обновить шаг"
+          cancel: "Отмена"
+        preview:
+          page_header: "Имитация шапки страницы"
+          navigation: "Панель навигации"
+          target_element: "Целевой элемент:"
+          content_area: "Область контента"
+          sidebar: "Боковая панель"
+          step_title: "Заголовок шага"
+          step_body: "Текст шага отображается здесь..."
+          skip: "Пропустить"
+          next: "Далее"
+      stats:
+        title: "Статистика: %{name}"
+        back: "Назад к туру"
+        started: "Начато"
+        completed: "Завершено"
+        dismissed: "Пропущено"
+        completion_rate: "Процент завершения"
+        drop_off_title: "Отказы по шагам"
+        drop_off:
+          position: "Позиция"
+          step: "Шаг"
+          dropped: "Отказы"
+        ab_test_title: "Результаты A/B теста"
+        ab_test:
+          group: "Группа"
+          total: "Всего"
+          completed: "Завершено"
+          rate: "Процент"
+    flash:
+      tour_created: "Тур создан."
+      tour_updated: "Тур обновлён."
+      tour_deleted: "Тур удалён."
+      step_created: "Шаг создан."
+      step_updated: "Шаг обновлён."
+      step_deleted: "Шаг удалён."
+    statuses:
+      draft: "Черновик"
+      active: "Активный"
+      archived: "В архиве"
+    trigger_types:
+      auto: "Автоматический"
+      event: "По событию"
+      manual: "Ручной"
+    frequencies:
+      once: "Один раз"
+      every_session: "Каждая сессия"
+      always: "Всегда"
+    themes:
+      tooltip: "Тултип"
+      modal: "Модальное окно"
+      banner: "Баннер"
+      slideout: "Выдвижная панель"
+    placements:
+      top: "Сверху"
+      bottom: "Снизу"
+      left: "Слева"
+      right: "Справа"
+      center: "По центру"
+    action_types:
+      next: "Следующий"
+      redirect: "Перенаправление"
+      custom_event: "Пользовательское событие"

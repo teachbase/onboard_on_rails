@@ -1,7 +1,7 @@
 <div class="oor-page-header">
-  <h1>New Step for "<%= @tour.name %>"</h1>
+  <h1><%= t("onboard_on_rails.admin.steps.new.title", tour_name: @tour.name) %></h1>
   <div class="oor-page-header__actions">
-    <%= link_to "Back to Tour", edit_admin_tour_path(@tour), class: "oor-btn oor-btn--secondary" %>
+    <%= link_to t("onboard_on_rails.admin.steps.new.back"), edit_admin_tour_path(@tour), class: "oor-btn oor-btn--secondary" %>
   </div>
 </div>
 

@@ -2,6 +2,12 @@ module OnboardOnRails
   class Engine < ::Rails::Engine
     isolate_namespace OnboardOnRails
 
+    initializer "onboard_on_rails.i18n" do
+      OnboardOnRails::Engine.root.glob("config/locales/**/*.yml").each do |locale|
+        I18n.load_path += [locale]
+      end
+    end
+
     initializer "onboard_on_rails.helpers" do
       ActiveSupport.on_load(:action_view) do
         include OnboardOnRails::MetaTagsHelper

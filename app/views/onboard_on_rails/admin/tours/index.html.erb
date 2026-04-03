@@ -1,14 +1,14 @@
 <div class="oor-page-header">
-  <h1>Tours</h1>
+  <h1><%= t("onboard_on_rails.admin.tours.index.title") %></h1>
   <div class="oor-page-header__actions">
-    <%= link_to "New Tour", new_admin_tour_path, class: "oor-btn oor-btn--primary" %>
+    <%= link_to t("onboard_on_rails.admin.tours.index.new_tour"), new_admin_tour_path, class: "oor-btn oor-btn--primary" %>
   </div>
 </div>
 
 <div class="oor-filter-bar">
-  <%= link_to "All", admin_tours_path, class: "oor-btn oor-btn--sm #{'active' if params[:status].blank?}" %>
+  <%= link_to t("onboard_on_rails.admin.tours.index.all"), admin_tours_path, class: "oor-btn oor-btn--sm #{'active' if params[:status].blank?}" %>
   <% OnboardOnRails::Tour::STATUSES.each do |status| %>
-    <%= link_to status.capitalize, admin_tours_path(status: status), class: "oor-btn oor-btn--sm #{'active' if params[:status] == status}" %>
+    <%= link_to t("onboard_on_rails.statuses.#{status}"), admin_tours_path(status: status), class: "oor-btn oor-btn--sm #{'active' if params[:status] == status}" %>
   <% end %>
 </div>
 
@@ -16,13 +16,13 @@
   <table class="oor-table">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Steps</th>
-        <th>URL Pattern</th>
-        <th>Trigger</th>
-        <th>Priority</th>
-        <th>Actions</th>
+        <th><%= t("onboard_on_rails.admin.tours.table.name") %></th>
+        <th><%= t("onboard_on_rails.admin.tours.table.status") %></th>
+        <th><%= t("onboard_on_rails.admin.tours.table.steps") %></th>
+        <th><%= t("onboard_on_rails.admin.tours.table.url_pattern") %></th>
+        <th><%= t("onboard_on_rails.admin.tours.table.trigger") %></th>
+        <th><%= t("onboard_on_rails.admin.tours.table.priority") %></th>
+        <th><%= t("onboard_on_rails.admin.tours.table.actions") %></th>
       </tr>
     </thead>
     <tbody>
@@ -33,8 +33,8 @@
   </table>
 <% else %>
   <div class="oor-empty-state">
-    <h3>No tours found</h3>
-    <p>Create your first tour to get started with onboarding.</p>
-    <%= link_to "Create Tour", new_admin_tour_path, class: "oor-btn oor-btn--primary" %>
+    <h3><%= t("onboard_on_rails.admin.tours.index.no_tours_title") %></h3>
+    <p><%= t("onboard_on_rails.admin.tours.index.no_tours_description") %></p>
+    <%= link_to t("onboard_on_rails.admin.tours.index.create_tour"), new_admin_tour_path, class: "oor-btn oor-btn--primary" %>
   </div>
 <% end %>

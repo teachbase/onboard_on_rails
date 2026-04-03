@@ -1,7 +1,7 @@
 <%= form_with(model: tour, url: tour.persisted? ? admin_tour_path(tour) : admin_tours_path, local: true) do |f| %>
   <% if tour.errors.any? %>
     <div class="oor-admin-flash oor-admin-flash--alert">
-      <strong><%= pluralize(tour.errors.count, "error") %> prevented this tour from being saved:</strong>
+      <strong><%= t("onboard_on_rails.admin.tours.form.errors", count: tour.errors.count) %></strong>
       <ul>
         <% tour.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -11,81 +11,81 @@
   <% end %>
 
   <div class="oor-form-group">
-    <%= f.label :name %>
+    <%= f.label :name, t("onboard_on_rails.admin.tours.form.labels.name") %>
     <%= f.text_field :name, class: "oor-form-control" %>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :description %>
+    <%= f.label :description, t("onboard_on_rails.admin.tours.form.labels.description") %>
     <%= f.text_area :description, rows: 3 %>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :status %>
-    <%= f.select :status, OnboardOnRails::Tour::STATUSES.map { |s| [s.capitalize, s] }, {}, {} %>
+    <%= f.label :status, t("onboard_on_rails.admin.tours.form.labels.status") %>
+    <%= f.select :status, OnboardOnRails::Tour::STATUSES.map { |s| [t("onboard_on_rails.statuses.#{s}"), s] }, {}, {} %>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :trigger_type, "Trigger Type" %>
-    <%= f.select :trigger_type, OnboardOnRails::Tour::TRIGGER_TYPES.map { |t| [t.capitalize, t] }, {}, {} %>
+    <%= f.label :trigger_type, t("onboard_on_rails.admin.tours.form.labels.trigger_type") %>
+    <%= f.select :trigger_type, OnboardOnRails::Tour::TRIGGER_TYPES.map { |t_type| [t("onboard_on_rails.trigger_types.#{t_type}"), t_type] }, {}, {} %>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :trigger_event, "Trigger Event" %>
+    <%= f.label :trigger_event, t("onboard_on_rails.admin.tours.form.labels.trigger_event") %>
     <%= f.text_field :trigger_event %>
-    <div class="oor-form-hint">Required when trigger type is "event". The custom event name to listen for.</div>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.trigger_event") %></div>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :url_pattern, "URL Pattern" %>
+    <%= f.label :url_pattern, t("onboard_on_rails.admin.tours.form.labels.url_pattern") %>
     <%= f.text_field :url_pattern, value: tour.url_pattern&.join(", ") %>
-    <div class="oor-form-hint">Comma-separated URL patterns. Use * as wildcard (e.g., /dashboard/*, /settings)</div>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.url_pattern") %></div>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :frequency %>
-    <%= f.select :frequency, OnboardOnRails::Tour::FREQUENCIES.map { |fr| [fr.titleize, fr] }, {}, {} %>
+    <%= f.label :frequency, t("onboard_on_rails.admin.tours.form.labels.frequency") %>
+    <%= f.select :frequency, OnboardOnRails::Tour::FREQUENCIES.map { |fr| [t("onboard_on_rails.frequencies.#{fr}"), fr] }, {}, {} %>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :theme %>
-    <%= f.select :theme, OnboardOnRails::Tour::THEMES.map { |t| [t.capitalize, t] }, {}, {} %>
+    <%= f.label :theme, t("onboard_on_rails.admin.tours.form.labels.theme") %>
+    <%= f.select :theme, OnboardOnRails::Tour::THEMES.map { |th| [t("onboard_on_rails.themes.#{th}"), th] }, {}, {} %>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :priority %>
+    <%= f.label :priority, t("onboard_on_rails.admin.tours.form.labels.priority") %>
     <%= f.number_field :priority %>
-    <div class="oor-form-hint">Higher priority tours are shown first. Default: 0</div>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.priority") %></div>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :schedule_start, "Schedule Start" %>
+    <%= f.label :schedule_start, t("onboard_on_rails.admin.tours.form.labels.schedule_start") %>
     <%= f.datetime_local_field :schedule_start %>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :schedule_end, "Schedule End" %>
+    <%= f.label :schedule_end, t("onboard_on_rails.admin.tours.form.labels.schedule_end") %>
     <%= f.datetime_local_field :schedule_end %>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :ab_test_id, "A/B Test ID" %>
+    <%= f.label :ab_test_id, t("onboard_on_rails.admin.tours.form.labels.ab_test_id") %>
     <%= f.text_field :ab_test_id %>
-    <div class="oor-form-hint">Optional experiment identifier for A/B testing.</div>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.ab_test_id") %></div>
   </div>
 
   <div class="oor-form-group">
-    <%= f.label :ab_test_group, "A/B Test Group" %>
+    <%= f.label :ab_test_group, t("onboard_on_rails.admin.tours.form.labels.ab_test_group") %>
     <%= f.text_field :ab_test_group %>
-    <div class="oor-form-hint">Optional group assignment (e.g., A, B, control).</div>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.ab_test_group") %></div>
   </div>
 
   <div class="oor-form-actions">
-    <%= f.submit tour.persisted? ? "Update Tour" : "Create Tour", class: "oor-btn oor-btn--primary" %>
+    <%= f.submit tour.persisted? ? t("onboard_on_rails.admin.tours.form.submit.update") : t("onboard_on_rails.admin.tours.form.submit.create"), class: "oor-btn oor-btn--primary" %>
     <% if tour.persisted? %>
-      <%= link_to "Cancel", edit_admin_tour_path(tour), class: "oor-btn oor-btn--secondary" %>
+      <%= link_to t("onboard_on_rails.admin.tours.form.cancel"), edit_admin_tour_path(tour), class: "oor-btn oor-btn--secondary" %>
     <% else %>
-      <%= link_to "Cancel", admin_tours_path, class: "oor-btn oor-btn--secondary" %>
+      <%= link_to t("onboard_on_rails.admin.tours.form.cancel"), admin_tours_path, class: "oor-btn oor-btn--secondary" %>
     <% end %>
   </div>
 <% end %>

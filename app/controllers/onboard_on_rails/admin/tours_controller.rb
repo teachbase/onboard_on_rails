@@ -15,7 +15,7 @@ module OnboardOnRails
       def create
         @tour = Tour.new(tour_params)
         if @tour.save
-          redirect_to admin_tour_path(@tour), notice: "Tour created."
+          redirect_to admin_tour_path(@tour), notice: t("onboard_on_rails.flash.tour_created")
         else
           render :new, status: :unprocessable_entity
         end
@@ -30,7 +30,7 @@ module OnboardOnRails
 
       def update
         if @tour.update(tour_params)
-          redirect_to edit_admin_tour_path(@tour), notice: "Tour updated."
+          redirect_to edit_admin_tour_path(@tour), notice: t("onboard_on_rails.flash.tour_updated")
         else
           render :edit, status: :unprocessable_entity
         end
@@ -38,7 +38,7 @@ module OnboardOnRails
 
       def destroy
         @tour.destroy
-        redirect_to admin_tours_path, notice: "Tour deleted."
+        redirect_to admin_tours_path, notice: t("onboard_on_rails.flash.tour_deleted")
       end
 
       private

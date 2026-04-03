@@ -3,16 +3,16 @@
     <%= link_to tour.name, edit_admin_tour_path(tour) %>
   </td>
   <td>
-    <span class="oor-badge oor-badge--<%= tour.status %>"><%= tour.status %></span>
+    <span class="oor-badge oor-badge--<%= tour.status %>"><%= t("onboard_on_rails.statuses.#{tour.status}") %></span>
   </td>
   <td><%= tour.steps.count %></td>
   <td class="oor-text-muted"><%= tour.url_pattern&.join(", ") %></td>
-  <td><%= tour.trigger_type %></td>
+  <td><%= t("onboard_on_rails.trigger_types.#{tour.trigger_type}") %></td>
   <td><%= tour.priority %></td>
   <td>
     <div class="oor-table__actions">
-      <%= link_to "Edit", edit_admin_tour_path(tour), class: "oor-btn oor-btn--sm oor-btn--secondary" %>
-      <%= link_to "Delete", admin_tour_path(tour), method: :delete, data: { confirm: "Are you sure you want to delete this tour?" }, class: "oor-btn oor-btn--sm oor-btn--danger" %>
+      <%= link_to t("onboard_on_rails.admin.tours.table.edit"), edit_admin_tour_path(tour), class: "oor-btn oor-btn--sm oor-btn--secondary" %>
+      <%= link_to t("onboard_on_rails.admin.tours.table.delete"), admin_tour_path(tour), method: :delete, data: { confirm: t("onboard_on_rails.admin.tours.table.delete_confirm") }, class: "oor-btn oor-btn--sm oor-btn--danger" %>
     </div>
   </td>
 </tr>

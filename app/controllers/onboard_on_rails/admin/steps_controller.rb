@@ -12,7 +12,7 @@ module OnboardOnRails
         @step = @tour.steps.build(step_params)
         @step.position ||= @tour.steps.count
         if @step.save
-          redirect_to edit_admin_tour_step_path(@tour, @step), notice: "Step created."
+          redirect_to edit_admin_tour_step_path(@tour, @step), notice: t("onboard_on_rails.flash.step_created")
         else
           render :new, status: :unprocessable_entity
         end
@@ -23,7 +23,7 @@ module OnboardOnRails
 
       def update
         if @step.update(step_params)
-          redirect_to edit_admin_tour_step_path(@tour, @step), notice: "Step updated."
+          redirect_to edit_admin_tour_step_path(@tour, @step), notice: t("onboard_on_rails.flash.step_updated")
         else
           render :edit, status: :unprocessable_entity
         end
@@ -31,7 +31,7 @@ module OnboardOnRails
 
       def destroy
         @step.destroy
-        redirect_to edit_admin_tour_path(@tour), notice: "Step deleted."
+        redirect_to edit_admin_tour_path(@tour), notice: t("onboard_on_rails.flash.step_deleted")
       end
 
       private

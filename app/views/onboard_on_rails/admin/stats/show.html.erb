@@ -1,36 +1,36 @@
 <div class="oor-page-header">
-  <h1>Stats: <%= @tour.name %></h1>
+  <h1><%= t("onboard_on_rails.admin.stats.title", name: @tour.name) %></h1>
   <div class="oor-page-header__actions">
-    <%= link_to "Back to Tour", admin_tour_path(@tour), class: "oor-btn oor-btn--sm" %>
+    <%= link_to t("onboard_on_rails.admin.stats.back"), admin_tour_path(@tour), class: "oor-btn oor-btn--sm" %>
   </div>
 </div>
 
 <div class="oor-stats-grid">
   <div class="oor-stat-card">
     <div class="oor-stat-card__value"><%= @summary[:total_started] %></div>
-    <div class="oor-stat-card__label">Started</div>
+    <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.started") %></div>
   </div>
   <div class="oor-stat-card">
     <div class="oor-stat-card__value"><%= @summary[:completed] %></div>
-    <div class="oor-stat-card__label">Completed</div>
+    <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.completed") %></div>
   </div>
   <div class="oor-stat-card">
     <div class="oor-stat-card__value"><%= @summary[:dismissed] %></div>
-    <div class="oor-stat-card__label">Dismissed</div>
+    <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.dismissed") %></div>
   </div>
   <div class="oor-stat-card">
     <div class="oor-stat-card__value"><%= @summary[:completion_rate] %>%</div>
-    <div class="oor-stat-card__label">Completion Rate</div>
+    <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.completion_rate") %></div>
   </div>
 </div>
 
-<h2 class="oor-section-title">Drop-off per Step</h2>
+<h2 class="oor-section-title"><%= t("onboard_on_rails.admin.stats.drop_off_title") %></h2>
 <table class="oor-table">
   <thead>
     <tr>
-      <th>Position</th>
-      <th>Step</th>
-      <th>Dropped</th>
+      <th><%= t("onboard_on_rails.admin.stats.drop_off.position") %></th>
+      <th><%= t("onboard_on_rails.admin.stats.drop_off.step") %></th>
+      <th><%= t("onboard_on_rails.admin.stats.drop_off.dropped") %></th>
     </tr>
   </thead>
   <tbody>
@@ -45,14 +45,14 @@
 </table>
 
 <% if @ab_breakdown.any? %>
-  <h2 class="oor-section-title">A/B Test Breakdown</h2>
+  <h2 class="oor-section-title"><%= t("onboard_on_rails.admin.stats.ab_test_title") %></h2>
   <table class="oor-table">
     <thead>
       <tr>
-        <th>Group</th>
-        <th>Total</th>
-        <th>Completed</th>
-        <th>Rate</th>
+        <th><%= t("onboard_on_rails.admin.stats.ab_test.group") %></th>
+        <th><%= t("onboard_on_rails.admin.stats.ab_test.total") %></th>
+        <th><%= t("onboard_on_rails.admin.stats.ab_test.completed") %></th>
+        <th><%= t("onboard_on_rails.admin.stats.ab_test.rate") %></th>
       </tr>
     </thead>
     <tbody>

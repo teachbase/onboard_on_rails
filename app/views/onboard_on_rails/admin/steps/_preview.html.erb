@@ -1,20 +1,20 @@
 <div class="oor-preview-container" data-controller="step-preview">
   <div class="oor-preview-page">
     <div class="oor-preview-page__header">
-      Simulated Page Header
+      <%= t("onboard_on_rails.admin.steps.preview.page_header") %>
     </div>
     <div class="oor-preview-page__content">
       <div class="oor-preview-page__element">
-        Navigation bar placeholder
+        <%= t("onboard_on_rails.admin.steps.preview.navigation") %>
       </div>
       <div class="oor-preview-page__element oor-preview-page__element--target" id="oor-preview-target">
-        Target Element: <code><%= step.selector %></code>
+        <%= t("onboard_on_rails.admin.steps.preview.target_element") %> <code><%= step.selector %></code>
       </div>
       <div class="oor-preview-page__element">
-        Content area placeholder
+        <%= t("onboard_on_rails.admin.steps.preview.content_area") %>
       </div>
       <div class="oor-preview-page__element">
-        Sidebar placeholder
+        <%= t("onboard_on_rails.admin.steps.preview.sidebar") %>
       </div>
     </div>
   </div>
@@ -42,16 +42,16 @@
          border-radius: <%= border_radius %>;
        ">
     <div class="oor-preview-tooltip__title" style="color: <%= text_color %>;">
-      <%= step.title.presence || "Step Title" %>
+      <%= step.title.presence || t("onboard_on_rails.admin.steps.preview.step_title") %>
     </div>
     <div class="oor-preview-tooltip__body" style="color: <%= text_color %>; opacity: 0.8;">
-      <%= step.body.presence || "Step body text goes here..." %>
+      <%= step.body.presence || t("onboard_on_rails.admin.steps.preview.step_body") %>
     </div>
     <div class="oor-preview-tooltip__actions">
-      <button class="oor-btn oor-btn--sm oor-btn--secondary" type="button">Skip</button>
+      <button class="oor-btn oor-btn--sm oor-btn--secondary" type="button"><%= t("onboard_on_rails.admin.steps.preview.skip") %></button>
       <button class="oor-btn oor-btn--sm" type="button"
               style="background: <%= button_color %>; color: #fff; border-color: <%= button_color %>;">
-        Next
+        <%= t("onboard_on_rails.admin.steps.preview.next") %>
       </button>
     </div>
   </div>

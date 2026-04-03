@@ -1,19 +1,19 @@
 <div class="oor-page-header">
-  <h1>Edit Tour: <%= @tour.name %></h1>
+  <h1><%= t("onboard_on_rails.admin.tours.edit.title", name: @tour.name) %></h1>
   <div class="oor-page-header__actions">
-    <%= link_to "Back to Tours", admin_tours_path, class: "oor-btn oor-btn--secondary" %>
+    <%= link_to t("onboard_on_rails.admin.tours.edit.back"), admin_tours_path, class: "oor-btn oor-btn--secondary" %>
   </div>
 </div>
 
 <div class="oor-panel-layout">
   <div class="oor-panel">
-    <h3 class="oor-panel__title">Tour Settings</h3>
+    <h3 class="oor-panel__title"><%= t("onboard_on_rails.admin.tours.edit.tour_settings") %></h3>
     <%= render "form", tour: @tour %>
   </div>
 
   <div class="oor-panel">
     <h3 class="oor-panel__title">
-      Steps (<%= @tour.steps.count %>)
+      <%= t("onboard_on_rails.admin.tours.edit.steps_title", count: @tour.steps.count) %>
     </h3>
 
     <% if @tour.steps.any? %>
@@ -28,20 +28,20 @@
               </div>
             </div>
             <div class="oor-step-item__actions">
-              <%= link_to "Edit", edit_admin_tour_step_path(@tour, step), class: "oor-btn oor-btn--sm oor-btn--secondary" %>
-              <%= link_to "Delete", admin_tour_step_path(@tour, step), method: :delete, data: { confirm: "Delete this step?" }, class: "oor-btn oor-btn--sm oor-btn--danger" %>
+              <%= link_to t("onboard_on_rails.admin.tours.edit.edit"), edit_admin_tour_step_path(@tour, step), class: "oor-btn oor-btn--sm oor-btn--secondary" %>
+              <%= link_to t("onboard_on_rails.admin.tours.edit.delete"), admin_tour_step_path(@tour, step), method: :delete, data: { confirm: t("onboard_on_rails.admin.tours.edit.delete_step_confirm") }, class: "oor-btn oor-btn--sm oor-btn--danger" %>
             </div>
           </li>
         <% end %>
       </ul>
     <% else %>
       <div class="oor-empty-state">
-        <p>No steps yet. Add your first step to this tour.</p>
+        <p><%= t("onboard_on_rails.admin.tours.edit.no_steps") %></p>
       </div>
     <% end %>
 
     <div class="oor-form-actions">
-      <%= link_to "Add Step", new_admin_tour_step_path(@tour), class: "oor-btn oor-btn--primary" %>
+      <%= link_to t("onboard_on_rails.admin.tours.edit.add_step"), new_admin_tour_step_path(@tour), class: "oor-btn oor-btn--primary" %>
     </div>
   </div>
 </div>
