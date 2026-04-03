@@ -63,26 +63,47 @@ module OnboardOnRails
 
       create_step(tour, 1,
         title: "Название тура",
-        body: "Введите понятное название для тура. Оно видно только в админке и помогает отличать туры друг от друга.",
+        body: "Введите понятное название для тура. Оно видно только в админке и помогает отличать туры друг от друга. Например: «Приветствие новых пользователей» или «Обзор отчётов».",
         selector: "input[name='tour[name]']",
         placement: "bottom"
       )
 
       create_step(tour, 2,
-        title: "Статус тура",
-        body: "<b>Черновик</b> — тур не показывается пользователям, можно спокойно редактировать.<br><b>Активный</b> — тур виден пользователям на целевых страницах.<br><b>В архиве</b> — тур скрыт, но данные сохранены.",
-        selector: "select[name='tour[status]']",
+        title: "Описание",
+        body: "Необязательное поле. Опишите для чего этот тур и кому он предназначен. Помогает коллегам понять назначение тура без необходимости открывать шаги.",
+        selector: "textarea[name='tour[description]']",
         placement: "bottom"
       )
 
       create_step(tour, 3,
-        title: "URL паттерн",
-        body: "На каких страницах показывать тур. Примеры:<br><code>/dashboard</code> — точное совпадение<br><code>/dashboard/*</code> — все подстраницы<br><code>/projects/**</code> — любая вложенность",
-        selector: "input[name='tour[url_pattern]']",
+        title: "Статус тура",
+        body: "<b>Черновик</b> — тур не показывается, можно спокойно редактировать.<br><b>Активный</b> — тур виден пользователям на целевых страницах.<br><b>В архиве</b> — тур скрыт, но данные и статистика сохранены.",
+        selector: "select[name='tour[status]']",
         placement: "bottom"
       )
 
       create_step(tour, 4,
+        title: "Тип триггера",
+        body: "<b>Автоматический</b> — тур запускается сразу при загрузке страницы.<br><b>По событию</b> — тур появится когда произойдёт определённое событие (например, пользователь создал первый проект).<br><b>Ручной</b> — тур запускается только через API из вашего кода.",
+        selector: "select[name='tour[trigger_type]']",
+        placement: "bottom"
+      )
+
+      create_step(tour, 5,
+        title: "Событие триггера",
+        body: "Заполняется только для типа «По событию». Укажите название события, например: <code>first_project_created</code> или <code>subscription_activated</code>. Событие отправляется из вашего кода через <code>OnboardOnRails.track_event(user, 'event_name')</code>.",
+        selector: "input[name='tour[trigger_event]']",
+        placement: "bottom"
+      )
+
+      create_step(tour, 6,
+        title: "URL паттерн",
+        body: "На каких страницах показывать тур. Можно указать несколько через запятую.<br><br>Примеры:<br><code>/dashboard</code> — точное совпадение<br><code>/dashboard/*</code> — все подстраницы одного уровня<br><code>/projects/**</code> — все подстраницы любой вложенности",
+        selector: "input[name='tour[url_pattern]']",
+        placement: "bottom"
+      )
+
+      create_step(tour, 7,
         title: "Тема: Тултип",
         body: "Компактная всплывающая подсказка рядом с целевым элементом. Идеально для пошаговых инструкций." \
              '<div style="margin-top:12px;background:#f8f9fa;border-radius:6px;padding:12px;position:relative;min-height:80px;">' \
@@ -95,7 +116,7 @@ module OnboardOnRails
         placement: "bottom"
       )
 
-      create_step(tour, 5,
+      create_step(tour, 8,
         title: "Тема: Модальное окно",
         body: "Появляется по центру экрана. Подходит для приветствий и важных объявлений." \
              '<div style="margin-top:12px;background:#f8f9fa;border-radius:6px;padding:12px;position:relative;min-height:80px;">' \
@@ -107,7 +128,7 @@ module OnboardOnRails
         placement: "bottom"
       )
 
-      create_step(tour, 6,
+      create_step(tour, 9,
         title: "Тема: Баннер",
         body: "Полоса внизу экрана на всю ширину. Для ненавязчивых уведомлений." \
              '<div style="margin-top:12px;background:#f8f9fa;border-radius:6px;padding:12px;position:relative;min-height:80px;">' \
@@ -120,7 +141,7 @@ module OnboardOnRails
         placement: "top"
       )
 
-      create_step(tour, 7,
+      create_step(tour, 10,
         title: "Тема: Выдвижная панель",
         body: "Панель справа на всю высоту. Для подробных инструкций." \
              '<div style="margin-top:12px;background:#f8f9fa;border-radius:6px;padding:12px;position:relative;min-height:80px;overflow:hidden;">' \
@@ -133,23 +154,37 @@ module OnboardOnRails
         placement: "left"
       )
 
-      create_step(tour, 8,
+      create_step(tour, 11,
         title: "Частота показа",
-        body: "<b>Один раз</b> — тур покажется пользователю только один раз.<br><b>Каждая сессия</b> — раз за сессию браузера.<br><b>Всегда</b> — при каждом посещении страницы.",
+        body: "<b>Один раз</b> — тур покажется пользователю только один раз, даже если он обновит страницу.<br><b>Каждая сессия</b> — показывается один раз за сессию браузера. Полезно для напоминаний.<br><b>Всегда</b> — при каждом посещении страницы. Для обучающих справочников.",
         selector: "select[name='tour[frequency]']",
         placement: "bottom"
       )
 
-      create_step(tour, 9,
+      create_step(tour, 12,
         title: "Приоритет",
-        body: "Если несколько туров подходят для одной страницы, покажется тур с наибольшим приоритетом. По умолчанию: 0.",
+        body: "Число от 0 и выше. Если на одну страницу подходят несколько туров, пользователь увидит тур с наибольшим приоритетом. Остальные покажутся позже, когда первый будет завершён или пропущен.",
         selector: "input[name='tour[priority]']",
         placement: "bottom"
       )
 
-      create_step(tour, 10,
+      create_step(tour, 13,
+        title: "Расписание",
+        body: "Необязательно. Задайте окно времени, когда тур активен.<br><br><b>Начало расписания</b> — тур не покажется раньше этой даты.<br><b>Конец расписания</b> — тур автоматически скроется после этой даты.<br><br>Полезно для анонсов функций, привязанных к релизам.",
+        selector: "input[name='tour[schedule_start]']",
+        placement: "bottom"
+      )
+
+      create_step(tour, 14,
+        title: "A/B тестирование",
+        body: "Необязательно. Позволяет показывать разные варианты тура разным пользователям.<br><br><b>ID теста</b> — общий идентификатор эксперимента (одинаковый для всех вариантов).<br><b>Группа</b> — название варианта (A, B, control). Создайте отдельный тур для каждой группы с одинаковым ID теста.<br><br>Пользователи распределяются автоматически и стабильно.",
+        selector: "input[name='tour[ab_test_id]']",
+        placement: "bottom"
+      )
+
+      create_step(tour, 15,
         title: "Готово!",
-        body: "Заполните форму и нажмите 'Создать тур'. После этого добавьте шаги — об этом расскажет Урок 3.",
+        body: "Теперь вы знаете все параметры тура. Заполните форму и нажмите «Создать тур».<br><br>После создания вы попадёте на страницу редактирования, где сможете добавить шаги. Об этом — в Уроке 3.",
         selector: ".oor-form-actions",
         placement: "top"
       )
