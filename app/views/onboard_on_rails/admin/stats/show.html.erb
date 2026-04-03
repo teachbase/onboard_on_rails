@@ -1,0 +1,69 @@
+<div class="oor-page-header">
+  <h1>Stats: <%= @tour.name %></h1>
+  <div class="oor-page-header__actions">
+    <%= link_to "Back to Tour", admin_tour_path(@tour), class: "oor-btn oor-btn--sm" %>
+  </div>
+</div>
+
+<div class="oor-stats-grid">
+  <div class="oor-stat-card">
+    <div class="oor-stat-card__value"><%= @summary[:total_started] %></div>
+    <div class="oor-stat-card__label">Started</div>
+  </div>
+  <div class="oor-stat-card">
+    <div class="oor-stat-card__value"><%= @summary[:completed] %></div>
+    <div class="oor-stat-card__label">Completed</div>
+  </div>
+  <div class="oor-stat-card">
+    <div class="oor-stat-card__value"><%= @summary[:dismissed] %></div>
+    <div class="oor-stat-card__label">Dismissed</div>
+  </div>
+  <div class="oor-stat-card">
+    <div class="oor-stat-card__value"><%= @summary[:completion_rate] %>%</div>
+    <div class="oor-stat-card__label">Completion Rate</div>
+  </div>
+</div>
+
+<h2 class="oor-section-title">Drop-off per Step</h2>
+<table class="oor-table">
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Step</th>
+      <th>Dropped</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @drop_off.each do |step_data| %>
+      <tr>
+        <td><%= step_data[:position] %></td>
+        <td><%= step_data[:title] %></td>
+        <td><%= step_data[:dropped] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @ab_breakdown.any? %>
+  <h2 class="oor-section-title">A/B Test Breakdown</h2>
+  <table class="oor-table">
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th>Total</th>
+        <th>Completed</th>
+        <th>Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @ab_breakdown.each do |row| %>
+        <tr>
+          <td><%= row[:group] %></td>
+          <td><%= row[:total] %></td>
+          <td><%= row[:completed] %></td>
+          <td><%= row[:rate] %>%</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

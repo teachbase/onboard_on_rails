@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Select Element</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    .oor-picker-toolbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 48px;
+      background: #1a1a2e; display: flex; align-items: center;
+      padding: 0 16px; gap: 12px; z-index: 100000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .oor-picker-toolbar__label { color: #888; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .oor-picker-toolbar__selector {
+      flex: 1; background: #16213e; border: 1px solid #333; border-radius: 4px;
+      padding: 6px 10px; color: #e0e0e0; font-family: monospace; font-size: 13px;
+    }
+    .oor-picker-toolbar__btn { padding: 6px 16px; border: none; border-radius: 4px; font-size: 13px; cursor: pointer; font-weight: 500; }
+    .oor-picker-toolbar__btn--confirm { background: #6c5ce7; color: white; }
+    .oor-picker-toolbar__btn--cancel { background: #333; color: #ccc; }
+    .oor-picker-iframe { position: fixed; top: 48px; left: 0; right: 0; bottom: 0; border: none; width: 100%; height: calc(100vh - 48px); }
+  </style>
+</head>
+<body>
+  <div class="oor-picker-toolbar">
+    <span class="oor-picker-toolbar__label">Selector:</span>
+    <input type="text" class="oor-picker-toolbar__selector" id="selectorInput" placeholder="Click an element to select...">
+    <button class="oor-picker-toolbar__btn oor-picker-toolbar__btn--confirm" id="confirmBtn">Confirm</button>
+    <button class="oor-picker-toolbar__btn oor-picker-toolbar__btn--cancel" id="cancelBtn">Cancel</button>
+  </div>
+  <iframe class="oor-picker-iframe" id="targetFrame" src="<%= @target_url %>"></iframe>
+  <%= javascript_include_tag "onboard_on_rails/client" %>
+  <script>
+    const iframe = document.getElementById("targetFrame");
+    const selectorInput = document.getElementById("selectorInput");
+    let highlightEl = null;
+    iframe.addEventListener("load", () => {
+      const doc = iframe.contentDocument;
+      if (!doc) return;
+      doc.querySelectorAll('script[src*="onboard_on_rails"]').forEach(s => s.remove());
+      const style = doc.createElement("style");
+      style.textContent = ".oor-picker-highlight { outline: 3px solid #6c5ce7 !important; outline-offset: 2px !important; cursor: crosshair !important; }";
+      doc.head.appendChild(style);
+      doc.body.addEventListener("mouseover", (e) => {
+        if (highlightEl) highlightEl.classList.remove("oor-picker-highlight");
+        highlightEl = e.target;
+        highlightEl.classList.add("oor-picker-highlight");
+      });
+      doc.body.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation();
+        selectorInput.value = OnboardOnRails.SelectorGenerator.generate(e.target);
+      }, true);
+    });
+    document.getElementById("confirmBtn").addEventListener("click", () => {
+      if (window.opener) window.opener.postMessage({ type: "oor-selector-picked", selector: selectorInput.value }, "*");
+      window.close();
+    });
+    document.getElementById("cancelBtn").addEventListener("click", () => window.close());
+  </script>
+</body>
+</html>
