@@ -4,6 +4,14 @@ OnboardOnRails::Engine.routes.draw do
       resources :steps, except: [:index]
       resource :stats, only: [:show]
     end
+    resources :lessons, only: [:index] do
+      member do
+        post :replay
+      end
+      collection do
+        post :seed
+      end
+    end
     root to: "tours#index"
   end
 

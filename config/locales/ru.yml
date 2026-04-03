@@ -4,6 +4,7 @@ ru:
       nav:
         brand: "OnboardOnRails"
         tours: "Туры"
+        lessons: "Уроки"
       tours:
         index:
           title: "Туры"
@@ -122,6 +123,16 @@ ru:
           step_body: "Текст шага отображается здесь..."
           skip: "Пропустить"
           next: "Далее"
+      lessons:
+        title: "Уроки"
+        description: "Интерактивные уроки для знакомства с панелью управления OnboardOnRails."
+        replay: "Повторить"
+        completed: "Пройден"
+        not_started: "Не начат"
+        no_lessons: "Уроков пока нет. Нажмите кнопку ниже чтобы создать их."
+        replayed: "Тур сброшен. Он появится на целевой странице."
+        seed_button: "Создать уроки"
+        seed_success: "Обучающие уроки успешно созданы!"
       stats:
         title: "Статистика: %{name}"
         back: "Назад к туру"

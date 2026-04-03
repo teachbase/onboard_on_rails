@@ -696,6 +696,73 @@ a:hover {
   font-size: 13px;
 }
 
+/* ============================================
+   Lessons
+   ============================================ */
+.oor-lessons-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.oor-lesson-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--oor-surface);
+  border: 1px solid var(--oor-border);
+  border-radius: var(--oor-radius);
+  padding: 20px;
+  box-shadow: var(--oor-shadow);
+  transition: border-color var(--oor-transition);
+}
+
+.oor-lesson-card:hover {
+  border-color: var(--oor-primary-light);
+}
+
+.oor-lesson-card__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--oor-primary);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.oor-lesson-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.oor-lesson-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.oor-lesson-card__description {
+  font-size: 13px;
+  color: var(--oor-text-light);
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.oor-lesson-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.oor-lesson-card__actions {
+  flex-shrink: 0;
+}
+
 .oor-mt-0 { margin-top: 0; }
 .oor-mb-0 { margin-bottom: 0; }
 .oor-mb-sm { margin-bottom: 8px; }

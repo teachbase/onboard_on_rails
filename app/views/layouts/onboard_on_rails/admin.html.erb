@@ -3,8 +3,10 @@
 <head>
   <title>OnboardOnRails Admin</title>
   <%= stylesheet_link_tag "onboard_on_rails/admin", media: "all" %>
+  <%= stylesheet_link_tag "onboard_on_rails/client", media: "all" %>
   <%= javascript_include_tag "onboard_on_rails/admin" %>
   <%= csrf_meta_tags %>
+  <%= onboard_on_rails_meta_tags rescue nil %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -14,6 +16,7 @@
     </div>
     <div class="oor-admin-nav__links">
       <%= link_to t("onboard_on_rails.admin.nav.tours"), onboard_on_rails.admin_tours_path, class: "oor-admin-nav__link" %>
+      <%= link_to t("onboard_on_rails.admin.nav.lessons"), onboard_on_rails.admin_tours_path(lessons: true), class: "oor-admin-nav__link" %>
     </div>
   </nav>
   <main class="oor-admin-main">
@@ -25,5 +28,6 @@
     <% end %>
     <%= yield %>
   </main>
+  <%= javascript_include_tag "onboard_on_rails/client" %>
 </body>
 </html>

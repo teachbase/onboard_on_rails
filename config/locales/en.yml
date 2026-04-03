@@ -4,6 +4,7 @@ en:
       nav:
         brand: "OnboardOnRails"
         tours: "Tours"
+        lessons: "Lessons"
       tours:
         index:
           title: "Tours"
@@ -118,6 +119,16 @@ en:
           step_body: "Step body text goes here..."
           skip: "Skip"
           next: "Next"
+      lessons:
+        title: "Lessons"
+        description: "Interactive tutorials to help you learn OnboardOnRails admin panel."
+        replay: "Replay"
+        completed: "Completed"
+        not_started: "Not started"
+        no_lessons: "No lessons available. Run the seed task to create them."
+        replayed: "Tour reset. It will appear on the target page."
+        seed_button: "Create Lessons"
+        seed_success: "Tutorial lessons created successfully!"
       stats:
         title: "Stats: %{name}"
         back: "Back to Tour"

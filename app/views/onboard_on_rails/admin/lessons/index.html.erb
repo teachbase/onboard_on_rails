@@ -1,0 +1,42 @@
+<div class="oor-page-header">
+  <h1><%= t("onboard_on_rails.admin.lessons.title") %></h1>
+</div>
+
+<p class="oor-text-muted" style="margin-bottom: 24px;"><%= t("onboard_on_rails.admin.lessons.description") %></p>
+
+<% if @lessons.any? %>
+  <div class="oor-lessons-grid">
+    <% @lessons.each_with_index do |lesson, index| %>
+      <%
+        completion = OnboardOnRails::Completion.find_by(tour: lesson, user_id: current_user&.id)
+        is_completed = completion&.status == "completed"
+        target_url = Array(lesson.url_pattern).first&.gsub(%r{/?\*+\z}, "") || "/onboard/admin"
+      %>
+      <div class="oor-lesson-card">
+        <div class="oor-lesson-card__number"><%= index + 1 %></div>
+        <div class="oor-lesson-card__content">
+          <h3 class="oor-lesson-card__title"><%= lesson.name %></h3>
+          <p class="oor-lesson-card__description"><%= lesson.description %></p>
+          <div class="oor-lesson-card__meta">
+            <span class="oor-badge <%= is_completed ? 'oor-badge--active' : 'oor-badge--draft' %>">
+              <%= is_completed ? t("onboard_on_rails.admin.lessons.completed") : t("onboard_on_rails.admin.lessons.not_started") %>
+            </span>
+            <span class="oor-text-muted"><%= lesson.steps.count %> <%= t("onboard_on_rails.admin.tours.table.steps").downcase %></span>
+          </div>
+        </div>
+        <div class="oor-lesson-card__actions">
+          <% if is_completed %>
+            <%= button_to t("onboard_on_rails.admin.lessons.replay"), replay_admin_lesson_path(lesson), method: :post, class: "oor-btn oor-btn--secondary" %>
+          <% else %>
+            <%= link_to is_completed ? t("onboard_on_rails.admin.lessons.replay") : "Start", target_url, class: "oor-btn oor-btn--primary" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="oor-empty-state">
+    <p><%= t("onboard_on_rails.admin.lessons.no_lessons") %></p>
+    <%= button_to t("onboard_on_rails.admin.lessons.seed_button"), seed_admin_lessons_path, method: :post, class: "oor-btn oor-btn--primary" %>
+  </div>
+<% end %>
