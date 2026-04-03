@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OnboardOnRails Admin</title>
+  <%= stylesheet_link_tag "onboard_on_rails/admin", media: "all" %>
+  <%= javascript_include_tag "onboard_on_rails/admin" %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <nav class="oor-admin-nav">
+    <div class="oor-admin-nav__brand">
+      <%= link_to "OnboardOnRails", onboard_on_rails.admin_root_path, class: "oor-admin-nav__logo" %>
+    </div>
+    <div class="oor-admin-nav__links">
+      <%= link_to "Tours", onboard_on_rails.admin_tours_path, class: "oor-admin-nav__link" %>
+    </div>
+  </nav>
+  <main class="oor-admin-main">
+    <% if flash[:notice] %>
+      <div class="oor-admin-flash oor-admin-flash--notice"><%= flash[:notice] %></div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="oor-admin-flash oor-admin-flash--alert"><%= flash[:alert] %></div>
+    <% end %>
+    <%= yield %>
+  </main>
+</body>
+</html>

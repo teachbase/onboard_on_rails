@@ -1,0 +1,91 @@
+<%= form_with(model: tour, url: tour.persisted? ? admin_tour_path(tour) : admin_tours_path, local: true) do |f| %>
+  <% if tour.errors.any? %>
+    <div class="oor-admin-flash oor-admin-flash--alert">
+      <strong><%= pluralize(tour.errors.count, "error") %> prevented this tour from being saved:</strong>
+      <ul>
+        <% tour.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="oor-form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "oor-form-control" %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, rows: 3 %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :status %>
+    <%= f.select :status, OnboardOnRails::Tour::STATUSES.map { |s| [s.capitalize, s] }, {}, {} %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :trigger_type, "Trigger Type" %>
+    <%= f.select :trigger_type, OnboardOnRails::Tour::TRIGGER_TYPES.map { |t| [t.capitalize, t] }, {}, {} %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :trigger_event, "Trigger Event" %>
+    <%= f.text_field :trigger_event %>
+    <div class="oor-form-hint">Required when trigger type is "event". The custom event name to listen for.</div>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :url_pattern, "URL Pattern" %>
+    <%= f.text_field :url_pattern, value: tour.url_pattern&.join(", ") %>
+    <div class="oor-form-hint">Comma-separated URL patterns. Use * as wildcard (e.g., /dashboard/*, /settings)</div>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :frequency %>
+    <%= f.select :frequency, OnboardOnRails::Tour::FREQUENCIES.map { |fr| [fr.titleize, fr] }, {}, {} %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :theme %>
+    <%= f.select :theme, OnboardOnRails::Tour::THEMES.map { |t| [t.capitalize, t] }, {}, {} %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :priority %>
+    <%= f.number_field :priority %>
+    <div class="oor-form-hint">Higher priority tours are shown first. Default: 0</div>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :schedule_start, "Schedule Start" %>
+    <%= f.datetime_local_field :schedule_start %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :schedule_end, "Schedule End" %>
+    <%= f.datetime_local_field :schedule_end %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :ab_test_id, "A/B Test ID" %>
+    <%= f.text_field :ab_test_id %>
+    <div class="oor-form-hint">Optional experiment identifier for A/B testing.</div>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :ab_test_group, "A/B Test Group" %>
+    <%= f.text_field :ab_test_group %>
+    <div class="oor-form-hint">Optional group assignment (e.g., A, B, control).</div>
+  </div>
+
+  <div class="oor-form-actions">
+    <%= f.submit tour.persisted? ? "Update Tour" : "Create Tour", class: "oor-btn oor-btn--primary" %>
+    <% if tour.persisted? %>
+      <%= link_to "Cancel", edit_admin_tour_path(tour), class: "oor-btn oor-btn--secondary" %>
+    <% else %>
+      <%= link_to "Cancel", admin_tours_path, class: "oor-btn oor-btn--secondary" %>
+    <% end %>
+  </div>
+<% end %>

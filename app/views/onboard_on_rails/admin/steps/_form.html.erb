@@ -1,0 +1,132 @@
+<%= form_with(model: [tour, step], url: step.persisted? ? admin_tour_step_path(tour, step) : admin_tour_steps_path(tour), local: true) do |f| %>
+  <% if step.errors.any? %>
+    <div class="oor-admin-flash oor-admin-flash--alert">
+      <strong><%= pluralize(step.errors.count, "error") %> prevented this step from being saved:</strong>
+      <ul>
+        <% step.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="oor-form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :body, "Body (HTML supported)" %>
+    <%= f.text_area :body, rows: 4 %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :selector, "CSS Selector" %>
+    <div style="display: flex; gap: 8px;">
+      <%= f.text_field :selector, style: "flex: 1;" %>
+      <%= link_to "Pick", onboard_on_rails.selector_picker_path, class: "oor-btn oor-btn--secondary", id: "oor-selector-picker-btn", target: "_blank" %>
+    </div>
+    <div class="oor-form-hint">CSS selector for the target element (e.g., #main-header, .btn-primary)</div>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :placement %>
+    <div class="oor-placement-options">
+      <% OnboardOnRails::Step::PLACEMENTS.each do |placement| %>
+        <label>
+          <%= f.radio_button :placement, placement %>
+          <span><%= placement.capitalize %></span>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :position %>
+    <%= f.number_field :position, min: 1 %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :action_type, "Action Type" %>
+    <%= f.select :action_type, OnboardOnRails::Step::ACTION_TYPES.map { |a| [a.titleize, a] }, {}, {} %>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :action_value, "Action Value" %>
+    <%= f.text_field :action_value %>
+    <div class="oor-form-hint">For "redirect": the URL. For "custom_event": the event name.</div>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :wait_for_selector, "Wait for Selector" %>
+    <%= f.text_field :wait_for_selector %>
+    <div class="oor-form-hint">Optional. Wait for this selector to appear before showing the step.</div>
+  </div>
+
+  <div class="oor-form-group">
+    <%= f.label :url_pattern, "URL Pattern" %>
+    <%= f.text_field :url_pattern %>
+    <div class="oor-form-hint">Optional. Only show this step on matching URLs.</div>
+  </div>
+
+  <h4 class="oor-mb-sm" style="margin-top: 20px;">Style Overrides</h4>
+
+  <div class="oor-form-group">
+    <label>Background Color</label>
+    <div class="oor-color-input">
+      <input type="color" name="step[style_overrides][background_color]" value="<%= step.style_overrides&.dig('background_color') || '#ffffff' %>">
+      <input type="text" name="step[style_overrides][background_color]" value="<%= step.style_overrides&.dig('background_color') || '#ffffff' %>" placeholder="#ffffff">
+    </div>
+  </div>
+
+  <div class="oor-form-group">
+    <label>Text Color</label>
+    <div class="oor-color-input">
+      <input type="color" name="step[style_overrides][text_color]" value="<%= step.style_overrides&.dig('text_color') || '#2d3436' %>">
+      <input type="text" name="step[style_overrides][text_color]" value="<%= step.style_overrides&.dig('text_color') || '#2d3436' %>" placeholder="#2d3436">
+    </div>
+  </div>
+
+  <div class="oor-form-group">
+    <label>Font Family</label>
+    <select name="step[style_overrides][font_family]">
+      <option value="">Default (System)</option>
+      <% %w[Arial Helvetica Georgia Times\ New\ Roman Courier\ New Verdana].each do |font| %>
+        <option value="<%= font %>" <%= 'selected' if step.style_overrides&.dig('font_family') == font %>><%= font %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="oor-form-group">
+    <label>Font Size</label>
+    <select name="step[style_overrides][font_size]">
+      <option value="">Default</option>
+      <% %w[12px 13px 14px 15px 16px 18px 20px].each do |size| %>
+        <option value="<%= size %>" <%= 'selected' if step.style_overrides&.dig('font_size') == size %>><%= size %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="oor-form-group">
+    <label>Border Radius</label>
+    <select name="step[style_overrides][border_radius]">
+      <option value="">Default (6px)</option>
+      <% %w[0px 4px 6px 8px 12px 16px 24px].each do |radius| %>
+        <option value="<%= radius %>" <%= 'selected' if step.style_overrides&.dig('border_radius') == radius %>><%= radius %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="oor-form-group">
+    <label>Button Color</label>
+    <div class="oor-color-input">
+      <input type="color" name="step[style_overrides][button_color]" value="<%= step.style_overrides&.dig('button_color') || '#6c5ce7' %>">
+      <input type="text" name="step[style_overrides][button_color]" value="<%= step.style_overrides&.dig('button_color') || '#6c5ce7' %>" placeholder="#6c5ce7">
+    </div>
+  </div>
+
+  <div class="oor-form-actions">
+    <%= f.submit step.persisted? ? "Update Step" : "Create Step", class: "oor-btn oor-btn--primary" %>
+    <%= link_to "Cancel", edit_admin_tour_path(tour), class: "oor-btn oor-btn--secondary" %>
+  </div>
+<% end %>

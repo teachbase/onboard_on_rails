@@ -1,0 +1,58 @@
+<div class="oor-preview-container" data-controller="step-preview">
+  <div class="oor-preview-page">
+    <div class="oor-preview-page__header">
+      Simulated Page Header
+    </div>
+    <div class="oor-preview-page__content">
+      <div class="oor-preview-page__element">
+        Navigation bar placeholder
+      </div>
+      <div class="oor-preview-page__element oor-preview-page__element--target" id="oor-preview-target">
+        Target Element: <code><%= step.selector %></code>
+      </div>
+      <div class="oor-preview-page__element">
+        Content area placeholder
+      </div>
+      <div class="oor-preview-page__element">
+        Sidebar placeholder
+      </div>
+    </div>
+  </div>
+
+  <%
+    bg_color = step.style_overrides&.dig('background_color') || '#ffffff'
+    text_color = step.style_overrides&.dig('text_color') || '#2d3436'
+    font_family = step.style_overrides&.dig('font_family').presence
+    font_size = step.style_overrides&.dig('font_size').presence
+    border_radius = step.style_overrides&.dig('border_radius') || '6px'
+    button_color = step.style_overrides&.dig('button_color') || '#6c5ce7'
+  %>
+
+  <div class="oor-preview-overlay"></div>
+
+  <div class="oor-preview-tooltip"
+       style="
+         bottom: 20px;
+         left: 50%;
+         transform: translateX(-50%);
+         background: <%= bg_color %>;
+         color: <%= text_color %>;
+         <%= "font-family: #{font_family};" if font_family %>
+         <%= "font-size: #{font_size};" if font_size %>
+         border-radius: <%= border_radius %>;
+       ">
+    <div class="oor-preview-tooltip__title" style="color: <%= text_color %>;">
+      <%= step.title.presence || "Step Title" %>
+    </div>
+    <div class="oor-preview-tooltip__body" style="color: <%= text_color %>; opacity: 0.8;">
+      <%= step.body.presence || "Step body text goes here..." %>
+    </div>
+    <div class="oor-preview-tooltip__actions">
+      <button class="oor-btn oor-btn--sm oor-btn--secondary" type="button">Skip</button>
+      <button class="oor-btn oor-btn--sm" type="button"
+              style="background: <%= button_color %>; color: #fff; border-color: <%= button_color %>;">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

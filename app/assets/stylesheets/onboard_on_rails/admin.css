@@ -1,0 +1,702 @@
+/* OnboardOnRails Admin Panel Styles */
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+:root {
+  --oor-primary: #6c5ce7;
+  --oor-primary-dark: #5a4bd1;
+  --oor-primary-light: #a29bfe;
+  --oor-bg: #f5f6fa;
+  --oor-surface: #ffffff;
+  --oor-border: #dcdde1;
+  --oor-text: #2d3436;
+  --oor-text-light: #636e72;
+  --oor-danger: #d63031;
+  --oor-danger-dark: #c0392b;
+  --oor-success: #00b894;
+  --oor-warning: #fdcb6e;
+  --oor-warning-dark: #e17055;
+  --oor-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --oor-radius: 6px;
+  --oor-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --oor-transition: 0.2s ease;
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--oor-font);
+  background: var(--oor-bg);
+  color: var(--oor-text);
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--oor-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+.oor-admin-nav {
+  display: flex;
+  align-items: center;
+  background: var(--oor-surface);
+  border-bottom: 1px solid var(--oor-border);
+  padding: 0 24px;
+  height: 56px;
+  box-shadow: var(--oor-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.oor-admin-nav__brand {
+  margin-right: 32px;
+}
+
+.oor-admin-nav__logo {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--oor-primary);
+  text-decoration: none;
+}
+
+.oor-admin-nav__logo:hover {
+  text-decoration: none;
+  color: var(--oor-primary-dark);
+}
+
+.oor-admin-nav__links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.oor-admin-nav__link {
+  color: var(--oor-text);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: var(--oor-radius);
+  transition: background var(--oor-transition);
+}
+
+.oor-admin-nav__link:hover {
+  background: var(--oor-bg);
+  text-decoration: none;
+}
+
+.oor-admin-nav__link--active {
+  background: var(--oor-primary);
+  color: #fff;
+}
+
+/* ============================================
+   Main Container
+   ============================================ */
+.oor-admin-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* ============================================
+   Flash Messages
+   ============================================ */
+.oor-admin-flash {
+  padding: 12px 16px;
+  border-radius: var(--oor-radius);
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.oor-admin-flash--notice {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.oor-admin-flash--alert {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* ============================================
+   Page Header
+   ============================================ */
+.oor-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.oor-page-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--oor-text);
+}
+
+.oor-page-header__actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.oor-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--oor-font);
+  border: 1px solid var(--oor-border);
+  border-radius: var(--oor-radius);
+  cursor: pointer;
+  transition: all var(--oor-transition);
+  text-decoration: none;
+  line-height: 1.4;
+  background: var(--oor-surface);
+  color: var(--oor-text);
+}
+
+.oor-btn:hover {
+  text-decoration: none;
+  background: var(--oor-bg);
+}
+
+.oor-btn--primary {
+  background: var(--oor-primary);
+  color: #fff;
+  border-color: var(--oor-primary);
+}
+
+.oor-btn--primary:hover {
+  background: var(--oor-primary-dark);
+  border-color: var(--oor-primary-dark);
+  color: #fff;
+}
+
+.oor-btn--secondary {
+  background: var(--oor-surface);
+  color: var(--oor-text);
+  border-color: var(--oor-border);
+}
+
+.oor-btn--secondary:hover {
+  background: var(--oor-bg);
+}
+
+.oor-btn--danger {
+  background: var(--oor-danger);
+  color: #fff;
+  border-color: var(--oor-danger);
+}
+
+.oor-btn--danger:hover {
+  background: var(--oor-danger-dark);
+  border-color: var(--oor-danger-dark);
+  color: #fff;
+}
+
+.oor-btn--sm {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+/* ============================================
+   Table
+   ============================================ */
+.oor-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--oor-surface);
+  border-radius: var(--oor-radius);
+  overflow: hidden;
+  box-shadow: var(--oor-shadow);
+}
+
+.oor-table thead th {
+  background: var(--oor-bg);
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--oor-text-light);
+  border-bottom: 2px solid var(--oor-border);
+  white-space: nowrap;
+}
+
+.oor-table tbody td {
+  padding: 12px 14px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--oor-border);
+  vertical-align: middle;
+}
+
+.oor-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.oor-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.oor-table__actions {
+  display: flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* ============================================
+   Badges
+   ============================================ */
+.oor-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  text-transform: capitalize;
+}
+
+.oor-badge--active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.oor-badge--draft {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.oor-badge--archived {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+/* ============================================
+   Forms
+   ============================================ */
+.oor-form-group {
+  margin-bottom: 16px;
+}
+
+.oor-form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--oor-text);
+  margin-bottom: 4px;
+}
+
+.oor-form-group input[type="text"],
+.oor-form-group input[type="number"],
+.oor-form-group input[type="url"],
+.oor-form-group input[type="color"],
+.oor-form-group input[type="datetime-local"],
+.oor-form-group textarea,
+.oor-form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: var(--oor-font);
+  border: 1px solid var(--oor-border);
+  border-radius: var(--oor-radius);
+  background: var(--oor-surface);
+  color: var(--oor-text);
+  transition: border-color var(--oor-transition);
+}
+
+.oor-form-group input:focus,
+.oor-form-group textarea:focus,
+.oor-form-group select:focus {
+  outline: none;
+  border-color: var(--oor-primary);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+}
+
+.oor-form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.oor-form-group .oor-form-hint {
+  font-size: 12px;
+  color: var(--oor-text-light);
+  margin-top: 4px;
+}
+
+.oor-form-group .oor-form-errors {
+  font-size: 12px;
+  color: var(--oor-danger);
+  margin-top: 4px;
+}
+
+.oor-form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+/* ============================================
+   Panel Layout (Two-column)
+   ============================================ */
+.oor-panel-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .oor-panel-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   Panel
+   ============================================ */
+.oor-panel {
+  background: var(--oor-surface);
+  border: 1px solid var(--oor-border);
+  border-radius: var(--oor-radius);
+  padding: 20px;
+  box-shadow: var(--oor-shadow);
+}
+
+.oor-panel__title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--oor-border);
+  color: var(--oor-text);
+}
+
+/* ============================================
+   Step List
+   ============================================ */
+.oor-step-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.oor-step-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--oor-border);
+}
+
+.oor-step-item:last-child {
+  border-bottom: none;
+}
+
+.oor-step-item__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.oor-step-item__position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--oor-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.oor-step-item__title {
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.oor-step-item__selector {
+  font-size: 12px;
+  color: var(--oor-text-light);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.oor-step-item__actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Placement Options
+   ============================================ */
+.oor-placement-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.oor-placement-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: 1px solid var(--oor-border);
+  border-radius: var(--oor-radius);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--oor-transition);
+  background: var(--oor-surface);
+}
+
+.oor-placement-options label:hover {
+  border-color: var(--oor-primary-light);
+}
+
+.oor-placement-options input[type="radio"] {
+  margin: 0;
+}
+
+.oor-placement-options input[type="radio"]:checked + span {
+  color: var(--oor-primary);
+  font-weight: 600;
+}
+
+/* ============================================
+   Color Input
+   ============================================ */
+.oor-color-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.oor-color-input input[type="color"] {
+  width: 40px;
+  height: 36px;
+  padding: 2px;
+  border: 1px solid var(--oor-border);
+  border-radius: var(--oor-radius);
+  cursor: pointer;
+}
+
+.oor-color-input input[type="text"] {
+  flex: 1;
+}
+
+/* ============================================
+   Status Filter Bar
+   ============================================ */
+.oor-filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.oor-filter-bar a {
+  padding: 6px 14px;
+  border-radius: var(--oor-radius);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--oor-text);
+  border: 1px solid var(--oor-border);
+  text-decoration: none;
+  transition: all var(--oor-transition);
+}
+
+.oor-filter-bar a:hover {
+  background: var(--oor-bg);
+  text-decoration: none;
+}
+
+.oor-filter-bar a.active {
+  background: var(--oor-primary);
+  color: #fff;
+  border-color: var(--oor-primary);
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+.oor-empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--oor-text-light);
+}
+
+.oor-empty-state h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--oor-text);
+}
+
+.oor-empty-state p {
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* ============================================
+   Step Preview
+   ============================================ */
+.oor-preview-container {
+  position: relative;
+  background: #f0f0f0;
+  border: 1px solid var(--oor-border);
+  border-radius: var(--oor-radius);
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.oor-preview-page {
+  padding: 24px;
+  background: #fff;
+  min-height: 400px;
+}
+
+.oor-preview-page__header {
+  background: var(--oor-bg);
+  padding: 12px 16px;
+  border-radius: var(--oor-radius);
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--oor-text-light);
+}
+
+.oor-preview-page__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.oor-preview-page__element {
+  background: var(--oor-bg);
+  padding: 16px;
+  border-radius: var(--oor-radius);
+  font-size: 13px;
+  color: var(--oor-text-light);
+}
+
+.oor-preview-page__element--target {
+  border: 2px dashed var(--oor-primary);
+  position: relative;
+}
+
+.oor-preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.oor-preview-highlight {
+  position: absolute;
+  border: 2px solid var(--oor-primary);
+  border-radius: 4px;
+  box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
+  z-index: 11;
+}
+
+.oor-preview-tooltip {
+  position: absolute;
+  background: var(--oor-surface);
+  border-radius: var(--oor-radius);
+  padding: 16px;
+  min-width: 240px;
+  max-width: 320px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 12;
+}
+
+.oor-preview-tooltip__title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--oor-text);
+}
+
+.oor-preview-tooltip__body {
+  font-size: 13px;
+  color: var(--oor-text-light);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.oor-preview-tooltip__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.oor-preview-tooltip__arrow {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--oor-surface);
+  transform: rotate(45deg);
+}
+
+/* ============================================
+   Inline Errors
+   ============================================ */
+.oor-field-with-errors {
+  display: contents;
+}
+
+.oor-field-with-errors input,
+.oor-field-with-errors textarea,
+.oor-field-with-errors select {
+  border-color: var(--oor-danger);
+}
+
+/* ============================================
+   Utility
+   ============================================ */
+.oor-text-muted {
+  color: var(--oor-text-light);
+  font-size: 13px;
+}
+
+.oor-mt-0 { margin-top: 0; }
+.oor-mb-0 { margin-bottom: 0; }
+.oor-mb-sm { margin-bottom: 8px; }
+.oor-mb-md { margin-bottom: 16px; }

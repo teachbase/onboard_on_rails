@@ -1,0 +1,10 @@
+<div class="oor-page-header">
+  <h1>New Tour</h1>
+  <div class="oor-page-header__actions">
+    <%= link_to "Back to Tours", admin_tours_path, class: "oor-btn oor-btn--secondary" %>
+  </div>
+</div>
+
+<div class="oor-panel">
+  <%= render "form", tour: @tour %>
+</div>
