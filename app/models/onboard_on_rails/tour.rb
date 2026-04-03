@@ -2,6 +2,9 @@ module OnboardOnRails
   class Tour < ApplicationRecord
     self.table_name = "onboard_on_rails_tours"
 
+    include Concerns::UrlMatchable
+    include Concerns::SegmentEvaluator
+
     STATUSES = %w[draft active archived].freeze
     TRIGGER_TYPES = %w[auto event manual].freeze
     FREQUENCIES = %w[once every_session always].freeze
