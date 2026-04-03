@@ -6,6 +6,7 @@ module OnboardOnRails
     ACTION_TYPES = %w[next redirect custom_event].freeze
 
     belongs_to :tour
+    has_many :completions, dependent: :nullify
 
     validates :title, presence: true
     validates :selector, presence: true
