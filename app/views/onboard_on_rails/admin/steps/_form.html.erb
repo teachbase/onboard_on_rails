@@ -24,7 +24,7 @@
     <%= f.label :selector, t("onboard_on_rails.admin.steps.form.labels.selector") %>
     <div style="display: flex; gap: 8px;">
       <%= f.text_field :selector, style: "flex: 1;" %>
-      <%= link_to t("onboard_on_rails.admin.steps.form.labels.pick"), onboard_on_rails.selector_picker_path(tour_id: tour.id, step_id: step.persisted? ? step.id : nil), class: "oor-btn oor-btn--secondary", id: "oor-selector-picker-btn", target: "_blank" %>
+      <button type="button" class="oor-btn oor-btn--secondary" onclick="window.open('<%= onboard_on_rails.selector_picker_path(tour_id: tour.id, step_id: step.persisted? ? step.id : nil) %>', 'oor-picker', 'width=1200,height=800')"><%= t("onboard_on_rails.admin.steps.form.labels.pick") %></button>
     </div>
     <div class="oor-form-hint"><%= t("onboard_on_rails.admin.steps.form.hints.selector") %></div>
   </div>
