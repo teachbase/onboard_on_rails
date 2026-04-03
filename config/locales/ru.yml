@@ -207,6 +207,17 @@ ru:
           position: "Позиция"
           step: "Шаг"
           dropped: "Отказы"
+        completions_title: "История прохождений"
+        completions:
+          user: "Пользователь"
+          status: "Статус"
+          last_step: "Последний шаг"
+          started_at: "Начало"
+          completed_at: "Завершение"
+          status_in_progress: "В процессе"
+          status_completed: "Завершён"
+          status_dismissed: "Пропущен"
+          none: "Никто ещё не начинал этот тур."
         ab_test_title: "Результаты A/B теста"
         ab_test:
           group: "Группа"

@@ -44,6 +44,45 @@
   </tbody>
 </table>
 
+<h2 class="oor-section-title"><%= t("onboard_on_rails.admin.stats.completions_title") %></h2>
+<% if @completions.any? %>
+  <table class="oor-table">
+    <thead>
+      <tr>
+        <th><%= t("onboard_on_rails.admin.stats.completions.user") %></th>
+        <th><%= t("onboard_on_rails.admin.stats.completions.status") %></th>
+        <th><%= t("onboard_on_rails.admin.stats.completions.last_step") %></th>
+        <th><%= t("onboard_on_rails.admin.stats.completions.started_at") %></th>
+        <th><%= t("onboard_on_rails.admin.stats.completions.completed_at") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @completions.each do |completion| %>
+        <%
+          user_class = OnboardOnRails.configuration.user_class.constantize rescue nil
+          user = user_class&.find_by(id: completion.user_id)
+          user_label = user.respond_to?(:email) ? user.email : "User ##{completion.user_id}"
+        %>
+        <tr>
+          <td><%= user_label %></td>
+          <td>
+            <span class="oor-badge oor-badge--<%= completion.status == 'completed' ? 'active' : completion.status == 'dismissed' ? 'archived' : 'draft' %>">
+              <%= t("onboard_on_rails.admin.stats.completions.status_#{completion.status}") %>
+            </span>
+          </td>
+          <td><%= completion.step&.title || "—" %></td>
+          <td class="oor-text-muted"><%= completion.started_at&.strftime("%d.%m.%Y %H:%M") || "—" %></td>
+          <td class="oor-text-muted"><%= completion.completed_at&.strftime("%d.%m.%Y %H:%M") || "—" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="oor-empty-state">
+    <p><%= t("onboard_on_rails.admin.stats.completions.none") %></p>
+  </div>
+<% end %>
+
 <% if @ab_breakdown.any? %>
   <h2 class="oor-section-title"><%= t("onboard_on_rails.admin.stats.ab_test_title") %></h2>
   <table class="oor-table">

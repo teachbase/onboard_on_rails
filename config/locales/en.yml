@@ -142,6 +142,17 @@ en:
           position: "Position"
           step: "Step"
           dropped: "Dropped"
+        completions_title: "Completion History"
+        completions:
+          user: "User"
+          status: "Status"
+          last_step: "Last Step"
+          started_at: "Started"
+          completed_at: "Completed"
+          status_in_progress: "In Progress"
+          status_completed: "Completed"
+          status_dismissed: "Dismissed"
+          none: "No one has started this tour yet."
         ab_test_title: "A/B Test Breakdown"
         ab_test:
           group: "Group"
