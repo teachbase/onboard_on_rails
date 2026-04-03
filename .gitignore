@@ -1,0 +1,8 @@
+.claude/
+.superpowers/
+*.gem
+.bundle/
+pkg/
+tmp/
+log/
+Gemfile.lock
