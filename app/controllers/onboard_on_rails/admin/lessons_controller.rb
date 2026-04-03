@@ -2,7 +2,7 @@ module OnboardOnRails
   module Admin
     class LessonsController < BaseController
       def index
-        @lessons = Tour.where(ab_test_id: "self_tour").order(:priority)
+        @lessons = Tour.where(ab_test_id: "self_tour").order(priority: :desc)
       end
 
       def replay

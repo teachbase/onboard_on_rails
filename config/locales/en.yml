@@ -123,6 +123,7 @@ en:
         title: "Lessons"
         description: "Interactive tutorials to help you learn OnboardOnRails admin panel."
         replay: "Replay"
+        start: "Start"
         completed: "Completed"
         not_started: "Not started"
         no_lessons: "No lessons available. Run the seed task to create them."

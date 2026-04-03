@@ -28,7 +28,7 @@
           <% if is_completed %>
             <%= button_to t("onboard_on_rails.admin.lessons.replay"), replay_admin_lesson_path(lesson), method: :post, class: "oor-btn oor-btn--secondary" %>
           <% else %>
-            <%= link_to is_completed ? t("onboard_on_rails.admin.lessons.replay") : "Start", target_url, class: "oor-btn oor-btn--primary" %>
+            <%= link_to t("onboard_on_rails.admin.lessons.start"), target_url, class: "oor-btn oor-btn--primary" %>
           <% end %>
         </div>
       </div>
