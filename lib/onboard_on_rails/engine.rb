@@ -16,9 +16,6 @@ module OnboardOnRails
     end
 
     initializer "onboard_on_rails.assets" do |app|
-      app.config.assets.paths << OnboardOnRails::Engine.root.join("app", "assets", "javascripts").to_s
-      app.config.assets.paths << OnboardOnRails::Engine.root.join("app", "assets", "stylesheets").to_s
-
       if app.config.assets.respond_to?(:precompile)
         app.config.assets.precompile += %w[
           onboard_on_rails/admin.js
