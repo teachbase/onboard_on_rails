@@ -26,6 +26,11 @@ RSpec.describe OnboardOnRails::Step, type: :model do
       step = build(:step)
       expect(step).to be_valid
     end
+
+    it "defaults complete_on_target_click to false" do
+      step = create(:step)
+      expect(step.complete_on_target_click).to eq(false)
+    end
   end
 
   describe "associations" do
