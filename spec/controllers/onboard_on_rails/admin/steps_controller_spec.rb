@@ -44,6 +44,17 @@ RSpec.describe OnboardOnRails::Admin::StepsController, type: :controller do
     end
   end
 
+  describe "PATCH #update complete_on_target_click" do
+    it "saves complete_on_target_click flag" do
+      step = create(:step, tour: tour, complete_on_target_click: false)
+      patch :update, params: {
+        tour_id: tour.id, id: step.id,
+        step: { complete_on_target_click: "1" }
+      }
+      expect(step.reload.complete_on_target_click).to eq(true)
+    end
+  end
+
   describe "DELETE #destroy" do
     it "destroys the step" do
       step = create(:step, tour: tour)

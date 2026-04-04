@@ -48,6 +48,7 @@ module OnboardOnRails
         params.require(:step).permit(
           :title, :body, :selector, :placement, :position,
           :url_pattern, :action_type, :action_value, :wait_for_selector,
+          :complete_on_target_click,
           style_overrides: {}
         )
       end
