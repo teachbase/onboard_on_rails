@@ -8,6 +8,8 @@ require "rspec/rails"
 require "factory_bot_rails"
 
 begin
+  # Run from engine root — point to dummy app's migrations, not engine's db/migrate
+  ActiveRecord::Migrator.migrations_paths = [File.expand_path("dummy/db/migrate", __dir__)]
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip

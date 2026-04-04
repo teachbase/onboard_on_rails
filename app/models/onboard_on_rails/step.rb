@@ -12,5 +12,11 @@ module OnboardOnRails
     validates :selector, presence: true
     validates :placement, inclusion: { in: PLACEMENTS }
     validates :action_type, inclusion: { in: ACTION_TYPES }
+
+    def matches_step_url?(url)
+      return true if url_pattern.blank?
+
+      Concerns::UrlMatchable.pattern_matches?(url, url_pattern.to_s)
+    end
   end
 end

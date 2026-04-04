@@ -10,6 +10,20 @@ module OnboardOnRails
         patterns.any? { |pattern| url_matches_pattern?(url, pattern.to_s) }
       end
 
+      def self.pattern_matches?(url, pattern)
+        return true if pattern.blank?
+
+        if pattern.include?("\\")
+          Regexp.new("\\A#{pattern}\\z").match?(url)
+        else
+          escaped = Regexp.escape(pattern)
+          escaped = escaped.gsub("\\*\\*", "DOUBLE_STAR")
+          escaped = escaped.gsub("\\*", "[^/]*")
+          escaped = escaped.gsub("DOUBLE_STAR", ".*")
+          Regexp.new("\\A#{escaped}\\z").match?(url)
+        end
+      end
+
       private
 
       def url_matches_pattern?(url, pattern)

@@ -215,20 +215,32 @@ module OnboardOnRails
       )
 
       create_step(tour, 3,
-        title: "CSS селектор",
-        body: "К какому элементу на странице привяжется подсказка. Примеры: <code>#header</code>, <code>.sidebar-nav</code>, <code>button.btn-primary</code>. Нажмите 'Выбрать' для визуального выбора элемента.",
-        selector: "input[name='step[selector]']",
+        title: "URL шага",
+        body: "Если шаг должен показаться на другой странице — укажите URL. Поддерживаются глобы: <code>/users/*/about</code>.<br><br>" \
+              "Оставьте пустым, если шаг на той же странице, где тур активировался.<br><br>" \
+              "<b>Мультистраничные туры:</b> тур может начаться на <code>/students</code>, " \
+              "затем перенаправить на <code>/courses</code> для следующих шагов. " \
+              "Прогресс сохраняется на сервере — при перезагрузке тур продолжится с нужного шага.",
+        selector: "input[name='step[url_pattern]']",
         placement: "bottom"
       )
 
       create_step(tour, 4,
+        title: "CSS селектор",
+        body: "К какому элементу на странице привяжется подсказка. Примеры: <code>#header</code>, <code>.sidebar-nav</code>, <code>button.btn-primary</code>. Нажмите 'Выбрать' для визуального выбора элемента.<br><br>" \
+              "<b>Совет:</b> если у шага указан URL, кнопка «Выбрать» откроет эту страницу, а не страницу тура.",
+        selector: "input[name='step[selector]']",
+        placement: "bottom"
+      )
+
+      create_step(tour, 5,
         title: "Расположение",
         body: "Где появится подсказка относительно элемента:<br><b>Сверху/Снизу</b> — горизонтально<br><b>Слева/Справа</b> — вертикально<br><b>По центру</b> — модальное окно по центру экрана",
         selector: ".oor-placement-options",
         placement: "bottom"
       )
 
-      create_step(tour, 5,
+      create_step(tour, 6,
         title: "Стилизация",
         body: "Настройте внешний вид: цвет фона, текста, кнопок, шрифт и скругление углов. Изменения видны в предпросмотре справа.",
         selector: "h4",

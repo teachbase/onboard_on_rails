@@ -10,6 +10,7 @@ OnboardOnRails::Engine.routes.draw do
       end
       collection do
         post :seed
+        post :recreate
       end
     end
     root to: "tours#index"

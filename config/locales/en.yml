@@ -94,7 +94,7 @@ en:
             selector: "CSS selector for the target element (e.g., #main-header, .btn-primary)"
             action_value: "For \"redirect\": the URL. For \"custom_event\": the event name."
             wait_for_selector: "Optional. Wait for this selector to appear before showing the step."
-            url_pattern: "Optional. Only show this step on matching URLs."
+            url_pattern: "Optional. Show this step on a specific page. Supports globs: /users/*/about. Leave empty to show on current page."
           style_overrides: "Style Overrides"
           styles:
             background_color: "Background Color"
@@ -131,6 +131,8 @@ en:
         replayed: "Tour reset. It will appear on the target page."
         seed_button: "Create Lessons"
         seed_success: "Tutorial lessons created successfully!"
+        recreate_button: "Recreate Lessons"
+        recreate_success: "Lessons recreated successfully! All progress has been reset."
       stats:
         title: "Stats: %{name}"
         back: "Back to Tour"

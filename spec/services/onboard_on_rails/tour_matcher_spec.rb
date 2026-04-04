@@ -92,5 +92,79 @@ RSpec.describe OnboardOnRails::TourMatcher do
       result = described_class.new(user: user, url: "/dashboard/home").match
       expect(result).to be_nil
     end
+
+    context "in-progress tour resumption" do
+      it "resumes an in-progress tour on a step's URL" do
+        tour = create(:tour, url_pattern: ["/teacher/students"])
+        step1 = create(:step, tour: tour, position: 1, url_pattern: nil)
+        step2 = create(:step, tour: tour, position: 2, url_pattern: "/teacher/courses")
+        create(:completion, tour: tour, user_id: user.id, step_id: step2.id, status: "in_progress")
+
+        result = described_class.new(user: user, url: "/teacher/courses").match
+        expect(result).to eq(tour)
+      end
+
+      it "returns current_step_index for resumed tour" do
+        tour = create(:tour, url_pattern: ["/teacher/students"])
+        step1 = create(:step, tour: tour, position: 1, url_pattern: nil)
+        step2 = create(:step, tour: tour, position: 2, url_pattern: "/teacher/courses")
+        create(:completion, tour: tour, user_id: user.id, step_id: step2.id, status: "in_progress")
+
+        matcher = described_class.new(user: user, url: "/teacher/courses")
+        matcher.match
+        expect(matcher.current_step_index).to eq(1)
+      end
+
+      it "computes current_step_index 0 when no completion exists" do
+        tour = create(:tour, url_pattern: ["/dashboard/*"])
+        create(:step, tour: tour, position: 1)
+
+        matcher = described_class.new(user: user, url: "/dashboard/home")
+        matcher.match
+        expect(matcher.current_step_index).to eq(0)
+      end
+
+      it "prioritizes in-progress tour over new tour match" do
+        old_tour = create(:tour, url_pattern: ["/teacher/students"], priority: 1)
+        step1 = create(:step, tour: old_tour, position: 1)
+        step2 = create(:step, tour: old_tour, position: 2, url_pattern: "/shared-page")
+        create(:completion, tour: old_tour, user_id: user.id, step_id: step2.id, status: "in_progress")
+
+        new_tour = create(:tour, url_pattern: ["/shared-page"], priority: 100)
+        create(:step, tour: new_tour, position: 1)
+
+        result = described_class.new(user: user, url: "/shared-page").match
+        expect(result).to eq(old_tour)
+      end
+
+      it "does not resume a completed tour" do
+        tour = create(:tour, url_pattern: ["/teacher/students"], frequency: "once")
+        step1 = create(:step, tour: tour, position: 1)
+        create(:completion, tour: tour, user_id: user.id, step_id: step1.id, status: "completed")
+
+        result = described_class.new(user: user, url: "/teacher/students").match
+        expect(result).to be_nil
+      end
+
+      it "does not resume when step URL doesn't match current page" do
+        tour = create(:tour, url_pattern: ["/teacher/students"])
+        step1 = create(:step, tour: tour, position: 1)
+        step2 = create(:step, tour: tour, position: 2, url_pattern: "/teacher/courses")
+        create(:completion, tour: tour, user_id: user.id, step_id: step2.id, status: "in_progress")
+
+        result = described_class.new(user: user, url: "/unrelated/page").match
+        expect(result).to be_nil
+      end
+
+      it "resumes tour when current step has no url_pattern and tour URL matches" do
+        tour = create(:tour, url_pattern: ["/dashboard/*"])
+        step1 = create(:step, tour: tour, position: 1)
+        step2 = create(:step, tour: tour, position: 2, url_pattern: nil)
+        create(:completion, tour: tour, user_id: user.id, step_id: step2.id, status: "in_progress")
+
+        result = described_class.new(user: user, url: "/dashboard/home").match
+        expect(result).to eq(tour)
+      end
+    end
   end
 end

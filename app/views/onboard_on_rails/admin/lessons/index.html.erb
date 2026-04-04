@@ -1,5 +1,8 @@
 <div class="oor-page-header">
   <h1><%= t("onboard_on_rails.admin.lessons.title") %></h1>
+  <div class="oor-page-header__actions">
+    <%= button_to t("onboard_on_rails.admin.lessons.recreate_button"), recreate_admin_lessons_path, method: :post, class: "oor-btn oor-btn--secondary" %>
+  </div>
 </div>
 
 <p class="oor-text-muted" style="margin-bottom: 24px;"><%= t("onboard_on_rails.admin.lessons.description") %></p>

@@ -21,10 +21,22 @@
   </div>
 
   <div class="oor-form-group">
+    <%= f.label :url_pattern, t("onboard_on_rails.admin.steps.form.labels.url_pattern") %>
+    <%= f.text_field :url_pattern %>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.steps.form.hints.url_pattern") %></div>
+  </div>
+
+  <div class="oor-form-group">
     <%= f.label :selector, t("onboard_on_rails.admin.steps.form.labels.selector") %>
     <div style="display: flex; gap: 8px;">
       <%= f.text_field :selector, style: "flex: 1;" %>
-      <button type="button" class="oor-btn oor-btn--secondary" onclick="window.open('<%= onboard_on_rails.selector_picker_path(tour_id: tour.id, step_id: step.persisted? ? step.id : nil) %>', 'oor-picker', 'width=1200,height=800')"><%= t("onboard_on_rails.admin.steps.form.labels.pick") %></button>
+      <button type="button" class="oor-btn oor-btn--secondary" onclick="(function(){
+        var base = '<%= onboard_on_rails.selector_picker_path(tour_id: tour.id, step_id: step.persisted? ? step.id : nil) %>';
+        var urlInput = document.querySelector('input[name=\'step[url_pattern]\']');
+        var stepUrl = urlInput ? urlInput.value.trim() : '';
+        if (stepUrl && stepUrl.indexOf('*') === -1) base += '&url=' + encodeURIComponent(stepUrl);
+        window.open(base, 'oor-picker', 'width=1200,height=800');
+      })()"><%= t("onboard_on_rails.admin.steps.form.labels.pick") %></button>
     </div>
     <div class="oor-form-hint"><%= t("onboard_on_rails.admin.steps.form.hints.selector") %></div>
   </div>
@@ -61,12 +73,6 @@
     <%= f.label :wait_for_selector, t("onboard_on_rails.admin.steps.form.labels.wait_for_selector") %>
     <%= f.text_field :wait_for_selector %>
     <div class="oor-form-hint"><%= t("onboard_on_rails.admin.steps.form.hints.wait_for_selector") %></div>
-  </div>
-
-  <div class="oor-form-group">
-    <%= f.label :url_pattern, t("onboard_on_rails.admin.steps.form.labels.url_pattern") %>
-    <%= f.text_field :url_pattern %>
-    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.steps.form.hints.url_pattern") %></div>
   </div>
 
   <h4 class="oor-mb-sm" style="margin-top: 20px;"><%= t("onboard_on_rails.admin.steps.form.style_overrides") %></h4>

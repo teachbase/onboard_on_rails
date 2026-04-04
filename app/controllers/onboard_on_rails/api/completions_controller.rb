@@ -14,6 +14,10 @@ module OnboardOnRails
         completion.started_at ||= Time.current
         completion.completed_at = Time.current if params[:status] == "completed"
 
+        if params[:matched_step_id].present? && params[:matched_url].present?
+          completion.matched_urls[params[:matched_step_id].to_s] = params[:matched_url]
+        end
+
         if completion.save
           status_code = was_new ? :created : :ok
           render json: { completion: { id: completion.id, tour_id: completion.tour_id, status: completion.status } }, status: status_code

@@ -27,12 +27,17 @@ OnboardOnRails.ApiClient = {
     const data = await response.json();
     return data.tour;
   },
-  async updateCompletion(tourId, stepId, status, sessionId) {
+  async updateCompletion(tourId, stepId, status, sessionId, matchedUrl, matchedStepId) {
     const mountPath = this.getMountPath();
+    const body = { tour_id: tourId, step_id: stepId, status, session_id: sessionId };
+    if (matchedUrl && matchedStepId) {
+      body.matched_url = matchedUrl;
+      body.matched_step_id = matchedStepId;
+    }
     const response = await fetch(`${mountPath}/api/completions`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": this.getCsrfToken() },
-      body: JSON.stringify({ tour_id: tourId, step_id: stepId, status, session_id: sessionId })
+      body: JSON.stringify(body)
     });
     return response.ok;
   },
@@ -329,7 +334,7 @@ OnboardOnRails.TourManager = {
     const tour = await OnboardOnRails.ApiClient.fetchTours(url, this.sessionId);
     if (!tour) { this.currentTour = null; return; }
     this.currentTour = tour;
-    this.currentStepIndex = 0;
+    this.currentStepIndex = tour.current_step_index || 0;
     this.showStep();
   },
 
@@ -337,10 +342,15 @@ OnboardOnRails.TourManager = {
     if (!this.currentTour) return;
     const step = this.currentTour.steps[this.currentStepIndex];
     if (!step) return;
-    if (step.url_pattern && !this.matchesCurrentUrl(step.url_pattern)) {
-      window.location.href = step.url_pattern;
-      return;
+
+    // Check if this step needs a different page
+    if (step.url_pattern && !step.url_pattern.includes("*")) {
+      if (window.location.pathname !== step.url_pattern) {
+        window.location.href = step.url_pattern;
+        return;
+      }
     }
+
     const showFn = () => {
       OnboardOnRails.TourRenderer.show(this.currentTour, this.currentStepIndex, {
         next: () => this.next(), prev: () => this.prev(),
@@ -357,16 +367,51 @@ OnboardOnRails.TourManager = {
   },
 
   async next() {
-    const step = this.currentTour.steps[this.currentStepIndex];
-    await OnboardOnRails.ApiClient.updateCompletion(this.currentTour.id, step.id, "in_progress", this.sessionId);
-    if (step.action_type === "redirect" && step.action_value) { window.location.href = step.action_value; return; }
-    if (step.action_type === "custom_event" && step.action_value) await OnboardOnRails.ApiClient.trackEvent(step.action_value);
-    this.currentStepIndex++;
-    if (this.currentStepIndex < this.currentTour.steps.length) this.showStep();
-    else this.complete();
+    const currentStep = this.currentTour.steps[this.currentStepIndex];
+    const nextIndex = this.currentStepIndex + 1;
+    const nextStep = this.currentTour.steps[nextIndex];
+
+    if (nextStep) {
+      await OnboardOnRails.ApiClient.updateCompletion(
+        this.currentTour.id, nextStep.id, "in_progress", this.sessionId,
+        window.location.pathname, currentStep.id
+      );
+    }
+
+    if (currentStep.action_type === "redirect" && currentStep.action_value) {
+      window.location.href = currentStep.action_value;
+      return;
+    }
+    if (currentStep.action_type === "custom_event" && currentStep.action_value) {
+      await OnboardOnRails.ApiClient.trackEvent(currentStep.action_value);
+    }
+
+    this.currentStepIndex = nextIndex;
+    if (this.currentStepIndex < this.currentTour.steps.length) {
+      this.showStep();
+    } else {
+      this.complete();
+    }
   },
 
-  prev() { if (this.currentStepIndex > 0) { this.currentStepIndex--; this.showStep(); } },
+  async prev() {
+    if (this.currentStepIndex <= 0) return;
+
+    const prevIndex = this.currentStepIndex - 1;
+    const prevStep = this.currentTour.steps[prevIndex];
+
+    await OnboardOnRails.ApiClient.updateCompletion(
+      this.currentTour.id, prevStep.id, "in_progress", this.sessionId
+    );
+
+    if (prevStep.matched_url && prevStep.matched_url !== window.location.pathname) {
+      window.location.href = prevStep.matched_url;
+      return;
+    }
+
+    this.currentStepIndex = prevIndex;
+    this.showStep();
+  },
 
   async dismiss() {
     const step = this.currentTour.steps[this.currentStepIndex];
@@ -380,10 +425,6 @@ OnboardOnRails.TourManager = {
     await OnboardOnRails.ApiClient.updateCompletion(this.currentTour.id, step.id, "completed", this.sessionId);
     OnboardOnRails.TourRenderer.cleanup();
     this.currentTour = null;
-  },
-
-  matchesCurrentUrl(pattern) {
-    return window.location.pathname === pattern || window.location.pathname.startsWith(pattern.replace("*", ""));
   },
 
   getOrCreateSessionId() {

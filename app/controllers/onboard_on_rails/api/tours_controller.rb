@@ -2,14 +2,18 @@ module OnboardOnRails
   module Api
     class ToursController < BaseController
       def index
-        tour = TourMatcher.new(
+        matcher = TourMatcher.new(
           user: current_user,
           url: params[:url],
           session_id: params[:session_id]
-        ).match
+        )
+        tour = matcher.match
 
         if tour
-          render json: { tour: serialize_tour(tour) }
+          completion = Completion.find_by(tour: tour, user_id: current_user.id)
+          render json: {
+            tour: serialize_tour(tour, matcher.current_step_index, completion)
+          }
         else
           render json: { tour: nil }
         end
@@ -17,17 +21,19 @@ module OnboardOnRails
 
       private
 
-      def serialize_tour(tour)
+      def serialize_tour(tour, current_step_index, completion)
+        matched_urls = completion&.matched_urls || {}
         {
           id: tour.id,
           name: tour.name,
           theme: tour.theme,
           style_overrides: tour.style_overrides,
-          steps: tour.steps.map { |s| serialize_step(s) }
+          current_step_index: current_step_index,
+          steps: tour.steps.sort_by(&:position).map { |s| serialize_step(s, matched_urls) }
         }
       end
 
-      def serialize_step(step)
+      def serialize_step(step, matched_urls)
         {
           id: step.id,
           position: step.position,
@@ -36,6 +42,7 @@ module OnboardOnRails
           selector: step.selector,
           placement: step.placement,
           url_pattern: step.url_pattern,
+          matched_url: matched_urls[step.id.to_s],
           style_overrides: step.style_overrides,
           action_type: step.action_type,
           action_value: step.action_value,

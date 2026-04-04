@@ -16,6 +16,14 @@ module OnboardOnRails
         redirect_to admin_lessons_path, notice: t("onboard_on_rails.admin.lessons.seed_success")
       end
 
+      def recreate
+        self_tours = Tour.where(ab_test_id: "self_tour")
+        Completion.where(tour: self_tours).destroy_all
+        self_tours.destroy_all
+        SelfTourSeeder.seed!
+        redirect_to admin_lessons_path, notice: t("onboard_on_rails.admin.lessons.recreate_success")
+      end
+
       private
 
       def resolve_lesson_url(tour)

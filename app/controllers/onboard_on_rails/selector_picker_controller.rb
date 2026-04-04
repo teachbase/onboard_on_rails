@@ -10,13 +10,13 @@ module OnboardOnRails
     private
 
     def resolve_target_url
+      if @step&.url_pattern.present? && !@step.url_pattern.include?("*")
+        return @step.url_pattern
+      end
+
       pattern = Array(@tour&.url_pattern).first
       return nil if pattern.blank?
 
-      # Strip glob wildcards to get a navigable base path
-      # "/dashboard/*" → "/dashboard"
-      # "/projects/**" → "/projects"
-      # "/settings" → "/settings" (unchanged)
       url = pattern.gsub(%r{/?\*+\z}, "")
       url = "/" if url.blank?
       url
