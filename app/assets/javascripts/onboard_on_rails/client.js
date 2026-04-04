@@ -380,6 +380,7 @@ OnboardOnRails.TourManager = {
   },
 
   async next() {
+    this._clearTargetClickListener();
     const currentStep = this.currentTour.steps[this.currentStepIndex];
     const nextIndex = this.currentStepIndex + 1;
     const nextStep = this.currentTour.steps[nextIndex];
@@ -408,6 +409,7 @@ OnboardOnRails.TourManager = {
   },
 
   async prev() {
+    this._clearTargetClickListener();
     if (this.currentStepIndex <= 0) return;
 
     const prevIndex = this.currentStepIndex - 1;
