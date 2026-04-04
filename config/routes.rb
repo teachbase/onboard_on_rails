@@ -17,7 +17,7 @@ OnboardOnRails::Engine.routes.draw do
 
   namespace :api do
     resources :tours, only: [:index]
-    resources :completions, only: [:create]
+    resources :completions, only: [:create, :destroy]
     resources :events, only: [:create]
   end
 

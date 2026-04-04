@@ -39,5 +39,59 @@ RSpec.describe OnboardOnRails::Api::CompletionsController, type: :controller do
       expect(response).to have_http_status(:ok)
       expect(existing.reload.status).to eq("completed")
     end
+
+    it "stores matched_url in matched_urls hash" do
+      tour_record = create(:tour)
+      step1 = create(:step, tour: tour_record, position: 1)
+      step2 = create(:step, tour: tour_record, position: 2)
+
+      post :create, params: {
+        tour_id: tour_record.id,
+        step_id: step2.id,
+        status: "in_progress",
+        session_id: "abc123",
+        matched_url: "/teacher/students",
+        matched_step_id: step1.id
+      }, format: :json
+
+      expect(response).to have_http_status(:created)
+      completion = OnboardOnRails::Completion.last
+      expect(completion.step_id).to eq(step2.id)
+      expect(completion.matched_urls[step1.id.to_s]).to eq("/teacher/students")
+    end
+
+    it "accumulates matched_urls across multiple next calls" do
+      tour_record = create(:tour)
+      step1 = create(:step, tour: tour_record, position: 1)
+      step2 = create(:step, tour: tour_record, position: 2)
+      step3 = create(:step, tour: tour_record, position: 3)
+
+      post :create, params: {
+        tour_id: tour_record.id, step_id: step2.id, status: "in_progress",
+        session_id: "s1", matched_url: "/page-a", matched_step_id: step1.id
+      }, format: :json
+
+      post :create, params: {
+        tour_id: tour_record.id, step_id: step3.id, status: "in_progress",
+        session_id: "s1", matched_url: "/page-b", matched_step_id: step2.id
+      }, format: :json
+
+      completion = OnboardOnRails::Completion.find_by(tour_id: tour_record.id, user_id: user.id)
+      expect(completion.matched_urls[step1.id.to_s]).to eq("/page-a")
+      expect(completion.matched_urls[step2.id.to_s]).to eq("/page-b")
+    end
+  end
+
+  describe "DELETE #destroy" do
+    it "deletes completion for the given tour" do
+      tour_record = create(:tour)
+      step1 = create(:step, tour: tour_record)
+      create(:completion, tour: tour_record, user_id: user.id, step_id: step1.id)
+
+      delete :destroy, params: { id: tour_record.id }, format: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(OnboardOnRails::Completion.where(tour_id: tour_record.id, user_id: user.id).count).to eq(0)
+    end
   end
 end

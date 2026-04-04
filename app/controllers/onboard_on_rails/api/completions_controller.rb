@@ -14,12 +14,21 @@ module OnboardOnRails
         completion.started_at ||= Time.current
         completion.completed_at = Time.current if params[:status] == "completed"
 
+        if params[:matched_step_id].present? && params[:matched_url].present?
+          completion.matched_urls[params[:matched_step_id].to_s] = params[:matched_url]
+        end
+
         if completion.save
           status_code = was_new ? :created : :ok
           render json: { completion: { id: completion.id, tour_id: completion.tour_id, status: completion.status } }, status: status_code
         else
           render json: { errors: completion.errors.full_messages }, status: :unprocessable_entity
         end
+      end
+
+      def destroy
+        Completion.where(tour_id: params[:id], user_id: current_user.id).destroy_all
+        render json: { ok: true }
       end
     end
   end
