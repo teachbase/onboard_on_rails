@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_04_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_04_191032) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,7 +18,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_04_000001) do
     t.string "ab_group"
     t.datetime "completed_at"
     t.datetime "created_at", null: false
-    t.jsonb "matched_urls", default: {}, null: false
     t.string "session_id"
     t.datetime "started_at"
     t.string "status", default: "in_progress", null: false
@@ -46,6 +45,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_04_000001) do
     t.string "action_type", default: "next", null: false
     t.string "action_value"
     t.text "body"
+    t.boolean "complete_on_target_click", default: false, null: false
     t.datetime "created_at", null: false
     t.string "placement", default: "bottom", null: false
     t.integer "position", default: 0, null: false
