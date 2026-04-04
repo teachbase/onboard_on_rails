@@ -11,6 +11,7 @@ module OnboardOnRails
     validates :status, inclusion: { in: STATUSES }
 
     scope :for_user, ->(user_id) { where(user_id: user_id) }
+    scope :in_progress, -> { where(status: "in_progress") }
     scope :completed, -> { where(status: "completed") }
     scope :dismissed, -> { where(status: "dismissed") }
   end
