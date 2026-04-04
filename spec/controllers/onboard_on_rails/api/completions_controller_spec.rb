@@ -81,17 +81,4 @@ RSpec.describe OnboardOnRails::Api::CompletionsController, type: :controller do
       expect(completion.matched_urls[step2.id.to_s]).to eq("/page-b")
     end
   end
-
-  describe "DELETE #destroy" do
-    it "deletes completion for the given tour" do
-      tour_record = create(:tour)
-      step1 = create(:step, tour: tour_record)
-      create(:completion, tour: tour_record, user_id: user.id, step_id: step1.id)
-
-      delete :destroy, params: { id: tour_record.id }, format: :json
-
-      expect(response).to have_http_status(:ok)
-      expect(OnboardOnRails::Completion.where(tour_id: tour_record.id, user_id: user.id).count).to eq(0)
-    end
-  end
 end

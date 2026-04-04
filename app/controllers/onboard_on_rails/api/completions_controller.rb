@@ -25,11 +25,6 @@ module OnboardOnRails
           render json: { errors: completion.errors.full_messages }, status: :unprocessable_entity
         end
       end
-
-      def destroy
-        Completion.where(tour_id: params[:id], user_id: current_user.id).destroy_all
-        render json: { ok: true }
-      end
     end
   end
 end
