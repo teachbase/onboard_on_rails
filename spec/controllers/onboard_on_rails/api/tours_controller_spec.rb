@@ -41,5 +41,41 @@ RSpec.describe OnboardOnRails::Api::ToursController, type: :controller do
       get :index, params: { url: "/dashboard" }, format: :json
       expect(response).to have_http_status(:unauthorized)
     end
+
+    it "returns current_step_index 0 for a new tour" do
+      tour = create(:tour, url_pattern: ["/dashboard/*"])
+      create(:step, tour: tour, position: 1)
+
+      get :index, params: { url: "/dashboard/home" }, format: :json
+
+      json = JSON.parse(response.body)
+      expect(json["tour"]["current_step_index"]).to eq(0)
+    end
+
+    it "returns current_step_index for an in-progress tour" do
+      tour = create(:tour, url_pattern: ["/teacher/students"])
+      step1 = create(:step, tour: tour, position: 1)
+      step2 = create(:step, tour: tour, position: 2, url_pattern: "/teacher/courses")
+      create(:completion, tour: tour, user_id: user.id, step_id: step2.id, status: "in_progress")
+
+      get :index, params: { url: "/teacher/courses" }, format: :json
+
+      json = JSON.parse(response.body)
+      expect(json["tour"]["current_step_index"]).to eq(1)
+    end
+
+    it "returns matched_url per step from completion" do
+      tour = create(:tour, url_pattern: ["/teacher/students"])
+      step1 = create(:step, tour: tour, position: 1)
+      step2 = create(:step, tour: tour, position: 2, url_pattern: "/teacher/courses")
+      create(:completion, tour: tour, user_id: user.id, step_id: step2.id,
+        status: "in_progress", matched_urls: { step1.id.to_s => "/teacher/students" })
+
+      get :index, params: { url: "/teacher/courses" }, format: :json
+
+      json = JSON.parse(response.body)
+      expect(json["tour"]["steps"][0]["matched_url"]).to eq("/teacher/students")
+      expect(json["tour"]["steps"][1]["matched_url"]).to be_nil
+    end
   end
 end
