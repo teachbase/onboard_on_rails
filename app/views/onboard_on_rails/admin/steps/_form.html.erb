@@ -42,6 +42,14 @@
   </div>
 
   <div class="oor-form-group">
+    <label>
+      <%= f.check_box :complete_on_target_click %>
+      <%= t("onboard_on_rails.admin.steps.form.labels.complete_on_target_click") %>
+    </label>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.steps.form.hints.complete_on_target_click") %></div>
+  </div>
+
+  <div class="oor-form-group">
     <%= f.label :placement, t("onboard_on_rails.admin.steps.form.labels.placement") %>
     <div class="oor-placement-options">
       <% OnboardOnRails::Step::PLACEMENTS.each do |placement| %>
