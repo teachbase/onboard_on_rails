@@ -77,5 +77,17 @@ RSpec.describe OnboardOnRails::Api::ToursController, type: :controller do
       expect(json["tour"]["steps"][0]["matched_url"]).to eq("/teacher/students")
       expect(json["tour"]["steps"][1]["matched_url"]).to be_nil
     end
+
+    it "returns complete_on_target_click for each step" do
+      tour = create(:tour, url_pattern: ["/dashboard/*"])
+      create(:step, tour: tour, position: 1, complete_on_target_click: true)
+      create(:step, tour: tour, position: 2, complete_on_target_click: false)
+
+      get :index, params: { url: "/dashboard/home" }, format: :json
+
+      json = JSON.parse(response.body)
+      expect(json["tour"]["steps"][0]["complete_on_target_click"]).to eq(true)
+      expect(json["tour"]["steps"][1]["complete_on_target_click"]).to eq(false)
+    end
   end
 end

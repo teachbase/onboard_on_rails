@@ -46,7 +46,8 @@ module OnboardOnRails
           style_overrides: step.style_overrides,
           action_type: step.action_type,
           action_value: step.action_value,
-          wait_for_selector: step.wait_for_selector
+          wait_for_selector: step.wait_for_selector,
+          complete_on_target_click: step.complete_on_target_click
         }
       end
     end
