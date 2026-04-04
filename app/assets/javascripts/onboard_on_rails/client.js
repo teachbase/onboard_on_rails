@@ -49,6 +49,16 @@ OnboardOnRails.ApiClient = {
       body: JSON.stringify({ name, payload: payload || {} })
     });
     return response.ok;
+  },
+  sendCompletionBeacon(tourId, stepId, status, sessionId, matchedUrl, matchedStepId) {
+    const mountPath = this.getMountPath();
+    const body = { tour_id: tourId, step_id: stepId, status, session_id: sessionId };
+    if (matchedUrl && matchedStepId) {
+      body.matched_url = matchedUrl;
+      body.matched_step_id = matchedStepId;
+    }
+    const blob = new Blob([JSON.stringify(body)], { type: "application/json" });
+    navigator.sendBeacon(`${mountPath}/api/completions`, blob);
   }
 };
 
@@ -320,6 +330,7 @@ OnboardOnRails.TourRenderer = {
 // === TourManager ===
 OnboardOnRails.TourManager = {
   currentTour: null, currentStepIndex: 0, sessionId: null,
+  _targetClickEl: null, _targetClickHandler: null,
 
   init() {
     if (!OnboardOnRails.ApiClient.getUserId()) return;
@@ -340,6 +351,7 @@ OnboardOnRails.TourManager = {
 
   showStep() {
     if (!this.currentTour) return;
+    this._clearTargetClickListener();
     const step = this.currentTour.steps[this.currentStepIndex];
     if (!step) return;
 
@@ -356,6 +368,7 @@ OnboardOnRails.TourManager = {
         next: () => this.next(), prev: () => this.prev(),
         dismiss: () => this.dismiss(), complete: () => this.complete()
       });
+      this._attachTargetClickListener(step);
     };
     if (step.wait_for_selector) {
       OnboardOnRails.DOMObserver.waitForSelector(step.wait_for_selector, showFn);
@@ -414,6 +427,7 @@ OnboardOnRails.TourManager = {
   },
 
   async dismiss() {
+    this._clearTargetClickListener();
     const step = this.currentTour.steps[this.currentStepIndex];
     await OnboardOnRails.ApiClient.updateCompletion(this.currentTour.id, step.id, "dismissed", this.sessionId);
     OnboardOnRails.TourRenderer.cleanup();
@@ -421,6 +435,7 @@ OnboardOnRails.TourManager = {
   },
 
   async complete() {
+    this._clearTargetClickListener();
     const step = this.currentTour.steps[this.currentStepIndex];
     await OnboardOnRails.ApiClient.updateCompletion(this.currentTour.id, step.id, "completed", this.sessionId);
     OnboardOnRails.TourRenderer.cleanup();
@@ -431,6 +446,46 @@ OnboardOnRails.TourManager = {
     let id = sessionStorage.getItem("oor_session_id");
     if (!id) { id = Math.random().toString(36).substring(2) + Date.now().toString(36); sessionStorage.setItem("oor_session_id", id); }
     return id;
+  },
+
+  _clearTargetClickListener() {
+    if (this._targetClickEl && this._targetClickHandler) {
+      this._targetClickEl.removeEventListener("click", this._targetClickHandler);
+    }
+    this._targetClickEl = null;
+    this._targetClickHandler = null;
+  },
+
+  _attachTargetClickListener(step) {
+    if (!step.complete_on_target_click) return;
+
+    const targetEl = document.querySelector(step.selector);
+    if (!targetEl) return;
+
+    const tour = this.currentTour;
+    const currentStep = step;
+    const stepIndex = this.currentStepIndex;
+    const isLast = stepIndex === tour.steps.length - 1;
+    const nextStep = tour.steps[stepIndex + 1];
+
+    this._targetClickHandler = () => {
+      this._clearTargetClickListener();
+
+      if (isLast) {
+        OnboardOnRails.ApiClient.sendCompletionBeacon(
+          tour.id, currentStep.id, "completed", this.sessionId
+        );
+        this.currentTour = null;
+      } else if (nextStep) {
+        OnboardOnRails.ApiClient.sendCompletionBeacon(
+          tour.id, nextStep.id, "in_progress", this.sessionId,
+          window.location.pathname, currentStep.id
+        );
+      }
+    };
+
+    this._targetClickEl = targetEl;
+    targetEl.addEventListener("click", this._targetClickHandler);
   }
 };
 
