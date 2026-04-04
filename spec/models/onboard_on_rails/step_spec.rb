@@ -34,4 +34,40 @@ RSpec.describe OnboardOnRails::Step, type: :model do
       expect(step.tour).to be_a(OnboardOnRails::Tour)
     end
   end
+
+  describe "#matches_step_url?" do
+    it "returns true when url_pattern is blank" do
+      step = build(:step, url_pattern: nil)
+      expect(step.matches_step_url?("/anything")).to be true
+    end
+
+    it "returns true when url_pattern is empty string" do
+      step = build(:step, url_pattern: "")
+      expect(step.matches_step_url?("/anything")).to be true
+    end
+
+    it "matches exact URL" do
+      step = build(:step, url_pattern: "/teacher/courses")
+      expect(step.matches_step_url?("/teacher/courses")).to be true
+      expect(step.matches_step_url?("/teacher/students")).to be false
+    end
+
+    it "matches glob with single wildcard" do
+      step = build(:step, url_pattern: "/users/*/about")
+      expect(step.matches_step_url?("/users/42/about")).to be true
+      expect(step.matches_step_url?("/users/42/edit")).to be false
+    end
+
+    it "matches glob with double wildcard" do
+      step = build(:step, url_pattern: "/admin/**")
+      expect(step.matches_step_url?("/admin/tours/1/steps")).to be true
+      expect(step.matches_step_url?("/admin")).to be false
+    end
+
+    it "matches regex pattern (with backslash)" do
+      step = build(:step, url_pattern: '/users/\d+/profile')
+      expect(step.matches_step_url?("/users/123/profile")).to be true
+      expect(step.matches_step_url?("/users/abc/profile")).to be false
+    end
+  end
 end
