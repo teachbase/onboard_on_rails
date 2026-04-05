@@ -79,7 +79,7 @@
   </span>
   <%= t("onboard_on_rails.admin.stats.drop_off_title") %>
 </h2>
-<% max_dropped = @drop_off.map { |s| s[:dropped] }.max || 1 %>
+<% max_dropped = [@drop_off.map { |s| s[:dropped] }.max.to_i, 1].max %>
 <table class="oor-table">
   <thead>
     <tr>
