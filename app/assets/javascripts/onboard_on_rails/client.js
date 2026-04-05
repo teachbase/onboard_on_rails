@@ -188,6 +188,7 @@ OnboardOnRails.DOMObserver = {
   start(onNavigate) {
     document.addEventListener("turbo:load", () => onNavigate());
     document.addEventListener("turbo:before-render", () => OnboardOnRails.TourRenderer.cleanup());
+    document.addEventListener("turbo:before-cache", () => OnboardOnRails.TourRenderer.cleanup());
     this.mutationObserver = new MutationObserver(() => this.checkWaitCallbacks());
     this.mutationObserver.observe(document.body, { childList: true, subtree: true });
   },
