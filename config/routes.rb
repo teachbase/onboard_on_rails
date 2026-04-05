@@ -1,6 +1,7 @@
 OnboardOnRails::Engine.routes.draw do
   namespace :admin do
     resources :tours do
+      post :copy, on: :member
       resources :steps, except: [:index]
       resource :stats, only: [:show, :destroy]
     end
