@@ -78,7 +78,7 @@ RSpec.describe OnboardOnRails::Admin::ToursController, type: :controller do
       expect(copied.status).to eq("draft")
       expect(copied.steps.count).to eq(1)
       expect(response).to redirect_to(edit_admin_tour_path(copied))
-      expect(flash[:notice]).to be_present
+      expect(flash[:notice]).to eq("Tour copied successfully.")
     end
   end
 end
