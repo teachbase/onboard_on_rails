@@ -155,11 +155,13 @@ ru:
             action_value: "Значение действия"
             wait_for_selector: "Ждать селектор"
             url_pattern: "URL паттерн"
+            complete_on_target_click: "Засчитывать клик по элементу"
           hints:
             selector: "CSS селектор целевого элемента (например, #main-header, .btn-primary)"
             action_value: "Для \"redirect\": URL. Для \"custom_event\": название события."
             wait_for_selector: "Необязательно. Ждать появления элемента перед показом шага."
             url_pattern: "Необязательно. На какой странице показать шаг. Поддерживает глобы: /users/*/about. Пусто = текущая страница."
+            complete_on_target_click: "Клик по целевому элементу автоматически засчитывает выполнение шага."
           style_overrides: "Переопределение стилей"
           styles:
             background_color: "Цвет фона"

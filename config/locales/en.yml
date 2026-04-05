@@ -90,11 +90,13 @@ en:
             action_value: "Action Value"
             wait_for_selector: "Wait for Selector"
             url_pattern: "URL Pattern"
+            complete_on_target_click: "Complete on target click"
           hints:
             selector: "CSS selector for the target element (e.g., #main-header, .btn-primary)"
             action_value: "For \"redirect\": the URL. For \"custom_event\": the event name."
             wait_for_selector: "Optional. Wait for this selector to appear before showing the step."
             url_pattern: "Optional. Show this step on a specific page. Supports globs: /users/*/about. Leave empty to show on current page."
+            complete_on_target_click: "When enabled, clicking the target element completes this step automatically."
           style_overrides: "Style Overrides"
           styles:
             background_color: "Background Color"
