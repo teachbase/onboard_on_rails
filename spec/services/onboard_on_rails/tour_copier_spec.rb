@@ -107,19 +107,19 @@ RSpec.describe OnboardOnRails::TourCopier do
 
     context "when tour save fails" do
       it "returns an unpersisted tour and does not create steps" do
-        allow_any_instance_of(OnboardOnRails::Tour).to receive(:save!).and_raise(ActiveRecord::RecordInvalid)
+        # Force creation of original tour and steps before stubbing
+        original; step1; step2
+        step_count = OnboardOnRails::Step.count
 
-        step_count_before = OnboardOnRails::Step.count
-        tour_count_before = OnboardOnRails::Tour.count
-
-        begin
-          described_class.call(original)
-        rescue ActiveRecord::RecordInvalid
-          # expected
+        # Stub save! to raise only for new (unsaved) tour records
+        allow_any_instance_of(OnboardOnRails::Tour).to receive(:save!) do |tour|
+          raise ActiveRecord::RecordInvalid.new(tour) unless tour.id.present?
         end
 
-        expect(OnboardOnRails::Step.count).to eq(step_count_before)
-        expect(OnboardOnRails::Tour.count).to eq(tour_count_before)
+        result = described_class.call(original)
+
+        expect(result).not_to be_persisted
+        expect(OnboardOnRails::Step.count).to eq(step_count)
       end
     end
   end

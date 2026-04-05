@@ -80,5 +80,16 @@ RSpec.describe OnboardOnRails::Admin::ToursController, type: :controller do
       expect(response).to redirect_to(edit_admin_tour_path(copied))
       expect(flash[:notice]).to eq("Tour copied successfully.")
     end
+
+    it "redirects to index with alert on failure" do
+      tour = create(:tour, name: "Original")
+      unpersisted = OnboardOnRails::Tour.new
+      allow(OnboardOnRails::TourCopier).to receive(:call).and_return(unpersisted)
+
+      post :copy, params: { id: tour.id }
+
+      expect(response).to redirect_to(admin_tours_path)
+      expect(flash[:alert]).to eq("Failed to copy tour.")
+    end
   end
 end
