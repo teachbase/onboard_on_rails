@@ -12,7 +12,7 @@ module OnboardOnRails
         @step = @tour.steps.build(step_params)
         @step.position ||= @tour.steps.count
         if @step.save
-          redirect_to edit_admin_tour_step_path(@tour, @step), notice: t("onboard_on_rails.flash.step_created")
+          redirect_to edit_admin_tour_path(@tour), notice: t("onboard_on_rails.flash.step_created")
         else
           render :new, status: :unprocessable_entity
         end
