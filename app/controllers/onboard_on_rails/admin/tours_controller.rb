@@ -1,7 +1,7 @@
 module OnboardOnRails
   module Admin
     class ToursController < BaseController
-      before_action :set_tour, only: [:show, :edit, :update, :destroy]
+      before_action :set_tour, only: [:show, :edit, :update, :destroy, :copy]
 
       def index
         @tours = Tour.order(updated_at: :desc)
@@ -39,6 +39,16 @@ module OnboardOnRails
       def destroy
         @tour.destroy
         redirect_to admin_tours_path, notice: t("onboard_on_rails.flash.tour_deleted")
+      end
+
+      def copy
+        copied = TourCopier.call(@tour)
+
+        if copied.persisted?
+          redirect_to edit_admin_tour_path(copied), notice: t(".success")
+        else
+          redirect_to admin_tours_path, alert: t(".failure")
+        end
       end
 
       private

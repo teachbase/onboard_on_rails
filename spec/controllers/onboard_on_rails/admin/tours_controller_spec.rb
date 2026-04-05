@@ -63,4 +63,22 @@ RSpec.describe OnboardOnRails::Admin::ToursController, type: :controller do
       expect(response).to have_http_status(:forbidden)
     end
   end
+
+  describe "POST #copy" do
+    it "creates a copy and redirects to edit" do
+      tour = create(:tour, name: "Original")
+      create(:step, tour: tour, position: 1)
+
+      expect {
+        post :copy, params: { id: tour.id }
+      }.to change(OnboardOnRails::Tour, :count).by(1)
+
+      copied = OnboardOnRails::Tour.last
+      expect(copied.name).to include("Original")
+      expect(copied.status).to eq("draft")
+      expect(copied.steps.count).to eq(1)
+      expect(response).to redirect_to(edit_admin_tour_path(copied))
+      expect(flash[:notice]).to be_present
+    end
+  end
 end
