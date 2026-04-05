@@ -1,30 +1,85 @@
 <div class="oor-page-header">
   <h1><%= t("onboard_on_rails.admin.stats.title", name: @tour.name) %></h1>
   <div class="oor-page-header__actions">
-    <%= link_to t("onboard_on_rails.admin.stats.back"), admin_tour_path(@tour), class: "oor-btn oor-btn--sm" %>
+    <%= button_to t("onboard_on_rails.admin.stats.reset"),
+        admin_tour_stats_path(@tour),
+        method: :delete,
+        class: "oor-btn oor-btn--sm oor-btn--danger",
+        form: { style: "display:inline" },
+        onclick: "return confirm('#{j t("onboard_on_rails.admin.stats.reset_confirm")}')" %>
+    <%= link_to t("onboard_on_rails.admin.stats.back"), edit_admin_tour_path(@tour), class: "oor-btn oor-btn--sm" %>
   </div>
 </div>
 
 <div class="oor-stats-grid">
   <div class="oor-stat-card">
-    <div class="oor-stat-card__value"><%= @summary[:total_started] %></div>
-    <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.started") %></div>
+    <div class="oor-stat-card__icon oor-stat-card__icon--started">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    </div>
+    <div class="oor-stat-card__content">
+      <div class="oor-stat-card__value"><%= @summary[:total_started] %></div>
+      <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.started") %></div>
+    </div>
   </div>
+
   <div class="oor-stat-card">
-    <div class="oor-stat-card__value"><%= @summary[:completed] %></div>
-    <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.completed") %></div>
+    <div class="oor-stat-card__icon oor-stat-card__icon--completed">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+    </div>
+    <div class="oor-stat-card__content">
+      <div class="oor-stat-card__value"><%= @summary[:completed] %></div>
+      <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.completed") %></div>
+    </div>
   </div>
+
   <div class="oor-stat-card">
-    <div class="oor-stat-card__value"><%= @summary[:dismissed] %></div>
-    <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.dismissed") %></div>
+    <div class="oor-stat-card__icon oor-stat-card__icon--dismissed">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+      </svg>
+    </div>
+    <div class="oor-stat-card__content">
+      <div class="oor-stat-card__value"><%= @summary[:dismissed] %></div>
+      <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.dismissed") %></div>
+    </div>
   </div>
+
   <div class="oor-stat-card">
-    <div class="oor-stat-card__value"><%= @summary[:completion_rate] %>%</div>
-    <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.completion_rate") %></div>
+    <div class="oor-stat-card__icon oor-stat-card__icon--rate">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+        <polyline points="17 6 23 6 23 12"/>
+      </svg>
+    </div>
+    <div class="oor-stat-card__content">
+      <div class="oor-stat-card__value"><%= @summary[:completion_rate] %>%</div>
+      <div class="oor-stat-card__label"><%= t("onboard_on_rails.admin.stats.completion_rate") %></div>
+      <div class="oor-progress">
+        <div class="oor-progress__bar oor-progress__bar--success" style="width: <%= @summary[:completion_rate] %>%"></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<h2 class="oor-section-title"><%= t("onboard_on_rails.admin.stats.drop_off_title") %></h2>
+<h2 class="oor-section-title">
+  <span class="oor-section-title__icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+    </svg>
+  </span>
+  <%= t("onboard_on_rails.admin.stats.drop_off_title") %>
+</h2>
+<% max_dropped = @drop_off.map { |s| s[:dropped] }.max || 1 %>
 <table class="oor-table">
   <thead>
     <tr>
@@ -38,13 +93,28 @@
       <tr>
         <td><%= step_data[:position] %></td>
         <td><%= step_data[:title] %></td>
-        <td><%= step_data[:dropped] %></td>
+        <td>
+          <div class="oor-drop-off-bar">
+            <span class="oor-drop-off-bar__value"><%= step_data[:dropped] %></span>
+            <div class="oor-drop-off-bar__track">
+              <div class="oor-drop-off-bar__fill" style="width: <%= (step_data[:dropped].to_f / max_dropped * 100).round %>%"></div>
+            </div>
+          </div>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<h2 class="oor-section-title"><%= t("onboard_on_rails.admin.stats.completions_title") %></h2>
+<h2 class="oor-section-title">
+  <span class="oor-section-title__icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+  </span>
+  <%= t("onboard_on_rails.admin.stats.completions_title") %>
+</h2>
 <% if @completions.any? %>
   <table class="oor-table">
     <thead>
@@ -84,7 +154,16 @@
 <% end %>
 
 <% if @ab_breakdown.any? %>
-  <h2 class="oor-section-title"><%= t("onboard_on_rails.admin.stats.ab_test_title") %></h2>
+  <h2 class="oor-section-title">
+    <span class="oor-section-title__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/>
+        <line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+    </span>
+    <%= t("onboard_on_rails.admin.stats.ab_test_title") %>
+  </h2>
   <table class="oor-table">
     <thead>
       <tr>

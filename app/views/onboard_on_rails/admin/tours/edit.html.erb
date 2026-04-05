@@ -1,6 +1,7 @@
 <div class="oor-page-header">
   <h1><%= t("onboard_on_rails.admin.tours.edit.title", name: @tour.name) %></h1>
   <div class="oor-page-header__actions">
+    <%= link_to t("onboard_on_rails.admin.tours.edit.stats"), admin_tour_stats_path(@tour), class: "oor-btn oor-btn--primary oor-btn--sm" %>
     <%= link_to t("onboard_on_rails.admin.tours.edit.back"), admin_tours_path, class: "oor-btn oor-btn--secondary" %>
   </div>
 </div>

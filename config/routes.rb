@@ -2,7 +2,7 @@ OnboardOnRails::Engine.routes.draw do
   namespace :admin do
     resources :tours do
       resources :steps, except: [:index]
-      resource :stats, only: [:show]
+      resource :stats, only: [:show, :destroy]
     end
     resources :lessons, only: [:index] do
       member do
