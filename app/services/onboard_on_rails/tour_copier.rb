@@ -25,7 +25,7 @@ module OnboardOnRails
 
       new_tour
     rescue ActiveRecord::RecordInvalid
-      new_tour
+      @original.dup
     end
   end
 end
