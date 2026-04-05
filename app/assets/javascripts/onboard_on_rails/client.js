@@ -332,6 +332,7 @@ OnboardOnRails.TourRenderer = {
 OnboardOnRails.TourManager = {
   currentTour: null, currentStepIndex: 0, sessionId: null,
   _targetClickEl: null, _targetClickHandler: null,
+  _loadVersion: 0,
 
   init() {
     if (!OnboardOnRails.ApiClient.getUserId()) return;
@@ -341,9 +342,17 @@ OnboardOnRails.TourManager = {
   },
 
   async loadTour() {
+    var version = ++this._loadVersion;
+    var url = window.location.pathname;
+    var tour = await OnboardOnRails.ApiClient.fetchTours(url, this.sessionId);
+    if (version !== this._loadVersion) return;
+
+    if (tour && this.currentTour && tour.id === this.currentTour.id &&
+        this.currentStepIndex === (tour.current_step_index || 0)) {
+      return;
+    }
+
     OnboardOnRails.TourRenderer.cleanup();
-    const url = window.location.pathname;
-    const tour = await OnboardOnRails.ApiClient.fetchTours(url, this.sessionId);
     if (!tour) { this.currentTour = null; return; }
     this.currentTour = tour;
     this.currentStepIndex = tour.current_step_index || 0;
