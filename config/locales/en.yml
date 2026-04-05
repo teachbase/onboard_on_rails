@@ -62,12 +62,16 @@ en:
             schedule_end: "Schedule End"
             ab_test_id: "A/B Test ID"
             ab_test_group: "A/B Test Group"
+          style_overrides: "Default Styles"
+          styles:
+            button_color: "Button Color"
           hints:
             trigger_event: "Required when trigger type is \"event\". The custom event name to listen for."
             url_pattern: "Comma-separated URL patterns. Use * as wildcard (e.g., /dashboard/*, /settings)"
             priority: "Higher priority tours are shown first. Default: 0"
             ab_test_id: "Optional experiment identifier for A/B testing."
             ab_test_group: "Optional group assignment (e.g., A, B, control)."
+            button_color: "Default button color for all steps. Can be overridden per step."
           submit:
             create: "Create Tour"
             update: "Update Tour"
@@ -103,6 +107,7 @@ en:
             wait_for_selector: "Optional. Wait for this selector to appear before showing the step."
             url_pattern: "Optional. Show this step on a specific page. Supports globs: /users/*/about. Leave empty to show on current page."
             complete_on_target_click: "When enabled, clicking the target element completes this step automatically."
+            button_color: "Overrides the tour's default button color for this step."
           style_overrides: "Style Overrides"
           styles:
             background_color: "Background Color"
