@@ -767,3 +767,170 @@ a:hover {
 .oor-mb-0 { margin-bottom: 0; }
 .oor-mb-sm { margin-bottom: 8px; }
 .oor-mb-md { margin-bottom: 16px; }
+
+/* ============================================
+   Stats Grid & Cards (Enhanced)
+   ============================================ */
+.oor-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 900px) {
+  .oor-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .oor-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.oor-stat-card {
+  background: var(--oor-surface);
+  border: 1px solid var(--oor-border);
+  border-radius: var(--oor-radius);
+  padding: 20px;
+  box-shadow: var(--oor-shadow);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: border-color var(--oor-transition);
+}
+
+.oor-stat-card:hover {
+  border-color: var(--oor-primary-light);
+}
+
+.oor-stat-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.oor-stat-card__icon--started {
+  background: rgba(108, 92, 231, 0.12);
+  color: var(--oor-primary);
+}
+
+.oor-stat-card__icon--completed {
+  background: rgba(0, 184, 148, 0.12);
+  color: var(--oor-success);
+}
+
+.oor-stat-card__icon--dismissed {
+  background: rgba(214, 48, 49, 0.12);
+  color: var(--oor-danger);
+}
+
+.oor-stat-card__icon--rate {
+  background: rgba(253, 203, 110, 0.2);
+  color: var(--oor-warning-dark);
+}
+
+.oor-stat-card__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.oor-stat-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.oor-stat-card__value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--oor-text);
+}
+
+.oor-stat-card__label {
+  font-size: 13px;
+  color: var(--oor-text-light);
+  margin-top: 2px;
+}
+
+/* ============================================
+   Progress Bar
+   ============================================ */
+.oor-progress {
+  height: 8px;
+  background: var(--oor-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.oor-progress__bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.oor-progress__bar--success {
+  background: var(--oor-success);
+}
+
+/* ============================================
+   Section Titles (Enhanced)
+   ============================================ */
+.oor-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 32px 0 16px 0;
+  color: var(--oor-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.oor-section-title__icon {
+  display: flex;
+  align-items: center;
+  color: var(--oor-primary);
+}
+
+.oor-section-title__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ============================================
+   Drop-off Bar (inline in table)
+   ============================================ */
+.oor-drop-off-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.oor-drop-off-bar__track {
+  flex: 1;
+  height: 6px;
+  background: var(--oor-bg);
+  border-radius: 3px;
+  overflow: hidden;
+  max-width: 120px;
+}
+
+.oor-drop-off-bar__fill {
+  height: 100%;
+  background: var(--oor-danger);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.oor-drop-off-bar__value {
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 24px;
+}

@@ -31,6 +31,7 @@ en:
         edit:
           title: "Edit Tour: %{name}"
           back: "Back to Tours"
+          stats: "Stats"
           tour_settings: "Tour Settings"
           steps_title: "Steps (%{count})"
           no_steps: "No steps yet. Add your first step to this tour."
@@ -138,6 +139,9 @@ en:
       stats:
         title: "Stats: %{name}"
         back: "Back to Tour"
+        reset: "Reset All Completions"
+        reset_confirm: "This will delete all completion data for this tour. Are you sure?"
+        reset_success: "All completions have been reset."
         started: "Started"
         completed: "Completed"
         dismissed: "Dismissed"
