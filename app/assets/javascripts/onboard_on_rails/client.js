@@ -359,14 +359,15 @@ OnboardOnRails.TourManager = {
     this.showStep();
   },
 
-  showStep() {
+  showStep(allowRedirect) {
     if (!this.currentTour) return;
     this._clearTargetClickListener();
     const step = this.currentTour.steps[this.currentStepIndex];
     if (!step) return;
 
-    // Check if this step needs a different page
-    if (step.url_pattern && !step.url_pattern.includes("*")) {
+    // Redirect to step's page only during explicit navigation (next/prev),
+    // not on initial load — the backend already validates URL matching.
+    if (allowRedirect && step.url_pattern && !step.url_pattern.includes("*")) {
       if (window.location.pathname !== step.url_pattern) {
         window.location.href = step.url_pattern;
         return;
@@ -412,7 +413,7 @@ OnboardOnRails.TourManager = {
 
     this.currentStepIndex = nextIndex;
     if (this.currentStepIndex < this.currentTour.steps.length) {
-      this.showStep();
+      this.showStep(true);
     } else {
       this.complete();
     }
@@ -435,7 +436,7 @@ OnboardOnRails.TourManager = {
     }
 
     this.currentStepIndex = prevIndex;
-    this.showStep();
+    this.showStep(true);
   },
 
   async dismiss() {
