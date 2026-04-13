@@ -259,7 +259,6 @@ OnboardOnRails.TourRenderer = {
     const step = tour.steps[stepIndex];
     if (!step) return;
     this.targetEl = step.selector ? document.querySelector(step.selector) : null;
-    if (!this.targetEl && step.placement !== "center") return;
     this.createOverlay(this.targetEl);
     this.highlightTarget(this.targetEl);
     this.createTooltip(tour, step, stepIndex, tour.steps.length, this.targetEl, callbacks);
@@ -334,11 +333,7 @@ OnboardOnRails.TourRenderer = {
     if (targetEl) {
       OnboardOnRails.PositioningEngine.position(this.tooltip, targetEl, step.placement);
     } else {
-      this.tooltip.style.position = "fixed";
-      this.tooltip.style.top = "50%";
-      this.tooltip.style.left = "50%";
-      this.tooltip.style.transform = "translate(-50%, -50%)";
-      this.tooltip.style.zIndex = "10001";
+      OnboardOnRails.PositioningEngine.positionViewport(this.tooltip, step.placement);
     }
   },
 
@@ -416,9 +411,13 @@ OnboardOnRails.TourManager = {
     if (step.wait_for_selector) {
       OnboardOnRails.DOMObserver.waitForSelector(step.wait_for_selector, showFn);
     } else {
-      const targetEl = (step.placement === "center" && !step.selector) ? true : document.querySelector(step.selector);
-      if (targetEl) showFn();
-      else OnboardOnRails.DOMObserver.waitForSelector(step.selector, showFn);
+      if (!step.selector) {
+        showFn();
+      } else {
+        const targetEl = document.querySelector(step.selector);
+        if (targetEl) showFn();
+        else OnboardOnRails.DOMObserver.waitForSelector(step.selector, showFn);
+      }
     }
   },
 
