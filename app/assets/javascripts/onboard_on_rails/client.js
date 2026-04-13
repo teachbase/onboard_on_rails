@@ -144,6 +144,38 @@ OnboardOnRails.PositioningEngine = {
     if (rect.top < 0 || rect.bottom > window.innerHeight) {
       targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
     }
+  },
+  positionViewport(tooltip, placement) {
+    tooltip.style.position = "fixed";
+    tooltip.style.zIndex = "10001";
+    switch (placement) {
+      case "top":
+        tooltip.style.top = this.MARGIN + "px";
+        tooltip.style.left = "50%";
+        tooltip.style.transform = "translateX(-50%)";
+        break;
+      case "bottom":
+        tooltip.style.bottom = this.MARGIN + "px";
+        tooltip.style.left = "50%";
+        tooltip.style.transform = "translateX(-50%)";
+        break;
+      case "left":
+        tooltip.style.top = "50%";
+        tooltip.style.left = this.MARGIN + "px";
+        tooltip.style.transform = "translateY(-50%)";
+        break;
+      case "right":
+        tooltip.style.top = "50%";
+        tooltip.style.right = this.MARGIN + "px";
+        tooltip.style.transform = "translateY(-50%)";
+        break;
+      case "center":
+      default:
+        tooltip.style.top = "50%";
+        tooltip.style.left = "50%";
+        tooltip.style.transform = "translate(-50%, -50%)";
+        break;
+    }
   }
 };
 
