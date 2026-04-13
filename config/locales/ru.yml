@@ -20,8 +20,6 @@ ru:
           attributes:
             title:
               blank: "не может быть пустым"
-            selector:
-              blank: "не может быть пустым"
         onboard_on_rails/completion:
           attributes:
             user_id:

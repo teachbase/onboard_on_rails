@@ -26,6 +26,15 @@ RSpec.describe OnboardOnRails::Admin::StepsController, type: :controller do
       }
       expect(tour.steps.count).to eq(1)
     end
+
+    it "creates a step without a selector" do
+      post :create, params: {
+        tour_id: tour.id,
+        step: { title: "Hello", selector: "", placement: "center" }
+      }
+      expect(tour.steps.count).to eq(1)
+      expect(tour.steps.first.selector).to eq("")
+    end
   end
 
   describe "GET #edit" do

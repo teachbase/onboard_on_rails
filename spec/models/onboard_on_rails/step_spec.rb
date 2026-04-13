@@ -7,9 +7,9 @@ RSpec.describe OnboardOnRails::Step, type: :model do
       expect(step).not_to be_valid
     end
 
-    it "requires a selector" do
+    it "is valid without a selector" do
       step = build(:step, selector: nil)
-      expect(step).not_to be_valid
+      expect(step).to be_valid
     end
 
     it "validates placement inclusion" do
