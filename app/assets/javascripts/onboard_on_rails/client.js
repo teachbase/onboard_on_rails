@@ -189,12 +189,44 @@ OnboardOnRails.DOMObserver = {
     document.addEventListener("turbo:load", () => onNavigate());
     document.addEventListener("turbo:before-render", () => OnboardOnRails.TourRenderer.cleanup());
     document.addEventListener("turbo:before-cache", () => OnboardOnRails.TourRenderer.cleanup());
+
+    // SPA support: detect navigation via History API (React Router, etc.)
+    this._lastUrl = window.location.href;
+    this._onUrlChange = () => {
+      var currentUrl = window.location.href;
+      if (currentUrl !== this._lastUrl) {
+        this._lastUrl = currentUrl;
+        onNavigate();
+      }
+    };
+    window.addEventListener("popstate", this._onUrlChange);
+
+    if (!history._oorPatched) {
+      var origPushState = history.pushState;
+      var origReplaceState = history.replaceState;
+      history.pushState = function() {
+        origPushState.apply(this, arguments);
+        window.dispatchEvent(new Event("oor:urlchange"));
+      };
+      history.replaceState = function() {
+        origReplaceState.apply(this, arguments);
+        window.dispatchEvent(new Event("oor:urlchange"));
+      };
+      history._oorPatched = true;
+    }
+    window.addEventListener("oor:urlchange", this._onUrlChange);
+
     this.mutationObserver = new MutationObserver(() => this.checkWaitCallbacks());
     this.mutationObserver.observe(document.body, { childList: true, subtree: true });
   },
 
   stop() {
     if (this.mutationObserver) { this.mutationObserver.disconnect(); this.mutationObserver = null; }
+    if (this._onUrlChange) {
+      window.removeEventListener("popstate", this._onUrlChange);
+      window.removeEventListener("oor:urlchange", this._onUrlChange);
+      this._onUrlChange = null;
+    }
     this.waitCallbacks = [];
   },
 
