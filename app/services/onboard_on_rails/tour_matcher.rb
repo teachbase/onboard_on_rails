@@ -7,7 +7,7 @@ module OnboardOnRails
       @url = url
       @session_id = session_id
       @device_type = device_type
-      @user_attributes = OnboardOnRails.configuration.user_attributes.call(user)
+      @user_attributes = OnboardOnRails.configuration.resolve_attributes(user)
       @current_step_index = 0
     end
 

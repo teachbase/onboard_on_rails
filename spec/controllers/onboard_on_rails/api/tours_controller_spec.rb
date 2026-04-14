@@ -8,7 +8,8 @@ RSpec.describe OnboardOnRails::Api::ToursController, type: :controller do
   before do
     OnboardOnRails.configure do |config|
       config.current_user_method = :current_user
-      config.user_attributes = ->(u) { { role: u.role, plan: u.plan } }
+      config.register_attribute(:role, type: :string, label: "Role") { |u| u.role }
+      config.register_attribute(:plan, type: :string, label: "Plan") { |u| u.plan }
     end
     allow(controller).to receive(:current_user).and_return(user)
   end
