@@ -115,9 +115,6 @@ OnboardOnRails.PositioningEngine = {
     tooltip.style.position = "absolute";
     tooltip.style.top = top + "px";
     tooltip.style.left = left + "px";
-    tooltip.style.bottom = "";
-    tooltip.style.right = "";
-    tooltip.style.transform = "";
     tooltip.dataset.placement = resolved;
   },
   resolvePlacement(preferred, targetRect, tooltipRect) {
@@ -151,11 +148,6 @@ OnboardOnRails.PositioningEngine = {
   positionViewport(tooltip, placement) {
     tooltip.style.position = "fixed";
     tooltip.style.zIndex = "10001";
-    tooltip.style.top = "";
-    tooltip.style.bottom = "";
-    tooltip.style.left = "";
-    tooltip.style.right = "";
-    tooltip.style.transform = "";
     switch (placement) {
       case "top":
         tooltip.style.top = this.MARGIN + "px";
@@ -337,14 +329,12 @@ OnboardOnRails.TourRenderer = {
       const action = e.target.dataset.action;
       if (action && callbacks[action]) callbacks[action]();
     });
-    this.tooltip.style.visibility = "hidden";
     document.body.appendChild(this.tooltip);
     if (targetEl) {
       OnboardOnRails.PositioningEngine.position(this.tooltip, targetEl, step.placement);
     } else {
       OnboardOnRails.PositioningEngine.positionViewport(this.tooltip, step.placement);
     }
-    this.tooltip.style.visibility = "";
   },
 
   cleanup() {
