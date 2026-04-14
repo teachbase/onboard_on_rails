@@ -62,6 +62,7 @@ en:
             schedule_end: "Schedule End"
             ab_test_id: "A/B Test ID"
             ab_test_group: "A/B Test Group"
+            device_type: "Device Type"
           style_overrides: "Default Styles"
           styles:
             button_color: "Button Color"
@@ -71,6 +72,7 @@ en:
             priority: "Higher priority tours are shown first. Default: 0"
             ab_test_id: "Optional experiment identifier for A/B testing."
             ab_test_group: "Optional group assignment (e.g., A, B, control)."
+            device_type: "Show this tour only on specific device types."
             button_color: "Default button color for all steps. Can be overridden per step."
           submit:
             create: "Create Tour"
@@ -203,6 +205,10 @@ en:
       modal: "Modal"
       banner: "Banner"
       slideout: "Slideout"
+    device_types:
+      all: "All Devices"
+      desktop: "Desktop"
+      mobile: "Mobile"
     placements:
       top: "Top"
       bottom: "Bottom"

@@ -61,7 +61,7 @@ module OnboardOnRails
         permitted = params.require(:tour).permit(
           :name, :description, :status, :trigger_type, :trigger_event,
           :frequency, :theme, :priority, :schedule_start, :schedule_end,
-          :ab_test_id, :ab_test_group,
+          :ab_test_id, :ab_test_group, :device_type,
           style_overrides: {}, segment_rules: {}
         )
 
