@@ -26,8 +26,9 @@ module OnboardOnRails
     private
 
     def hex_to_rgb(hex)
-      hex = hex.delete("#")
-      [hex[0..1].to_i(16), hex[2..3].to_i(16), hex[4..5].to_i(16)]
+      normalized = hex.delete("#")
+      raise ArgumentError, "Invalid hex color: #{hex}" unless normalized.match?(/\A[0-9a-fA-F]{6}\z/)
+      [normalized[0..1].to_i(16), normalized[2..3].to_i(16), normalized[4..5].to_i(16)]
     end
 
     def adjust_brightness(hex, factor)
