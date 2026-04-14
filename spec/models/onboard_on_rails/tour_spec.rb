@@ -34,6 +34,16 @@ RSpec.describe OnboardOnRails::Tour, type: :model do
       expect(tour.errors[:trigger_event]).to include("can't be blank")
     end
 
+    it "validates device_type inclusion" do
+      tour = build(:tour, device_type: "invalid")
+      expect(tour).not_to be_valid
+    end
+
+    it "defaults device_type to all" do
+      tour = build(:tour)
+      expect(tour.device_type).to eq("all")
+    end
+
     it "is valid with all required attributes" do
       tour = build(:tour)
       expect(tour).to be_valid

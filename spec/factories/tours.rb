@@ -31,5 +31,13 @@ FactoryBot.define do
       ab_test_id { "experiment_1" }
       ab_test_group { "A" }
     end
+
+    trait :desktop_only do
+      device_type { "desktop" }
+    end
+
+    trait :mobile_only do
+      device_type { "mobile" }
+    end
   end
 end
