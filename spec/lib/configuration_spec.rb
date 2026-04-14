@@ -1,4 +1,5 @@
-require "rails_helper"
+require "spec_helper"
+require "onboard_on_rails/configuration"
 
 RSpec.describe OnboardOnRails::Configuration do
   subject(:config) { described_class.new }
