@@ -1,6 +1,6 @@
 module OnboardOnRails
   class Configuration
-    attr_accessor :user_class, :admin_auth, :current_user_method, :user_locale
+    attr_accessor :user_class, :admin_auth, :current_user_method, :user_locale, :resolve_context
     attr_reader :registered_attributes
 
     def accent_color=(value)

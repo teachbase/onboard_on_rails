@@ -2,11 +2,15 @@ module OnboardOnRails
   class TourMatcher
     attr_reader :current_step_index
 
-    def initialize(user:, url:, session_id: nil, device_type: nil)
+    def initialize(user:, url:, session_id: nil, device_type: nil, request: nil)
       @user = user
       @url = url
       @session_id = session_id
       @device_type = device_type
+
+      context_proc = OnboardOnRails.configuration.resolve_context
+      context_proc.call(user, request) if context_proc && request
+
       @user_attributes = OnboardOnRails.configuration.resolve_attributes(user)
       @current_step_index = 0
     end
