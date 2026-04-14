@@ -91,8 +91,8 @@
   <div class="oor-form-group">
     <label><%= t("onboard_on_rails.admin.tours.form.styles.button_color") %></label>
     <div class="oor-color-input">
-      <input type="color" name="tour[style_overrides][button_color]" value="<%= tour.style_overrides&.dig('button_color') || '#6c5ce7' %>">
-      <input type="text" name="tour[style_overrides][button_color]" value="<%= tour.style_overrides&.dig('button_color') || '#6c5ce7' %>" placeholder="#6c5ce7">
+      <input type="color" name="tour[style_overrides][button_color]" value="<%= tour.style_overrides&.dig('button_color') || OnboardOnRails.configuration.accent_color %>">
+      <input type="text" name="tour[style_overrides][button_color]" value="<%= tour.style_overrides&.dig('button_color') || OnboardOnRails.configuration.accent_color %>" placeholder="<%= OnboardOnRails.configuration.accent_color %>">
     </div>
     <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.button_color") %></div>
   </div>

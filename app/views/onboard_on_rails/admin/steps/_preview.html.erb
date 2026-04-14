@@ -25,7 +25,7 @@
     font_family = step.style_overrides&.dig('font_family').presence
     font_size = step.style_overrides&.dig('font_size').presence
     border_radius = step.style_overrides&.dig('border_radius') || '6px'
-    button_color = step.style_overrides&.dig('button_color') || '#6c5ce7'
+    button_color = step.style_overrides&.dig('button_color') || OnboardOnRails.configuration.accent_color
   %>
 
   <div class="oor-preview-overlay"></div>

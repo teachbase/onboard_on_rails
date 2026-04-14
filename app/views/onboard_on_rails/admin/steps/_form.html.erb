@@ -135,8 +135,8 @@
   <div class="oor-form-group">
     <label><%= t("onboard_on_rails.admin.steps.form.styles.button_color") %></label>
     <div class="oor-color-input">
-      <input type="color" name="step[style_overrides][button_color]" value="<%= step.style_overrides&.dig('button_color') || '#6c5ce7' %>">
-      <input type="text" name="step[style_overrides][button_color]" value="<%= step.style_overrides&.dig('button_color') || '#6c5ce7' %>" placeholder="#6c5ce7">
+      <input type="color" name="step[style_overrides][button_color]" value="<%= step.style_overrides&.dig('button_color') || OnboardOnRails.configuration.accent_color %>">
+      <input type="text" name="step[style_overrides][button_color]" value="<%= step.style_overrides&.dig('button_color') || OnboardOnRails.configuration.accent_color %>" placeholder="<%= OnboardOnRails.configuration.accent_color %>">
     </div>
     <div class="oor-form-hint"><%= t("onboard_on_rails.admin.steps.form.hints.button_color") %></div>
   </div>

@@ -6,6 +6,16 @@
   <%= stylesheet_link_tag "onboard_on_rails/client", media: "all" %>
   <%= javascript_include_tag "onboard_on_rails/admin" %>
   <%= csrf_meta_tags %>
+  <style>
+    :root {
+      --oor-primary: <%= OnboardOnRails.configuration.accent_color %>;
+      --oor-primary-dark: <%= OnboardOnRails.configuration.accent_color_dark %>;
+      --oor-primary-light: <%= OnboardOnRails.configuration.accent_color_light %>;
+      --oor-primary-shadow: <%= OnboardOnRails.configuration.accent_color_rgba(0.15) %>;
+      --oor-primary-bg: <%= OnboardOnRails.configuration.accent_color_rgba(0.12) %>;
+      --oor-step-btn-bg: <%= OnboardOnRails.configuration.accent_color %>;
+    }
+  </style>
   <%= onboard_on_rails_meta_tags rescue nil %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
