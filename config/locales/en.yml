@@ -63,6 +63,7 @@ en:
             ab_test_id: "A/B Test ID"
             ab_test_group: "A/B Test Group"
             device_type: "Device Type"
+            overlay_enabled: "Show backdrop overlay"
           style_overrides: "Default Styles"
           styles:
             button_color: "Button Color"
@@ -74,6 +75,7 @@ en:
             ab_test_group: "Optional group assignment (e.g., A, B, control)."
             device_type: "Show this tour only on specific device types."
             button_color: "Default button color for all steps. Can be overridden per step."
+            overlay_enabled: "When enabled, a dark overlay covers the page behind the tour step."
           submit:
             create: "Create Tour"
             update: "Update Tour"
@@ -111,6 +113,7 @@ en:
             url_pattern: "Optional. Show this step on a specific page. Supports globs: /users/*/about. Leave empty to show on current page."
             complete_on_target_click: "When enabled, clicking the target element completes this step automatically."
             button_color: "Overrides the tour's default button color for this step."
+            min_width: "Minimum width in pixels. Leave empty for default."
           style_overrides: "Style Overrides"
           styles:
             background_color: "Background Color"
@@ -119,6 +122,7 @@ en:
             font_size: "Font Size"
             border_radius: "Border Radius"
             button_color: "Button Color"
+            min_width: "Min Width (px)"
             default_system: "Default (System)"
             default: "Default"
             default_radius: "Default (6px)"

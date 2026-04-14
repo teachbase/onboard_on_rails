@@ -30,6 +30,11 @@ RSpec.describe OnboardOnRails::Admin::ToursController, type: :controller do
       expect(OnboardOnRails::Tour.count).to eq(1)
       expect(response).to redirect_to(admin_tour_path(OnboardOnRails::Tour.last))
     end
+
+    it "creates a tour with overlay_enabled false" do
+      post :create, params: { tour: { name: "No Overlay", overlay_enabled: "0" } }
+      expect(OnboardOnRails::Tour.last.overlay_enabled).to eq(false)
+    end
   end
 
   describe "GET #edit" do

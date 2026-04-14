@@ -92,6 +92,7 @@ OnboardOnRails.ThemeEngine = {
     if (overrides.border_radius) container.style.setProperty("--oor-step-radius", overrides.border_radius);
     if (overrides.button_color) container.style.setProperty("--oor-step-btn-bg", overrides.button_color);
     if (overrides.max_width) container.style.setProperty("--oor-step-max-width", overrides.max_width);
+    if (overrides.min_width) container.style.setProperty("--oor-step-min-width", overrides.min_width + "px");
   }
 };
 
@@ -316,7 +317,7 @@ OnboardOnRails.TourRenderer = {
     const step = tour.steps[stepIndex];
     if (!step) return;
     this.targetEl = step.selector ? document.querySelector(step.selector) : null;
-    this.createOverlay(this.targetEl);
+    this.createOverlay(this.targetEl, tour.overlay_enabled);
     this.highlightTarget(this.targetEl);
     this.createTooltip(tour, step, stepIndex, tour.steps.length, this.targetEl, callbacks);
     if (this.targetEl) OnboardOnRails.PositioningEngine.scrollIntoView(this.targetEl);
@@ -354,9 +355,12 @@ OnboardOnRails.TourRenderer = {
     this.originalStyles = null;
   },
 
-  createOverlay(targetEl) {
+  createOverlay(targetEl, overlayEnabled) {
     this.overlay = document.createElement("div");
     this.overlay.className = "oor-overlay";
+    if (overlayEnabled === false) {
+      this.overlay.style.background = "transparent";
+    }
     if (targetEl) this.overlay.style.clipPath = OnboardOnRails.PositioningEngine.getClipPath(targetEl);
     document.body.appendChild(this.overlay);
   },
@@ -372,9 +376,11 @@ OnboardOnRails.TourRenderer = {
         <div class="oor-step-body">${step.body}</div>
       </div>
       <div class="oor-step-footer">
-        ${totalSteps > 5
-          ? `<div class="oor-step-counter">${stepIndex + 1} / ${totalSteps}</div>`
-          : `<div class="oor-step-dots">${tour.steps.map((_, i) => `<span class="oor-dot ${i === stepIndex ? 'oor-dot--active' : ''}"></span>`).join("")}</div>`
+        ${totalSteps > 1
+          ? (totalSteps > 5
+            ? `<div class="oor-step-counter">${stepIndex + 1} / ${totalSteps}</div>`
+            : `<div class="oor-step-dots">${tour.steps.map((_, i) => `<span class="oor-dot ${i === stepIndex ? 'oor-dot--active' : ''}"></span>`).join("")}</div>`)
+          : ''
         }
         <div class="oor-step-actions">
           <button class="oor-btn-skip" data-action="dismiss">${OnboardOnRails.I18n.t('skip')}</button>
@@ -423,6 +429,10 @@ OnboardOnRails.TourManager = {
     var accentMeta = document.querySelector('meta[name="onboard-on-rails-accent-color"]');
     if (accentMeta && accentMeta.content) {
       document.documentElement.style.setProperty("--oor-step-btn-bg", accentMeta.content);
+    }
+    var fontMeta = document.querySelector('meta[name="onboard-on-rails-default-font"]');
+    if (fontMeta && fontMeta.content) {
+      document.documentElement.style.setProperty("--oor-step-font", fontMeta.content);
     }
     this.sessionId = this.getOrCreateSessionId();
     this.loadTour();
