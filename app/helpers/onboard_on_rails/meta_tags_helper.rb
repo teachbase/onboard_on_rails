@@ -7,7 +7,7 @@ module OnboardOnRails
       mount_path = OnboardOnRails::Engine.routes.find_script_name({})
       mount_path = "/onboard" if mount_path.blank?
 
-      locale = OnboardOnRails.configuration.user_locale.call(user)
+      locale = OnboardOnRails.configuration.user_locale.call(user) || "ru"
 
       tag.meta(name: "onboard-on-rails-user-id", content: user.id) +
         tag.meta(name: "onboard-on-rails-mount-path", content: mount_path) +
