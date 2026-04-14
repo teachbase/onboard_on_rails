@@ -9,11 +9,17 @@ module OnboardOnRails
 
       locale = OnboardOnRails.configuration.user_locale.call(user) || "ru"
 
-      tag.meta(name: "onboard-on-rails-user-id", content: user.id) +
+      tags = tag.meta(name: "onboard-on-rails-user-id", content: user.id) +
         tag.meta(name: "onboard-on-rails-mount-path", content: mount_path) +
         tag.meta(name: "onboard-on-rails-accent-color", content: OnboardOnRails.configuration.accent_color) +
         tag.meta(name: "csrf-token", content: form_authenticity_token) +
         tag.meta(name: "onboard-on-rails-locale", content: locale)
+
+      if OnboardOnRails.configuration.default_font.present?
+        tags += tag.meta(name: "onboard-on-rails-default-font", content: OnboardOnRails.configuration.default_font)
+      end
+
+      tags
     end
   end
 end

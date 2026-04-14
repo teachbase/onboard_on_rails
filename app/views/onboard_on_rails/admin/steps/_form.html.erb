@@ -106,7 +106,7 @@
     <label><%= t("onboard_on_rails.admin.steps.form.styles.font_family") %></label>
     <select name="step[style_overrides][font_family]">
       <option value=""><%= t("onboard_on_rails.admin.steps.form.styles.default_system") %></option>
-      <% %w[Arial Helvetica Georgia Times\ New\ Roman Courier\ New Verdana].each do |font| %>
+      <% %w[Arial Helvetica Georgia Times\ New\ Roman Courier\ New Verdana Rubik].each do |font| %>
         <option value="<%= font %>" <%= 'selected' if step.style_overrides&.dig('font_family') == font %>><%= font %></option>
       <% end %>
     </select>

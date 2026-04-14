@@ -430,6 +430,10 @@ OnboardOnRails.TourManager = {
     if (accentMeta && accentMeta.content) {
       document.documentElement.style.setProperty("--oor-step-btn-bg", accentMeta.content);
     }
+    var fontMeta = document.querySelector('meta[name="onboard-on-rails-default-font"]');
+    if (fontMeta && fontMeta.content) {
+      document.documentElement.style.setProperty("--oor-step-font", fontMeta.content);
+    }
     this.sessionId = this.getOrCreateSessionId();
     this.loadTour();
     OnboardOnRails.DOMObserver.start(() => this.loadTour());
