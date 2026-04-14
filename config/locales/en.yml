@@ -103,6 +103,7 @@ en:
             complete_on_target_click: "Complete on target click"
           hints:
             selector: "CSS selector for the target element (e.g., #main-header, .btn-primary)"
+            selector_empty: "If left empty, the step will be positioned relative to the viewport"
             action_value: "For \"redirect\": the URL. For \"custom_event\": the event name."
             wait_for_selector: "Optional. Wait for this selector to appear before showing the step."
             url_pattern: "Optional. Show this step on a specific page. Supports globs: /users/*/about. Leave empty to show on current page."

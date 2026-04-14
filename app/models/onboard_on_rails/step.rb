@@ -9,7 +9,6 @@ module OnboardOnRails
     has_many :completions, dependent: :nullify
 
     validates :title, presence: true
-    validates :selector, presence: true
     validates :placement, inclusion: { in: PLACEMENTS }
     validates :action_type, inclusion: { in: ACTION_TYPES }
 

@@ -115,6 +115,9 @@ OnboardOnRails.PositioningEngine = {
     tooltip.style.position = "absolute";
     tooltip.style.top = top + "px";
     tooltip.style.left = left + "px";
+    tooltip.style.bottom = "auto";
+    tooltip.style.right = "auto";
+    tooltip.style.transform = "none";
     tooltip.dataset.placement = resolved;
   },
   resolvePlacement(preferred, targetRect, tooltipRect) {
@@ -143,6 +146,43 @@ OnboardOnRails.PositioningEngine = {
     const rect = targetEl.getBoundingClientRect();
     if (rect.top < 0 || rect.bottom > window.innerHeight) {
       targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  },
+  positionViewport(tooltip, placement) {
+    tooltip.style.position = "fixed";
+    tooltip.style.zIndex = "10001";
+    tooltip.style.top = "auto";
+    tooltip.style.bottom = "auto";
+    tooltip.style.left = "auto";
+    tooltip.style.right = "auto";
+    tooltip.style.transform = "none";
+    switch (placement) {
+      case "top":
+        tooltip.style.top = this.MARGIN + "px";
+        tooltip.style.left = "50%";
+        tooltip.style.transform = "translateX(-50%)";
+        break;
+      case "bottom":
+        tooltip.style.bottom = this.MARGIN + "px";
+        tooltip.style.left = "50%";
+        tooltip.style.transform = "translateX(-50%)";
+        break;
+      case "left":
+        tooltip.style.top = "50%";
+        tooltip.style.left = this.MARGIN + "px";
+        tooltip.style.transform = "translateY(-50%)";
+        break;
+      case "right":
+        tooltip.style.top = "50%";
+        tooltip.style.right = this.MARGIN + "px";
+        tooltip.style.transform = "translateY(-50%)";
+        break;
+      case "center":
+      default:
+        tooltip.style.top = "50%";
+        tooltip.style.left = "50%";
+        tooltip.style.transform = "translate(-50%, -50%)";
+        break;
     }
   }
 };
@@ -259,7 +299,6 @@ OnboardOnRails.TourRenderer = {
     const step = tour.steps[stepIndex];
     if (!step) return;
     this.targetEl = step.selector ? document.querySelector(step.selector) : null;
-    if (!this.targetEl && step.placement !== "center") return;
     this.createOverlay(this.targetEl);
     this.highlightTarget(this.targetEl);
     this.createTooltip(tour, step, stepIndex, tour.steps.length, this.targetEl, callbacks);
@@ -334,11 +373,7 @@ OnboardOnRails.TourRenderer = {
     if (targetEl) {
       OnboardOnRails.PositioningEngine.position(this.tooltip, targetEl, step.placement);
     } else {
-      this.tooltip.style.position = "fixed";
-      this.tooltip.style.top = "50%";
-      this.tooltip.style.left = "50%";
-      this.tooltip.style.transform = "translate(-50%, -50%)";
-      this.tooltip.style.zIndex = "10001";
+      OnboardOnRails.PositioningEngine.positionViewport(this.tooltip, step.placement);
     }
   },
 
@@ -416,9 +451,13 @@ OnboardOnRails.TourManager = {
     if (step.wait_for_selector) {
       OnboardOnRails.DOMObserver.waitForSelector(step.wait_for_selector, showFn);
     } else {
-      const targetEl = (step.placement === "center" && !step.selector) ? true : document.querySelector(step.selector);
-      if (targetEl) showFn();
-      else OnboardOnRails.DOMObserver.waitForSelector(step.selector, showFn);
+      if (!step.selector) {
+        showFn();
+      } else {
+        const targetEl = document.querySelector(step.selector);
+        if (targetEl) showFn();
+        else OnboardOnRails.DOMObserver.waitForSelector(step.selector, showFn);
+      }
     }
   },
 
