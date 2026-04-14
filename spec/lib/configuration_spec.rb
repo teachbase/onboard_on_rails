@@ -51,9 +51,8 @@ RSpec.describe OnboardOnRails::Configuration do
       expect(config.accent_color_rgba(0.5)).to eq("rgba(255, 0, 0, 0.5)")
     end
 
-    it "raises on invalid hex color" do
-      config.accent_color = "not-a-color"
-      expect { config.accent_color_rgba(0.5) }.to raise_error(ArgumentError, /Invalid hex color/)
+    it "raises on invalid hex color at setter time" do
+      expect { config.accent_color = "not-a-color" }.to raise_error(ArgumentError, /Invalid hex color/)
     end
   end
 end

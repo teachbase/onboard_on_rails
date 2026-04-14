@@ -1,6 +1,13 @@
 module OnboardOnRails
   class Configuration
-    attr_accessor :user_class, :admin_auth, :user_attributes, :current_user_method, :accent_color
+    attr_accessor :user_class, :admin_auth, :user_attributes, :current_user_method
+
+    def accent_color=(value)
+      hex_to_rgb(value)
+      @accent_color = value
+    end
+
+    attr_reader :accent_color
 
     def initialize
       @user_class = "User"
