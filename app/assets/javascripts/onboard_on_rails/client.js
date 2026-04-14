@@ -404,6 +404,10 @@ OnboardOnRails.TourManager = {
 
   init() {
     if (!OnboardOnRails.ApiClient.getUserId()) return;
+    var accentMeta = document.querySelector('meta[name="onboard-on-rails-accent-color"]');
+    if (accentMeta && accentMeta.content) {
+      document.documentElement.style.setProperty("--oor-step-btn-bg", accentMeta.content);
+    }
     this.sessionId = this.getOrCreateSessionId();
     this.loadTour();
     OnboardOnRails.DOMObserver.start(() => this.loadTour());

@@ -9,6 +9,7 @@ module OnboardOnRails
 
       tag.meta(name: "onboard-on-rails-user-id", content: user.id) +
         tag.meta(name: "onboard-on-rails-mount-path", content: mount_path) +
+        tag.meta(name: "onboard-on-rails-accent-color", content: OnboardOnRails.configuration.accent_color) +
         tag.meta(name: "csrf-token", content: form_authenticity_token)
     end
   end
