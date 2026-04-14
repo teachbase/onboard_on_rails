@@ -55,4 +55,17 @@ RSpec.describe OnboardOnRails::Configuration do
       expect { config.accent_color = "not-a-color" }.to raise_error(ArgumentError, /Invalid hex color/)
     end
   end
+
+  describe "#user_locale" do
+    it "defaults to a lambda returning 'ru'" do
+      fake_user = double("User")
+      expect(config.user_locale.call(fake_user)).to eq("ru")
+    end
+
+    it "can be overridden" do
+      config.user_locale = ->(user) { user.lang }
+      fake_user = double("User", lang: "en")
+      expect(config.user_locale.call(fake_user)).to eq("en")
+    end
+  end
 end

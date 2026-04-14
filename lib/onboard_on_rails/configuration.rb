@@ -1,6 +1,6 @@
 module OnboardOnRails
   class Configuration
-    attr_accessor :user_class, :admin_auth, :user_attributes, :current_user_method
+    attr_accessor :user_class, :admin_auth, :user_attributes, :current_user_method, :user_locale
 
     def accent_color=(value)
       hex_to_rgb(value)
@@ -15,6 +15,7 @@ module OnboardOnRails
       @user_attributes = ->(user) { {} }
       @current_user_method = :current_user
       @accent_color = "#2d3436"
+      @user_locale = ->(user) { "ru" }
     end
 
     def accent_color_dark

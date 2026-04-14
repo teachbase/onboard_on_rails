@@ -3,6 +3,22 @@
 
 window.OnboardOnRails = window.OnboardOnRails || {};
 
+// === I18n ===
+OnboardOnRails.I18n = {
+  translations: {
+    ru: { skip: "Пропустить", back: "Назад", next: "Далее", done: "Готово" },
+    en: { skip: "Skip", back: "Back", next: "Next", done: "Done" }
+  },
+  getLocale() {
+    const meta = document.querySelector('meta[name="onboard-on-rails-locale"]');
+    const locale = meta ? meta.content : "ru";
+    return this.translations[locale] ? locale : "en";
+  },
+  t(key) {
+    return this.translations[this.getLocale()][key];
+  }
+};
+
 // === ApiClient ===
 OnboardOnRails.ApiClient = {
   getMountPath() {
@@ -361,9 +377,9 @@ OnboardOnRails.TourRenderer = {
           : `<div class="oor-step-dots">${tour.steps.map((_, i) => `<span class="oor-dot ${i === stepIndex ? 'oor-dot--active' : ''}"></span>`).join("")}</div>`
         }
         <div class="oor-step-actions">
-          <button class="oor-btn-skip" data-action="dismiss">Skip</button>
-          ${!isFirst ? '<button class="oor-btn-prev" data-action="prev">Back</button>' : ''}
-          <button class="oor-btn-next" data-action="${isLast ? 'complete' : 'next'}">${isLast ? 'Done' : 'Next'}</button>
+          <button class="oor-btn-skip" data-action="dismiss">${OnboardOnRails.I18n.t('skip')}</button>
+          ${!isFirst ? `<button class="oor-btn-prev" data-action="prev">${OnboardOnRails.I18n.t('back')}</button>` : ''}
+          <button class="oor-btn-next" data-action="${isLast ? 'complete' : 'next'}">${isLast ? OnboardOnRails.I18n.t('done') : OnboardOnRails.I18n.t('next')}</button>
         </div>
       </div>`;
     this.tooltip.addEventListener("click", (e) => {
