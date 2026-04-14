@@ -74,7 +74,11 @@ module OnboardOnRails
         end
 
         if params[:tour][:segment_rules_json].present?
-          permitted[:segment_rules] = JSON.parse(params[:tour][:segment_rules_json])
+          begin
+            permitted[:segment_rules] = JSON.parse(params[:tour][:segment_rules_json])
+          rescue JSON::ParserError
+            permitted[:segment_rules] = {}
+          end
         end
 
         permitted

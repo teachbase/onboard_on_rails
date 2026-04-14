@@ -40,7 +40,12 @@ module OnboardOnRails
         when "ends_with"    then actual.to_s.end_with?(expected.to_s)
         when "contains"     then actual.to_s.include?(expected.to_s)
         when "not_contains" then !actual.to_s.include?(expected.to_s)
-        when "matches"      then actual.to_s.match?(Regexp.new(expected.to_s)) rescue false
+        when "matches"
+          begin
+            Timeout.timeout(1) { actual.to_s.match?(Regexp.new(expected.to_s)) }
+          rescue RegexpError, Timeout::Error
+            false
+          end
         when "length_gt"    then actual.to_s.length > expected.to_i
         when "length_lt"    then actual.to_s.length < expected.to_i
         else false
