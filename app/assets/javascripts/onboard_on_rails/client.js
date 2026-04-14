@@ -372,9 +372,11 @@ OnboardOnRails.TourRenderer = {
         <div class="oor-step-body">${step.body}</div>
       </div>
       <div class="oor-step-footer">
-        ${totalSteps > 5
-          ? `<div class="oor-step-counter">${stepIndex + 1} / ${totalSteps}</div>`
-          : `<div class="oor-step-dots">${tour.steps.map((_, i) => `<span class="oor-dot ${i === stepIndex ? 'oor-dot--active' : ''}"></span>`).join("")}</div>`
+        ${totalSteps > 1
+          ? (totalSteps > 5
+            ? `<div class="oor-step-counter">${stepIndex + 1} / ${totalSteps}</div>`
+            : `<div class="oor-step-dots">${tour.steps.map((_, i) => `<span class="oor-dot ${i === stepIndex ? 'oor-dot--active' : ''}"></span>`).join("")}</div>`)
+          : ''
         }
         <div class="oor-step-actions">
           <button class="oor-btn-skip" data-action="dismiss">${OnboardOnRails.I18n.t('skip')}</button>
