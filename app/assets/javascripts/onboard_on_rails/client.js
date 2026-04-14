@@ -316,7 +316,7 @@ OnboardOnRails.TourRenderer = {
     const step = tour.steps[stepIndex];
     if (!step) return;
     this.targetEl = step.selector ? document.querySelector(step.selector) : null;
-    this.createOverlay(this.targetEl);
+    this.createOverlay(this.targetEl, tour.overlay_enabled);
     this.highlightTarget(this.targetEl);
     this.createTooltip(tour, step, stepIndex, tour.steps.length, this.targetEl, callbacks);
     if (this.targetEl) OnboardOnRails.PositioningEngine.scrollIntoView(this.targetEl);
@@ -354,9 +354,12 @@ OnboardOnRails.TourRenderer = {
     this.originalStyles = null;
   },
 
-  createOverlay(targetEl) {
+  createOverlay(targetEl, overlayEnabled) {
     this.overlay = document.createElement("div");
     this.overlay.className = "oor-overlay";
+    if (overlayEnabled === false) {
+      this.overlay.style.background = "transparent";
+    }
     if (targetEl) this.overlay.style.clipPath = OnboardOnRails.PositioningEngine.getClipPath(targetEl);
     document.body.appendChild(this.overlay);
   },

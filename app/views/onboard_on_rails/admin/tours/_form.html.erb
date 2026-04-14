@@ -59,6 +59,14 @@
   </div>
 
   <div class="oor-form-group">
+    <label>
+      <%= f.check_box :overlay_enabled %>
+      <%= t("onboard_on_rails.admin.tours.form.labels.overlay_enabled") %>
+    </label>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.overlay_enabled") %></div>
+  </div>
+
+  <div class="oor-form-group">
     <%= f.label :priority, t("onboard_on_rails.admin.tours.form.labels.priority") %>
     <%= f.number_field :priority %>
     <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.priority") %></div>

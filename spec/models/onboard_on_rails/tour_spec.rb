@@ -44,6 +44,11 @@ RSpec.describe OnboardOnRails::Tour, type: :model do
       expect(tour.device_type).to eq("all")
     end
 
+    it "defaults overlay_enabled to true" do
+      tour = build(:tour)
+      expect(tour.overlay_enabled).to eq(true)
+    end
+
     it "is valid with all required attributes" do
       tour = build(:tour)
       expect(tour).to be_valid

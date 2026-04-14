@@ -124,6 +124,7 @@ ru:
             ab_test_id: "ID A/B теста"
             ab_test_group: "Группа A/B теста"
             device_type: "Тип устройства"
+            overlay_enabled: "Затемнение фона"
           style_overrides: "Стили по умолчанию"
           styles:
             button_color: "Цвет кнопки"
@@ -135,6 +136,7 @@ ru:
             ab_test_group: "Необязательная группа (например, A, B, control)."
             device_type: "Показывать тур только на определённых типах устройств."
             button_color: "Цвет кнопки по умолчанию для всех шагов. Можно переопределить в каждом шаге."
+            overlay_enabled: "Затемняет страницу позади шага тура."
           submit:
             create: "Создать тур"
             update: "Обновить тур"

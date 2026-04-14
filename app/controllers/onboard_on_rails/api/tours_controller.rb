@@ -29,6 +29,7 @@ module OnboardOnRails
           name: tour.name,
           theme: tour.theme,
           style_overrides: tour.style_overrides,
+          overlay_enabled: tour.overlay_enabled,
           current_step_index: current_step_index,
           steps: tour.steps.sort_by(&:position).map { |s| serialize_step(s, matched_urls) }
         }
