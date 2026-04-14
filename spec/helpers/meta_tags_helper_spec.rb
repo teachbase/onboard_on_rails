@@ -4,12 +4,17 @@ RSpec.describe OnboardOnRails::MetaTagsHelper, type: :helper do
   let(:user) { create(:user) }
 
   before do
+    @original_locale = OnboardOnRails.configuration.user_locale
     OnboardOnRails.configuration.current_user_method = :current_user
     # Define current_user method on the helper instance
     def helper.current_user
       @current_user
     end
     helper.instance_variable_set(:@current_user, user)
+  end
+
+  after do
+    OnboardOnRails.configuration.user_locale = @original_locale
   end
 
   describe "#onboard_on_rails_meta_tags" do
