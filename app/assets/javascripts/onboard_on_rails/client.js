@@ -115,6 +115,9 @@ OnboardOnRails.PositioningEngine = {
     tooltip.style.position = "absolute";
     tooltip.style.top = top + "px";
     tooltip.style.left = left + "px";
+    tooltip.style.bottom = "auto";
+    tooltip.style.right = "auto";
+    tooltip.style.transform = "none";
     tooltip.dataset.placement = resolved;
   },
   resolvePlacement(preferred, targetRect, tooltipRect) {
@@ -148,6 +151,11 @@ OnboardOnRails.PositioningEngine = {
   positionViewport(tooltip, placement) {
     tooltip.style.position = "fixed";
     tooltip.style.zIndex = "10001";
+    tooltip.style.top = "auto";
+    tooltip.style.bottom = "auto";
+    tooltip.style.left = "auto";
+    tooltip.style.right = "auto";
+    tooltip.style.transform = "none";
     switch (placement) {
       case "top":
         tooltip.style.top = this.MARGIN + "px";
