@@ -17,7 +17,7 @@
       padding: 6px 10px; color: #e0e0e0; font-family: monospace; font-size: 13px;
     }
     .oor-picker-toolbar__btn { padding: 6px 16px; border: none; border-radius: 4px; font-size: 13px; cursor: pointer; font-weight: 500; }
-    .oor-picker-toolbar__btn--confirm { background: #6c5ce7; color: white; }
+    .oor-picker-toolbar__btn--confirm { background: <%= OnboardOnRails.configuration.accent_color %>; color: white; }
     .oor-picker-toolbar__btn--cancel { background: #333; color: #ccc; }
     .oor-picker-iframe { position: fixed; top: 48px; left: 0; right: 0; bottom: 0; border: none; width: 100%; height: calc(100vh - 48px); }
   </style>
@@ -40,7 +40,7 @@
       if (!doc) return;
       doc.querySelectorAll('script[src*="onboard_on_rails"]').forEach(s => s.remove());
       const style = doc.createElement("style");
-      style.textContent = ".oor-picker-highlight { outline: 3px solid #6c5ce7 !important; outline-offset: 2px !important; cursor: crosshair !important; }";
+      style.textContent = ".oor-picker-highlight { outline: 3px solid <%= OnboardOnRails.configuration.accent_color %> !important; outline-offset: 2px !important; cursor: crosshair !important; }";
       doc.head.appendChild(style);
       doc.body.addEventListener("mouseover", (e) => {
         if (highlightEl) highlightEl.classList.remove("oor-picker-highlight");
