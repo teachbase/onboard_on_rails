@@ -5,7 +5,8 @@ module OnboardOnRails
         matcher = TourMatcher.new(
           user: current_user,
           url: params[:url],
-          session_id: params[:session_id]
+          session_id: params[:session_id],
+          device_type: params[:device_type]
         )
         tour = matcher.match
 

@@ -78,6 +78,26 @@ RSpec.describe OnboardOnRails::Api::ToursController, type: :controller do
       expect(json["tour"]["steps"][1]["matched_url"]).to be_nil
     end
 
+    it "filters tours by device_type param" do
+      tour = create(:tour, url_pattern: ["/dashboard/*"], device_type: "desktop")
+      create(:step, tour: tour)
+
+      get :index, params: { url: "/dashboard/home", device_type: "mobile" }, format: :json
+
+      json = JSON.parse(response.body)
+      expect(json["tour"]).to be_nil
+    end
+
+    it "returns desktop tour when device_type is desktop" do
+      tour = create(:tour, url_pattern: ["/dashboard/*"], device_type: "desktop")
+      create(:step, tour: tour)
+
+      get :index, params: { url: "/dashboard/home", device_type: "desktop" }, format: :json
+
+      json = JSON.parse(response.body)
+      expect(json["tour"]["id"]).to eq(tour.id)
+    end
+
     it "returns complete_on_target_click for each step" do
       tour = create(:tour, url_pattern: ["/dashboard/*"])
       create(:step, tour: tour, position: 1, complete_on_target_click: true)
