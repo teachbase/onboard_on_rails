@@ -94,6 +94,36 @@
     <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.ab_test_group") %></div>
   </div>
 
+  <% attributes_schema = OnboardOnRails.configuration.attributes_schema %>
+  <% if attributes_schema.any? %>
+    <div class="oor-segment-rules-section" data-controller="segment-rules"
+         data-available-attributes="<%= attributes_schema.to_json %>"
+         data-operator-labels="<%= t('onboard_on_rails.segment_rules.operators').to_json %>"
+         data-placeholders="<%= t('onboard_on_rails.segment_rules.placeholders').to_json %>">
+
+      <h4 class="oor-mb-sm" style="margin-top: 20px;"><%= t("onboard_on_rails.segment_rules.title") %></h4>
+      <p class="oor-form-hint" style="margin-bottom: 12px;"><%= t("onboard_on_rails.segment_rules.description_hint") %></p>
+
+      <div class="oor-form-group">
+        <label><%= t("onboard_on_rails.segment_rules.logic.and").split("(").first.strip %></label>
+        <select data-segment-rules-target="logic" class="oor-form-control" style="width: auto;">
+          <option value="and"><%= t("onboard_on_rails.segment_rules.logic.and") %></option>
+          <option value="or"><%= t("onboard_on_rails.segment_rules.logic.or") %></option>
+        </select>
+      </div>
+
+      <div data-segment-rules-target="container"></div>
+
+      <button type="button" class="oor-btn oor-btn--sm oor-btn--secondary" data-action="segment-rules#add" style="margin-bottom: 16px;">
+        + <%= t("onboard_on_rails.segment_rules.add_condition") %>
+      </button>
+
+      <input type="hidden" name="tour[segment_rules_json]" data-segment-rules-target="output" value="<%= tour.segment_rules.to_json %>">
+    </div>
+  <% else %>
+    <p class="oor-form-hint" style="margin-top: 20px;"><%= t("onboard_on_rails.segment_rules.no_attributes") %></p>
+  <% end %>
+
   <h4 class="oor-mb-sm" style="margin-top: 20px;"><%= t("onboard_on_rails.admin.tours.form.style_overrides") %></h4>
 
   <div class="oor-form-group">

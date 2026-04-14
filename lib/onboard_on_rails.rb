@@ -1,4 +1,5 @@
 require "onboard_on_rails/version"
+require "onboard_on_rails/attribute_definition"
 require "onboard_on_rails/configuration"
 require "onboard_on_rails/engine"
 
