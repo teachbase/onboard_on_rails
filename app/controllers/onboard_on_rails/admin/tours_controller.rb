@@ -62,7 +62,7 @@ module OnboardOnRails
           :name, :description, :status, :trigger_type, :trigger_event,
           :frequency, :theme, :priority, :schedule_start, :schedule_end,
           :ab_test_id, :ab_test_group, :device_type,
-          style_overrides: {}, segment_rules: {}
+          style_overrides: {}
         )
 
         if params[:tour].key?(:url_pattern)
@@ -71,6 +71,10 @@ module OnboardOnRails
           else
             permitted[:url_pattern] = params[:tour].permit(url_pattern: [])[:url_pattern] || []
           end
+        end
+
+        if params[:tour][:segment_rules_json].present?
+          permitted[:segment_rules] = JSON.parse(params[:tour][:segment_rules_json])
         end
 
         permitted
