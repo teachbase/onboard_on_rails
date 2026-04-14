@@ -4,9 +4,11 @@
    CSS Variables
    ============================================ */
 :root {
-  --oor-primary: #6c5ce7;
-  --oor-primary-dark: #5a4bd1;
-  --oor-primary-light: #a29bfe;
+  --oor-primary: #2d3436;
+  --oor-primary-dark: #262d2f;
+  --oor-primary-light: #7e8587;
+  --oor-primary-shadow: rgba(45, 52, 54, 0.15);
+  --oor-primary-bg: rgba(45, 52, 54, 0.12);
   --oor-bg: #f5f6fa;
   --oor-surface: #ffffff;
   --oor-border: #dcdde1;
@@ -338,7 +340,7 @@ a:hover {
 .oor-form-group select:focus {
   outline: none;
   border-color: var(--oor-primary);
-  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+  box-shadow: 0 0 0 3px var(--oor-primary-shadow);
 }
 
 .oor-form-group textarea {
@@ -817,7 +819,7 @@ a:hover {
 }
 
 .oor-stat-card__icon--started {
-  background: rgba(108, 92, 231, 0.12);
+  background: var(--oor-primary-bg);
   color: var(--oor-primary);
 }
 
