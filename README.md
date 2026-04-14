@@ -12,8 +12,11 @@ A universal onboarding tour engine for Ruby on Rails. Mount a full-featured admi
 - **Scheduling** — set start/end dates for time-limited tours
 - **Frequency Control** — once, every session, or always
 - **Trigger Types** — auto (page load), event-based, or manual via API
+- **Device Targeting** — run tours on all devices, desktop only, or mobile only
+- **Theming** — configurable accent color and default font applied to admin panel and tour defaults
+- **Overlay Toggle** — per-tour backdrop on/off
 - **SSR + SPA support** — vanilla JS client works with Turbo, React, or classic Rails
-- **i18n** — English and Russian out of the box
+- **i18n** — English and Russian out of the box, with per-user locale resolution
 - **Self-Tour Lessons** — built-in interactive tutorials that teach the admin panel itself
 - **Statistics** — completion rates, drop-off per step, A/B breakdown
 
@@ -65,6 +68,13 @@ OnboardOnRails.configure do |config|
     controller.current_user&.admin?
   }
 
+  # Optional: brand the admin panel and tour defaults
+  config.accent_color = "#2d3436"           # hex, 6 digits — dark/light/rgba variants derived automatically
+  config.default_font = "Inter, sans-serif" # applied to tours when no style override is set
+
+  # Optional: resolve the locale for each user (defaults to "ru")
+  config.user_locale = ->(user) { user.locale || "en" }
+
   config.register_attribute :email, type: :string, label: "Email" do |user|
     user.email
   end
@@ -93,6 +103,9 @@ end
 | `user_class` | String | `"User"` | ActiveRecord model representing users |
 | `admin_auth` | Lambda | `->(_) { true }` | Receives controller, returns true/false for admin access |
 | `current_user_method` | Symbol | `:current_user` | Method name on your ApplicationController that returns the current user |
+| `user_locale` | Lambda | `->(_) { "ru" }` | Receives the user, returns a locale code used to render tours |
+| `accent_color` | String | `"#2d3436"` | 6-digit hex color; drives admin panel branding and default tour accents (light/dark/rgba variants are derived automatically) |
+| `default_font` | String | `nil` | CSS `font-family` used as a default on tours when no style override is set |
 | `register_attribute` | DSL | — | Register a user attribute for targeting (see below) |
 
 ## User Targeting
