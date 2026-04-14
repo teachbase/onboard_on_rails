@@ -92,6 +92,7 @@ OnboardOnRails.ThemeEngine = {
     if (overrides.border_radius) container.style.setProperty("--oor-step-radius", overrides.border_radius);
     if (overrides.button_color) container.style.setProperty("--oor-step-btn-bg", overrides.button_color);
     if (overrides.max_width) container.style.setProperty("--oor-step-max-width", overrides.max_width);
+    if (overrides.min_width) container.style.setProperty("--oor-step-min-width", overrides.min_width + "px");
   }
 };
 

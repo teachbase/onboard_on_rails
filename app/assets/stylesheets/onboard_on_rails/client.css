@@ -23,6 +23,7 @@
   --oor-step-radius: 12px;
   --oor-step-btn-bg: #2d3436;
   --oor-step-max-width: 320px;
+  --oor-step-min-width: auto;
 
   position: absolute;
   z-index: 10001;
@@ -32,6 +33,7 @@
   font-size: var(--oor-step-font-size);
   border-radius: var(--oor-step-radius);
   max-width: var(--oor-step-max-width);
+  min-width: var(--oor-step-min-width);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
   animation: oor-fade-in 0.25s ease-out;
   overflow: hidden;

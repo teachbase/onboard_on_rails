@@ -133,6 +133,12 @@
   </div>
 
   <div class="oor-form-group">
+    <label><%= t("onboard_on_rails.admin.steps.form.styles.min_width") %></label>
+    <input type="number" name="step[style_overrides][min_width]" value="<%= step.style_overrides&.dig('min_width') %>" placeholder="auto" min="0" step="10">
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.steps.form.hints.min_width") %></div>
+  </div>
+
+  <div class="oor-form-group">
     <label><%= t("onboard_on_rails.admin.steps.form.styles.button_color") %></label>
     <div class="oor-color-input">
       <input type="color" name="step[style_overrides][button_color]" value="<%= step.style_overrides&.dig('button_color') || OnboardOnRails.configuration.accent_color %>">
