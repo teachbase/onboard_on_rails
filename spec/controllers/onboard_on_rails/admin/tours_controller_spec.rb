@@ -92,4 +92,17 @@ RSpec.describe OnboardOnRails::Admin::ToursController, type: :controller do
       expect(flash[:alert]).to eq("Failed to copy tour.")
     end
   end
+
+  describe "PATCH #update with segment_rules_json" do
+    it "parses segment_rules_json into segment_rules" do
+      tour = create(:tour, name: "Test")
+      rules = { "conditions" => [{ "attribute" => "email", "operator" => "starts_with", "value" => "foo" }], "logic" => "and" }
+
+      patch :update, params: { id: tour.id, tour: { segment_rules_json: rules.to_json } }
+
+      tour.reload
+      expect(tour.segment_rules["conditions"].first["operator"]).to eq("starts_with")
+      expect(tour.segment_rules["logic"]).to eq("and")
+    end
+  end
 end

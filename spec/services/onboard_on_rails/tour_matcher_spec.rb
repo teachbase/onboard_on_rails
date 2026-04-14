@@ -5,7 +5,9 @@ RSpec.describe OnboardOnRails::TourMatcher do
 
   before do
     OnboardOnRails.configure do |config|
-      config.user_attributes = ->(u) { { role: u.role, plan: u.plan, signed_up_at: u.created_at.to_s } }
+      config.register_attribute(:role, type: :string, label: "Role") { |u| u.role }
+      config.register_attribute(:plan, type: :string, label: "Plan") { |u| u.plan }
+      config.register_attribute(:signed_up_at, type: :string, label: "Signed up") { |u| u.created_at.to_s }
     end
   end
 

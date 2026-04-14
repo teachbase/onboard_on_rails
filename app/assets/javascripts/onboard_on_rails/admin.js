@@ -52,49 +52,165 @@ document.addEventListener("DOMContentLoaded", function() {
   var logicSelect = wrapper.querySelector("[data-segment-rules-target='logic']");
   var addButton = wrapper.querySelector("[data-action*='segment-rules#add']");
 
+  var availableAttributes = [];
+  var operatorLabels = {};
+  var placeholders = {};
+
+  try { availableAttributes = JSON.parse(wrapper.getAttribute("data-available-attributes") || "[]"); } catch(e) {}
+  try { operatorLabels = JSON.parse(wrapper.getAttribute("data-operator-labels") || "{}"); } catch(e) {}
+  try { placeholders = JSON.parse(wrapper.getAttribute("data-placeholders") || "{}"); } catch(e) {}
+
+  var OPERATORS_BY_TYPE = {
+    string:  ["eq", "not_eq", "in", "not_in", "starts_with", "ends_with", "contains", "not_contains", "matches", "length_gt", "length_lt"],
+    number:  ["eq", "not_eq", "in", "not_in", "gt", "lt", "gte", "lte"],
+    boolean: ["eq"]
+  };
+
+  function findAttr(key) {
+    for (var i = 0; i < availableAttributes.length; i++) {
+      if (availableAttributes[i].key === key) return availableAttributes[i];
+    }
+    return null;
+  }
+
   function serialize() {
     var rows = container.querySelectorAll(".oor-segment-row");
     var conditions = Array.from(rows).map(function(row) {
       var op = row.querySelector(".oor-segment-op").value;
-      var value = row.querySelector(".oor-segment-val").value;
-      if (op === "in") value = value.split(",").map(function(v) { return v.trim(); });
-      return { attribute: row.querySelector(".oor-segment-attr").value, operator: op, value: value };
+      var val = row.querySelector(".oor-segment-val").value;
+      if (op === "in" || op === "not_in") {
+        val = val.split(",").map(function(v) { return v.trim(); });
+      }
+      return {
+        attribute: row.querySelector(".oor-segment-attr").value,
+        operator: op,
+        value: val
+      };
     });
     var logic = logicSelect ? logicSelect.value : "and";
     output.value = JSON.stringify({ conditions: conditions, logic: logic });
   }
 
+  function buildAttrSelect(selectedKey) {
+    var html = "";
+    for (var i = 0; i < availableAttributes.length; i++) {
+      var a = availableAttributes[i];
+      var sel = a.key === selectedKey ? " selected" : "";
+      html += '<option value="' + a.key + '"' + sel + '>' + a.label + '</option>';
+    }
+    return html;
+  }
+
+  function buildOpSelect(type, selectedOp) {
+    var ops = OPERATORS_BY_TYPE[type] || OPERATORS_BY_TYPE.string;
+    var html = "";
+    for (var i = 0; i < ops.length; i++) {
+      var op = ops[i];
+      var label = operatorLabels[op] || op;
+      var sel = op === selectedOp ? " selected" : "";
+      html += '<option value="' + op + '"' + sel + '>' + label + '</option>';
+    }
+    return html;
+  }
+
+  function buildValueInput(attrDef, operator, value) {
+    if (operator === "eq" && attrDef && attrDef.type === "boolean") {
+      return '<select class="oor-segment-val oor-form-control" style="flex:1;">' +
+        '<option value="true"' + (value === "true" ? " selected" : "") + '>' + (placeholders.boolean_true || "true") + '</option>' +
+        '<option value="false"' + (value !== "true" ? " selected" : "") + '>' + (placeholders.boolean_false || "false") + '</option>' +
+        '</select>';
+    }
+    if ((operator === "eq" || operator === "not_eq") && attrDef && attrDef.values && attrDef.values.length > 0) {
+      var html = '<select class="oor-segment-val oor-form-control" style="flex:1;">';
+      for (var i = 0; i < attrDef.values.length; i++) {
+        var v = attrDef.values[i];
+        var sel = v === value ? " selected" : "";
+        html += '<option value="' + v + '"' + sel + '>' + v + '</option>';
+      }
+      html += '</select>';
+      return html;
+    }
+    var placeholder = placeholders.value || "value";
+    if (operator === "in" || operator === "not_in") placeholder = placeholders.in_values || "values separated by comma";
+    if (operator === "matches") placeholder = placeholders.regex || "regular expression";
+    var displayValue = Array.isArray(value) ? value.join(", ") : (value || "");
+    return '<input type="text" placeholder="' + placeholder + '" value="' + displayValue + '" class="oor-segment-val oor-form-control" style="flex:1;">';
+  }
+
   function addConditionRow(condition) {
+    var attrKey = condition.attribute || (availableAttributes[0] ? availableAttributes[0].key : "");
+    var attrDef = findAttr(attrKey);
+    var type = attrDef ? attrDef.type : "string";
+    var operator = condition.operator || "eq";
+
     var row = document.createElement("div");
     row.className = "oor-segment-row";
-    row.style.cssText = "display:flex;gap:8px;margin-bottom:8px;align-items:center;";
+
     row.innerHTML =
-      '<input type="text" placeholder="attribute" value="' + (condition.attribute || "") + '" class="oor-segment-attr" style="flex:1;padding:6px 8px;border:1px solid var(--oor-border);border-radius:4px;font-size:13px;">' +
-      '<select class="oor-segment-op" style="padding:6px 8px;border:1px solid var(--oor-border);border-radius:4px;font-size:13px;">' +
-        '<option value="eq"' + (condition.operator === "eq" ? " selected" : "") + '>equals</option>' +
-        '<option value="not_eq"' + (condition.operator === "not_eq" ? " selected" : "") + '>not equals</option>' +
-        '<option value="in"' + (condition.operator === "in" ? " selected" : "") + '>in</option>' +
-        '<option value="gt"' + (condition.operator === "gt" ? " selected" : "") + '>greater than</option>' +
-        '<option value="lt"' + (condition.operator === "lt" ? " selected" : "") + '>less than</option>' +
-      '</select>' +
-      '<input type="text" placeholder="value" value="' + (Array.isArray(condition.value) ? condition.value.join(", ") : (condition.value || "")) + '" class="oor-segment-val" style="flex:1;padding:6px 8px;border:1px solid var(--oor-border);border-radius:4px;font-size:13px;">' +
-      '<button type="button" class="oor-segment-remove" style="background:none;border:none;color:var(--oor-danger);cursor:pointer;font-size:16px;">&times;</button>';
+      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+        '<select class="oor-segment-attr oor-form-control" style="flex:1;min-width:120px;">' + buildAttrSelect(attrKey) + '</select>' +
+        '<select class="oor-segment-op oor-form-control" style="flex:1;min-width:120px;">' + buildOpSelect(type, operator) + '</select>' +
+        buildValueInput(attrDef, operator, Array.isArray(condition.value) ? condition.value.join(", ") : (condition.value || "")) +
+        '<button type="button" class="oor-segment-remove oor-btn oor-btn--sm oor-btn--danger" style="flex-shrink:0;">&times;</button>' +
+      '</div>' +
+      (attrDef && attrDef.description ? '<div class="oor-segment-description">' + attrDef.description + '</div>' : '');
 
     row.querySelector(".oor-segment-remove").addEventListener("click", function() {
       row.remove();
       serialize();
     });
-    row.querySelectorAll("input,select").forEach(function(el) {
-      el.addEventListener("change", serialize);
+
+    var attrSelect = row.querySelector(".oor-segment-attr");
+    attrSelect.addEventListener("change", function() {
+      var newAttrDef = findAttr(attrSelect.value);
+      var newType = newAttrDef ? newAttrDef.type : "string";
+      var opSelect = row.querySelector(".oor-segment-op");
+      opSelect.innerHTML = buildOpSelect(newType, "eq");
+      var oldValEl = row.querySelector(".oor-segment-val");
+      var temp = document.createElement("div");
+      temp.innerHTML = buildValueInput(newAttrDef, "eq", "");
+      oldValEl.parentNode.replaceChild(temp.firstChild, oldValEl);
+      var descEl = row.querySelector(".oor-segment-description");
+      if (descEl) descEl.remove();
+      if (newAttrDef && newAttrDef.description) {
+        var newDesc = document.createElement("div");
+        newDesc.className = "oor-segment-description";
+        newDesc.textContent = newAttrDef.description;
+        row.appendChild(newDesc);
+      }
+      bindRowEvents(row);
+      serialize();
     });
+
+    var opSelect = row.querySelector(".oor-segment-op");
+    opSelect.addEventListener("change", function() {
+      var currentAttrDef = findAttr(attrSelect.value);
+      var oldValEl = row.querySelector(".oor-segment-val");
+      var temp = document.createElement("div");
+      temp.innerHTML = buildValueInput(currentAttrDef, opSelect.value, "");
+      oldValEl.parentNode.replaceChild(temp.firstChild, oldValEl);
+      bindRowEvents(row);
+      serialize();
+    });
+
+    bindRowEvents(row);
     container.appendChild(row);
     serialize();
+  }
+
+  function bindRowEvents(row) {
+    row.querySelectorAll(".oor-segment-val, .oor-segment-op, .oor-segment-attr").forEach(function(el) {
+      el.removeEventListener("change", serialize);
+      el.removeEventListener("input", serialize);
+      el.addEventListener("change", serialize);
+      el.addEventListener("input", serialize);
+    });
   }
 
   function loadExisting() {
     var data;
     try { data = JSON.parse(output.value || "{}"); } catch(e) { data = {}; }
-    if (data.conditions) {
+    if (data.conditions && data.conditions.length > 0) {
       data.conditions.forEach(function(c) { addConditionRow(c); });
     }
     if (data.logic && logicSelect) logicSelect.value = data.logic;
