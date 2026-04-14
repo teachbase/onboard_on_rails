@@ -20,7 +20,8 @@ OnboardOnRails.ApiClient = {
   async fetchTours(url, sessionId) {
     if (!this.getUserId()) return null;
     const mountPath = this.getMountPath();
-    const params = new URLSearchParams({ url });
+    const deviceType = window.innerWidth < 768 ? "mobile" : "desktop";
+    const params = new URLSearchParams({ url, device_type: deviceType });
     if (sessionId) params.append("session_id", sessionId);
     const response = await fetch(`${mountPath}/api/tours?${params}`, { headers: { "Accept": "application/json" } });
     if (!response.ok) return null;

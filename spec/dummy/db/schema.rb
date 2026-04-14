@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_04_192615) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_14_075711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_04_192615) do
     t.string "ab_test_id"
     t.datetime "created_at", null: false
     t.text "description"
+    t.string "device_type", default: "all", null: false
     t.string "frequency", default: "once", null: false
     t.string "name", null: false
     t.integer "priority", default: 0, null: false

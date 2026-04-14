@@ -2,10 +2,11 @@ module OnboardOnRails
   class TourMatcher
     attr_reader :current_step_index
 
-    def initialize(user:, url:, session_id: nil)
+    def initialize(user:, url:, session_id: nil, device_type: nil)
       @user = user
       @url = url
       @session_id = session_id
+      @device_type = device_type
       @user_attributes = OnboardOnRails.configuration.user_attributes.call(user)
       @current_step_index = 0
     end
@@ -13,12 +14,13 @@ module OnboardOnRails
     def match
       # First: try to resume an in-progress tour
       resumed = find_in_progress_tour
-      return resumed if resumed
+      return resumed if resumed && matches_device?(resumed)
 
       # Otherwise: normal matching for new tours
       candidates = base_scope.to_a
       candidates = candidates.select { |t| t.matches_url?(@url) }
       candidates = candidates.select { |t| t.matches_segment?(@user_attributes) }
+      candidates = candidates.select { |t| matches_device?(t) }
       candidates = candidates.reject { |t| excluded_by_frequency?(t) }
       candidates = candidates.reject { |t| excluded_by_event_trigger?(t) }
       candidates = candidates.select { |t| included_by_ab_test?(t) }
@@ -100,6 +102,12 @@ module OnboardOnRails
 
       assigned = AbAssigner.assign_group(user_id: @user.id, tour: tour)
       tour.ab_test_group == assigned
+    end
+
+    def matches_device?(tour)
+      return true if tour.device_type == "all"
+      return true if @device_type.blank?
+      tour.device_type == @device_type
     end
   end
 end

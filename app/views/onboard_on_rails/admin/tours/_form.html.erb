@@ -43,6 +43,12 @@
   </div>
 
   <div class="oor-form-group">
+    <%= f.label :device_type, t("onboard_on_rails.admin.tours.form.labels.device_type") %>
+    <%= f.select :device_type, OnboardOnRails::Tour::DEVICE_TYPES.map { |dt| [t("onboard_on_rails.device_types.#{dt}"), dt] }, {}, {} %>
+    <div class="oor-form-hint"><%= t("onboard_on_rails.admin.tours.form.hints.device_type") %></div>
+  </div>
+
+  <div class="oor-form-group">
     <%= f.label :frequency, t("onboard_on_rails.admin.tours.form.labels.frequency") %>
     <%= f.select :frequency, OnboardOnRails::Tour::FREQUENCIES.map { |fr| [t("onboard_on_rails.frequencies.#{fr}"), fr] }, {}, {} %>
   </div>

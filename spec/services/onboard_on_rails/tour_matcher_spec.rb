@@ -93,7 +93,51 @@ RSpec.describe OnboardOnRails::TourMatcher do
       expect(result).to be_nil
     end
 
+    context "device type filtering" do
+      it "returns tour with device_type 'all' for any device" do
+        tour = create(:tour, url_pattern: ["/dashboard/*"], device_type: "all")
+        create(:step, tour: tour)
+
+        result = described_class.new(user: user, url: "/dashboard/home", device_type: "mobile").match
+        expect(result).to eq(tour)
+      end
+
+      it "returns tour when device_type matches" do
+        tour = create(:tour, :mobile_only, url_pattern: ["/dashboard/*"])
+        create(:step, tour: tour)
+
+        result = described_class.new(user: user, url: "/dashboard/home", device_type: "mobile").match
+        expect(result).to eq(tour)
+      end
+
+      it "excludes tour when device_type does not match" do
+        tour = create(:tour, :desktop_only, url_pattern: ["/dashboard/*"])
+        create(:step, tour: tour)
+
+        result = described_class.new(user: user, url: "/dashboard/home", device_type: "mobile").match
+        expect(result).to be_nil
+      end
+
+      it "returns any tour when device_type param is blank" do
+        tour = create(:tour, :mobile_only, url_pattern: ["/dashboard/*"])
+        create(:step, tour: tour)
+
+        result = described_class.new(user: user, url: "/dashboard/home").match
+        expect(result).to eq(tour)
+      end
+    end
+
     context "in-progress tour resumption" do
+      it "does not resume a desktop-only in-progress tour on mobile" do
+        tour = create(:tour, :desktop_only, url_pattern: ["/dashboard/*"])
+        step1 = create(:step, tour: tour, position: 1)
+        step2 = create(:step, tour: tour, position: 2)
+        create(:completion, tour: tour, user_id: user.id, step_id: step2.id, status: "in_progress")
+
+        result = described_class.new(user: user, url: "/dashboard/home", device_type: "mobile").match
+        expect(result).to be_nil
+      end
+
       it "resumes an in-progress tour on a step's URL" do
         tour = create(:tour, url_pattern: ["/teacher/students"])
         step1 = create(:step, tour: tour, position: 1, url_pattern: nil)
