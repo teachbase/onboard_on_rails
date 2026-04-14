@@ -177,8 +177,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 480px;
-  width: 90vw;
+  --oor-step-max-width: min(480px, 90vw);
+  --oor-step-min-width: min(320px, 90vw);
 }
 
 /* Theme: Banner */
@@ -207,8 +207,8 @@
   top: 0;
   right: 0;
   bottom: 0;
-  max-width: 360px;
-  width: 90vw;
+  --oor-step-max-width: 360px;
+  width: min(90vw, var(--oor-step-max-width));
   border-radius: 12px 0 0 12px;
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
   display: flex;
