@@ -128,6 +128,16 @@ RSpec.describe OnboardOnRails::TourMatcher do
     end
 
     context "in-progress tour resumption" do
+      it "does not resume a desktop-only in-progress tour on mobile" do
+        tour = create(:tour, :desktop_only, url_pattern: ["/dashboard/*"])
+        step1 = create(:step, tour: tour, position: 1)
+        step2 = create(:step, tour: tour, position: 2)
+        create(:completion, tour: tour, user_id: user.id, step_id: step2.id, status: "in_progress")
+
+        result = described_class.new(user: user, url: "/dashboard/home", device_type: "mobile").match
+        expect(result).to be_nil
+      end
+
       it "resumes an in-progress tour on a step's URL" do
         tour = create(:tour, url_pattern: ["/teacher/students"])
         step1 = create(:step, tour: tour, position: 1, url_pattern: nil)

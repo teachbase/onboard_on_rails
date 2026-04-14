@@ -14,7 +14,7 @@ module OnboardOnRails
     def match
       # First: try to resume an in-progress tour
       resumed = find_in_progress_tour
-      return resumed if resumed
+      return resumed if resumed && matches_device?(resumed)
 
       # Otherwise: normal matching for new tours
       candidates = base_scope.to_a
