@@ -360,6 +360,7 @@ OnboardOnRails.TourRenderer = {
     this.overlay.className = "oor-overlay";
     if (overlayEnabled === false) {
       this.overlay.style.background = "transparent";
+      this.overlay.style.pointerEvents = "none";
     }
     if (targetEl) this.overlay.style.clipPath = OnboardOnRails.PositioningEngine.getClipPath(targetEl);
     document.body.appendChild(this.overlay);
