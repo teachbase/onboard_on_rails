@@ -181,6 +181,11 @@
   --oor-step-min-width: min(320px, 90vw);
 }
 
+.oor-theme-modal .oor-step-content {
+  max-height: min(500px, 70vh);
+  overflow: auto;
+}
+
 /* Theme: Banner */
 .oor-theme-banner {
   position: fixed;
