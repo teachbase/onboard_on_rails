@@ -104,10 +104,11 @@
 
   <div class="oor-form-group">
     <label><%= t("onboard_on_rails.admin.steps.form.styles.font_family") %></label>
+    <% selected_font = step.style_overrides&.dig('font_family') || @tour.style_overrides&.dig('font_family') || OnboardOnRails.configuration.default_font %>
     <select name="step[style_overrides][font_family]">
       <option value=""><%= t("onboard_on_rails.admin.steps.form.styles.default_system") %></option>
       <% %w[Arial Helvetica Georgia Times\ New\ Roman Courier\ New Verdana Rubik].each do |font| %>
-        <option value="<%= font %>" <%= 'selected' if step.style_overrides&.dig('font_family') == font %>><%= font %></option>
+        <option value="<%= font %>" <%= 'selected' if selected_font == font %>><%= font %></option>
       <% end %>
     </select>
   </div>
