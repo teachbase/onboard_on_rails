@@ -166,7 +166,7 @@ OnboardOnRails.PositioningEngine = {
       targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   },
-  positionViewport(tooltip, placement) {
+  positionViewport(tooltip, placement, theme) {
     tooltip.style.position = "fixed";
     tooltip.style.zIndex = "10001";
     tooltip.style.top = "auto";
@@ -186,14 +186,22 @@ OnboardOnRails.PositioningEngine = {
         tooltip.style.transform = "translateX(-50%)";
         break;
       case "left":
-        tooltip.style.top = "50%";
         tooltip.style.left = this.MARGIN + "px";
-        tooltip.style.transform = "translateY(-50%)";
+        if (theme === "modal" || theme === "slideout") {
+          tooltip.style.bottom = this.MARGIN + "px";
+        } else {
+          tooltip.style.top = "50%";
+          tooltip.style.transform = "translateY(-50%)";
+        }
         break;
       case "right":
-        tooltip.style.top = "50%";
         tooltip.style.right = this.MARGIN + "px";
-        tooltip.style.transform = "translateY(-50%)";
+        if (theme === "modal" || theme === "slideout") {
+          tooltip.style.bottom = this.MARGIN + "px";
+        } else {
+          tooltip.style.top = "50%";
+          tooltip.style.transform = "translateY(-50%)";
+        }
         break;
       case "center":
       default:
@@ -397,7 +405,7 @@ OnboardOnRails.TourRenderer = {
     if (targetEl) {
       OnboardOnRails.PositioningEngine.position(this.tooltip, targetEl, step.placement);
     } else {
-      OnboardOnRails.PositioningEngine.positionViewport(this.tooltip, step.placement);
+      OnboardOnRails.PositioningEngine.positionViewport(this.tooltip, step.placement, tour.theme);
     }
   },
 
