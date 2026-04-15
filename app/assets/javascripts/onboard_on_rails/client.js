@@ -6,8 +6,8 @@ window.OnboardOnRails = window.OnboardOnRails || {};
 // === I18n ===
 OnboardOnRails.I18n = {
   translations: {
-    ru: { skip: "Пропустить", back: "Назад", next: "Далее", done: "Готово" },
-    en: { skip: "Skip", back: "Back", next: "Next", done: "Done" }
+    ru: { skip: "Пропустить", back: "Назад", next: "Далее", close: "Закрыть" },
+    en: { skip: "Skip", back: "Back", next: "Next", close: "Close" }
   },
   getLocale() {
     const meta = document.querySelector('meta[name="onboard-on-rails-locale"]');
@@ -392,9 +392,9 @@ OnboardOnRails.TourRenderer = {
           : ''
         }
         <div class="oor-step-actions">
-          <button class="oor-btn-skip" data-action="dismiss">${OnboardOnRails.I18n.t('skip')}</button>
+          ${!isLast ? `<button class="oor-btn-skip" data-action="dismiss">${OnboardOnRails.I18n.t('skip')}</button>` : ''}
           ${!isFirst ? `<button class="oor-btn-prev" data-action="prev">${OnboardOnRails.I18n.t('back')}</button>` : ''}
-          <button class="oor-btn-next" data-action="${isLast ? 'complete' : 'next'}">${isLast ? OnboardOnRails.I18n.t('done') : OnboardOnRails.I18n.t('next')}</button>
+          <button class="oor-btn-next" data-action="${isLast ? 'complete' : 'next'}">${isLast ? OnboardOnRails.I18n.t('close') : OnboardOnRails.I18n.t('next')}</button>
         </div>
       </div>`;
     this.tooltip.addEventListener("click", (e) => {
