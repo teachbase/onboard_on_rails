@@ -1,6 +1,9 @@
 <div class="oor-page-header">
   <h1><%= t("onboard_on_rails.admin.stats.title", name: @tour.name) %></h1>
   <div class="oor-page-header__actions">
+    <%= link_to t("onboard_on_rails.admin.stats.export"),
+        export_admin_tour_stats_path(@tour),
+        class: "oor-btn oor-btn--sm" %>
     <%= button_to t("onboard_on_rails.admin.stats.reset"),
         admin_tour_stats_path(@tour),
         method: :delete,
