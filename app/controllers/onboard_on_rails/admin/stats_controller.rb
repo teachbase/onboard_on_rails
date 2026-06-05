@@ -10,6 +10,15 @@ module OnboardOnRails
         @completions = @tour.completions.includes(:step).order(updated_at: :desc).limit(50)
       end
 
+      def export
+        @tour = Tour.find(params[:tour_id])
+        exporter = CompletionsCsvExporter.new(@tour)
+        send_data exporter.to_csv,
+                  filename: exporter.filename,
+                  type: "text/csv",
+                  disposition: "attachment"
+      end
+
       def destroy
         @tour = Tour.find(params[:tour_id])
         @tour.completions.destroy_all
