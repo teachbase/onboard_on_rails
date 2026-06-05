@@ -156,6 +156,7 @@ en:
       stats:
         title: "Stats: %{name}"
         back: "Back to Tour"
+        export: "Export CSV"
         reset: "Reset All Completions"
         reset_confirm: "This will delete all completion data for this tour. Are you sure?"
         reset_success: "All completions have been reset."
@@ -185,6 +186,14 @@ en:
           total: "Total"
           completed: "Completed"
           rate: "Rate"
+        csv:
+          user_id: "User ID"
+          user_email: "Email"
+          status: "Status"
+          last_step_position: "Last Step Position"
+          last_step_title: "Last Step Title"
+          started_at: "Started At"
+          completed_at: "Completed At"
     flash:
       tour_created: "Tour created."
       tour_updated: "Tour updated."

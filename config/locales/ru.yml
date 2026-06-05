@@ -219,6 +219,7 @@ ru:
       stats:
         title: "Статистика: %{name}"
         back: "Назад к туру"
+        export: "Выгрузить CSV"
         reset: "Сбросить все прохождения"
         reset_confirm: "Все данные о прохождении этого тура будут удалены. Вы уверены?"
         reset_success: "Все прохождения сброшены."
@@ -248,6 +249,14 @@ ru:
           total: "Всего"
           completed: "Завершено"
           rate: "Процент"
+        csv:
+          user_id: "ID пользователя"
+          user_email: "Email"
+          status: "Статус"
+          last_step_position: "Позиция последнего шага"
+          last_step_title: "Название последнего шага"
+          started_at: "Начато"
+          completed_at: "Завершено"
     flash:
       tour_created: "Тур создан."
       tour_updated: "Тур обновлён."
