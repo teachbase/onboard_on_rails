@@ -3,7 +3,9 @@ OnboardOnRails::Engine.routes.draw do
     resources :tours do
       post :copy, on: :member
       resources :steps, except: [:index]
-      resource :stats, only: [:show, :destroy]
+      resource :stats, only: [:show, :destroy] do
+        get :export
+      end
     end
     resources :lessons, only: [:index] do
       member do
