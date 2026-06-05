@@ -2,8 +2,10 @@ development:
   adapter: postgresql
   database: onboard_on_rails_development
   host: localhost
+  username: postgres
 
 test:
   adapter: postgresql
   database: onboard_on_rails_test
   host: localhost
+  username: postgres
